@@ -66,54 +66,24 @@ fun main() {
             LaunchedEffect(Unit) {
                 println("Launching..")
                 val flower = Movement.Flower()
-                val delay = flower.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
+                val waitTime = flower.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
 
                 while (true) {
-                    delay(2000)
                     activeMovement = Movement.Flower(Movement.Flower.To.SQUARE)
 
-                    /*delay(delay)
+                    delay(waitTime)
                     activeMovement = Movement.Flower(to = Movement.Flower.To.FLOWER)
 
-                    delay(delay - ENJOY_TIME_IN_MILLIS)
+                    delay(waitTime - ENJOY_TIME_IN_MILLIS)
                     activeMovement = Movement.Flower(to = Movement.Flower.To.STAR)
 
-                    delay(delay)
-                    activeMovement = Movement.Flower(to = Movement.Flower.To.MID)*/
+                    delay(waitTime)
+                    activeMovement = Movement.Flower(to = Movement.Flower.To.MID)
+
+                    delay(waitTime)
                 }
             }
         }
-
-
-        /*Button(
-            onClick = {
-                activeMovement = if (activeMovement is Movement.Flower) {
-                    // close flower if open, and open if close
-                    val activeFlower = activeMovement as Movement.Flower
-                    when (activeFlower.state) {
-                        Movement.Flower.State.STAND_BY -> {
-                            activeFlower.copy(state = Movement.Flower.State.OPEN)
-                        }
-                        Movement.Flower.State.OPEN -> {
-                            activeFlower.copy(state = Movement.Flower.State.STAND_BY)
-                        }
-
-                        Movement.Flower.State.MID -> {
-                            activeFlower.copy(state = Movement.Flower.State.CLOSE)
-                        }
-
-                        Movement.Flower.State.CLOSE -> {
-                            activeFlower.copy(state = Movement.Flower.State.STAND_BY)
-                        }
-                    }
-                } else {
-                    // start new flower
-                    Movement.Flower()
-                }
-            }
-        ) {
-            Text(text = "Animate :${activeMovement}")
-        }*/
     }
 }
 

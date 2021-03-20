@@ -13,7 +13,7 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
     val evenDegreeOne = when (flower.to) {
         Movement.Flower.To.SQUARE -> {
             ClockData(
-                degreeOne = 90 + 360,
+                degreeOne = 90,
                 degreeTwo = 180
             )
         }
@@ -44,7 +44,7 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
         Movement.Flower.To.SQUARE -> {
             // Square
             ClockData(
-                degreeOne = 180 + 360,
+                degreeOne = 180,
                 degreeTwo = 270
             )
         }
@@ -74,7 +74,7 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
         Movement.Flower.To.SQUARE -> {
             // Square
             ClockData(
-                degreeOne = 0 + 360,
+                degreeOne = 0,
                 degreeTwo = 90
             )
         }
@@ -103,7 +103,7 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
         Movement.Flower.To.SQUARE -> {
             // Square
             ClockData(
-                degreeOne = 270 + 360,
+                degreeOne = 270,
                 degreeTwo = 360
             )
         }
