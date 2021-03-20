@@ -6,7 +6,7 @@ import com.theapache64.kineticwallclock.model.ClockData
 
 
 /**
- * Creating a ROWSxCOLUMN matrix with given degree as com.theapache64.kineticwallclock.models.ClockData
+ * Creating a ROWSxCOLUMN matrix with given degree as ClockData
  */
 fun getStandByMatrix(
     standBy: Movement.StandBy,

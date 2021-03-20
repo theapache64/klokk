@@ -129,6 +129,8 @@ fun getFlowerMatrix(trance: Movement.Trance): List<List<ClockData>> {
 
     return mutableListOf<List<ClockData>>().apply {
         val columnRepeat = (COLUMNS / 2)
+
+        // Building matrix
         repeat(ROWS) { rowIndex ->
             val row = mutableListOf<ClockData>()
             repeat(columnRepeat) {
@@ -146,24 +148,16 @@ fun getFlowerMatrix(trance: Movement.Trance): List<List<ClockData>> {
             // filling remaining columns
             val remColumn = COLUMNS % 2
             if (remColumn > 0) {
-                repeat(remColumn) { remColumnIndex ->
-                    val lastColumn = if (remColumnIndex % 2 == 0) {
-                        // even
-                        if (rowIndex % 2 == 0) {
-                            evenDegreeOne
-                        } else {
-                            oddDegreeOne
-                        }
-                    } else {
-                        // odd
-                        if (rowIndex % 2 == 0) {
-                            evenDegreeTwo
-                        } else {
-                            oddDegreeTwo
-                        }
-                    }
-                    row.add(lastColumn)
+                require(remColumn == 1) { "Expected remaining column is 1, but found $remColumn" }
+
+                // even
+                val lastColumn = if (rowIndex % 2 == 0) {
+                    evenDegreeOne
+                } else {
+                    oddDegreeOne
                 }
+
+                row.add(lastColumn)
             }
 
             add(row)
@@ -173,7 +167,8 @@ fun getFlowerMatrix(trance: Movement.Trance): List<List<ClockData>> {
         val remRow = ROWS % 2
 
         // Add remaining row
-        if (remRow == 1) {
+        if (remRow > 1) {
+            require(remRow == 1) { "Expected 1 remaining row, but found $remRow" }
             add(get(0))
         }
     }

@@ -22,37 +22,8 @@ import com.theapache64.kineticwallclock.theme.CodGray_2
 import kotlin.math.cos
 import kotlin.math.sin
 
-fun main(args: Array<String>) {
-    Window {
-        var needleOneDegree by remember { mutableStateOf(315) }
-        var needleTwoDegree by remember { mutableStateOf(315) }
-
-        Box(
-            modifier = Modifier.fillMaxSize().background(CodGray)
-        ) {
-
-            Clock(
-                _needleOneDegree = needleOneDegree,
-                _needleTwoDegree = needleTwoDegree,
-                modifier = Modifier.size(600.dp),
-                durationInMillis = 2000
-            )
-
-            Button(
-                onClick = {
-                    needleOneDegree = 270 + 360
-                    needleTwoDegree = 360
-                }
-            ) {
-                Text(text = "Animate")
-            }
-        }
-    }
-}
-
 
 private val NEEDLE_COLOR = Color.White
-
 
 @Composable
 fun Clock(
@@ -67,13 +38,12 @@ fun Clock(
     val needleTwoDegree = (_needleTwoDegree * Math.PI / 180).toFloat()
     val animationSpec = tween<Float>(durationMillis = durationInMillis, easing = easing)
 
-    val targetOne by animateFloatAsState(
+    val needleOneDegreeAnim by animateFloatAsState(
         needleOneDegree,
         animationSpec = animationSpec
     )
 
-
-    val targetTwo by animateFloatAsState(
+    val needleTwoDegreeAnim by animateFloatAsState(
         needleTwoDegree,
         animationSpec = animationSpec,
     )
@@ -103,8 +73,9 @@ fun Clock(
             color = NEEDLE_COLOR,
             start = center,
             end = Offset(
-                x = center.x + radius * sin(targetOne),
-                y = center.y - radius * cos(targetOne),
+                // Finding end coordinate for the given degree
+                x = center.x + radius * sin(needleOneDegreeAnim),
+                y = center.y - radius * cos(needleOneDegreeAnim),
             ),
             strokeWidth = needleWidth
         )
@@ -115,12 +86,42 @@ fun Clock(
             color = NEEDLE_COLOR,
             start = center,
             end = Offset(
-                x = center.x + radius * sin(targetTwo),
-                y = center.y - radius * cos(targetTwo),
+                // Finding end coordinate for the given degree
+                x = center.x + radius * sin(needleTwoDegreeAnim),
+                y = center.y - radius * cos(needleTwoDegreeAnim),
             ),
             strokeWidth = needleWidth
         )
-
     }
 
+}
+
+
+// Preview
+fun main(args: Array<String>) {
+    Window {
+        var needleOneDegree by remember { mutableStateOf(315) }
+        var needleTwoDegree by remember { mutableStateOf(315) }
+
+        Box(
+            modifier = Modifier.fillMaxSize().background(CodGray)
+        ) {
+
+            Clock(
+                _needleOneDegree = needleOneDegree,
+                _needleTwoDegree = needleTwoDegree,
+                modifier = Modifier.size(600.dp),
+                durationInMillis = 2000
+            )
+
+            Button(
+                onClick = {
+                    needleOneDegree = 270 + 360
+                    needleTwoDegree = 360
+                }
+            ) {
+                Text(text = "Animate")
+            }
+        }
+    }
 }
