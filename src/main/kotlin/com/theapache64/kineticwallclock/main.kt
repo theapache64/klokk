@@ -1,11 +1,9 @@
+package com.theapache64.kineticwallclock
+
 import androidx.compose.desktop.Window
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,6 +14,7 @@ import com.theapache64.kineticwallclock.model.ClockData
 import com.theapache64.kineticwallclock.movement.Movement
 import com.theapache64.kineticwallclock.movement.getFlowerMatrix
 import com.theapache64.kineticwallclock.movement.getStandByMatrix
+import kotlinx.coroutines.delay
 
 
 // Configs
@@ -32,26 +31,28 @@ private const val DIGIT_ROWS = 6
 
 fun main() {
 
-    var activeMovement by mutableStateOf<Movement>(Movement.StandBy(STAND_BY_DEGREE))
 
     Window(
         title = "Kinetic Wall Clock",
         size = IntSize(CLOCKS_CONTAINER_WIDTH + PADDING, CLOCKS_CONTAINER_HEIGHT + PADDING),
     ) {
 
+        var activeMovement by remember { mutableStateOf<Movement>(Movement.StandBy(STAND_BY_DEGREE)) }
         val degreeMatrix = getDegreeMatrix(activeMovement)
         verifyIntegrity(degreeMatrix)
+
         Column(
             modifier = Modifier.fillMaxSize().background(Color.Black),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            println("Rendering new clock...")
+//            println("Rendering new clock...")
 
             repeat(ROWS) { i ->
                 Row {
                     repeat(COLUMNS) { j ->
                         val clockData = degreeMatrix[i][j]
+                        println("Anim duration is ${activeMovement.durationInMillis}")
                         Clock(
                             _needleOneDegree = clockData.degreeOne,
                             _needleTwoDegree = clockData.degreeTwo,
@@ -61,9 +62,34 @@ fun main() {
                     }
                 }
             }
+
+            LaunchedEffect(Unit) {
+                println("Launching..")
+                val flower = Movement.Flower()
+                val delay = flower.durationInMillis.toLong() + 250
+
+                while (true) {
+                    println("Delay is $delay")
+                    delay(delay)
+                    activeMovement = Movement.Flower(Movement.Flower.To.SQUARE)
+
+                    delay(delay)
+                    activeMovement = Movement.Flower(to = Movement.Flower.To.FLOWER)
+
+                    delay(delay)
+                    activeMovement = Movement.Flower(to = Movement.Flower.To.SQUARE)
+
+                    /*delay(delay)
+                    activeMovement = flower.copy(to = Movement.Flower.To.CIRCLE)*/
+
+                    delay(delay)
+                    activeMovement = Movement.Flower(to = Movement.Flower.To.STAR)
+                }
+            }
         }
 
-        Button(
+
+        /*Button(
             onClick = {
                 activeMovement = if (activeMovement is Movement.Flower) {
                     // close flower if open, and open if close
@@ -73,7 +99,7 @@ fun main() {
                             activeFlower.copy(state = Movement.Flower.State.OPEN)
                         }
                         Movement.Flower.State.OPEN -> {
-                            activeFlower.copy(state = Movement.Flower.State.MID)
+                            activeFlower.copy(state = Movement.Flower.State.STAND_BY)
                         }
 
                         Movement.Flower.State.MID -> {
@@ -91,7 +117,7 @@ fun main() {
             }
         ) {
             Text(text = "Animate :${activeMovement}")
-        }
+        }*/
     }
 }
 

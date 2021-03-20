@@ -1,19 +1,19 @@
 package com.theapache64.kineticwallclock.movement
 
 sealed class Movement(
-    val durationInMillis: Int = 2000,
+    val durationInMillis: Int,
 ) {
     data class StandBy(
         val degree: Int = 270,
-    ) : Movement()
+    ) : Movement(durationInMillis = 2000)
 
     data class Flower(
-        val state: State = State.STAND_BY,
+        val to: To = To.SQUARE,
     ) : Movement(
-        durationInMillis = 4000
+        durationInMillis = 2000 // TODO : Change to 4000
     ) {
-        enum class State {
-            STAND_BY, OPEN, MID, CLOSE
+        enum class To {
+            SQUARE, FLOWER, MID, STAR
         }
     }
 }

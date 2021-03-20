@@ -1,7 +1,7 @@
 package com.theapache64.kineticwallclock.movement
 
-import COLUMNS
-import ROWS
+import com.theapache64.kineticwallclock.COLUMNS
+import com.theapache64.kineticwallclock.ROWS
 import com.theapache64.kineticwallclock.model.ClockData
 
 /**
@@ -10,26 +10,28 @@ import com.theapache64.kineticwallclock.model.ClockData
 fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
 
     // 0,0
-    val evenDegreeOne = when (flower.state) {
-        Movement.Flower.State.STAND_BY -> {
+    val evenDegreeOne = when (flower.to) {
+        Movement.Flower.To.SQUARE -> {
             ClockData(
                 degreeOne = 90,
                 degreeTwo = 180
             )
         }
-        Movement.Flower.State.OPEN -> {
+
+
+        Movement.Flower.To.FLOWER -> {
             ClockData(
                 degreeOne = 135,
                 degreeTwo = 135
             )
         }
-        Movement.Flower.State.MID -> {
+        Movement.Flower.To.MID -> {
             ClockData(
                 degreeOne = 45,
                 degreeTwo = 225
             )
         }
-        Movement.Flower.State.CLOSE -> {
+        Movement.Flower.To.STAR -> {
             ClockData(
                 degreeOne = 315,
                 degreeTwo = 315
@@ -38,27 +40,27 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
     }
 
     // 0,1
-    val evenDegreeTwo = when (flower.state) {
-        Movement.Flower.State.STAND_BY -> {
+    val evenDegreeTwo = when (flower.to) {
+        Movement.Flower.To.SQUARE -> {
             // Square
             ClockData(
                 degreeOne = 270,
                 degreeTwo = 180
             )
         }
-        Movement.Flower.State.OPEN -> {
+        Movement.Flower.To.FLOWER -> {
             ClockData(
                 degreeOne = 225,
                 degreeTwo = 225
             )
         }
-        Movement.Flower.State.MID -> {
+        Movement.Flower.To.MID -> {
             ClockData(
                 degreeOne = 135,
                 degreeTwo = 315
             )
         }
-        Movement.Flower.State.CLOSE -> {
+        Movement.Flower.To.STAR -> {
             ClockData(
                 degreeOne = 45,
                 degreeTwo = 45
@@ -68,27 +70,27 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
 
 
     // 1,0
-    val oddDegreeOne = when (flower.state) {
-        Movement.Flower.State.STAND_BY -> {
+    val oddDegreeOne = when (flower.to) {
+        Movement.Flower.To.SQUARE -> {
             // Square
             ClockData(
                 degreeOne = 90,
                 degreeTwo = 0
             )
         }
-        Movement.Flower.State.OPEN -> {
+        Movement.Flower.To.FLOWER -> {
             ClockData(
                 degreeOne = 45,
                 degreeTwo = 45
             )
         }
-        Movement.Flower.State.MID -> {
+        Movement.Flower.To.MID -> {
             ClockData(
                 degreeOne = 135,
                 degreeTwo = 315
             )
         }
-        Movement.Flower.State.CLOSE -> {
+        Movement.Flower.To.STAR -> {
             ClockData(
                 degreeOne = 225,
                 degreeTwo = 225
@@ -97,27 +99,27 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
     }
 
     // 1,1
-    val oddDegreeTwo = when (flower.state) {
-        Movement.Flower.State.STAND_BY -> {
+    val oddDegreeTwo = when (flower.to) {
+        Movement.Flower.To.SQUARE -> {
             // Square
             ClockData(
                 degreeOne = 270,
                 degreeTwo = 360
             )
         }
-        Movement.Flower.State.OPEN -> {
+        Movement.Flower.To.FLOWER -> {
             ClockData(
                 degreeOne = 315,
                 degreeTwo = 315
             )
         }
-        Movement.Flower.State.MID -> {
+        Movement.Flower.To.MID -> {
             ClockData(
                 degreeOne = 225,
                 degreeTwo = 45
             )
         }
-        Movement.Flower.State.CLOSE -> {
+        Movement.Flower.To.STAR -> {
             ClockData(
                 degreeOne = 135,
                 degreeTwo = 135

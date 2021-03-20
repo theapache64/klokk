@@ -34,13 +34,13 @@ fun main(args: Array<String>) {
             Clock(
                 _needleOneDegree = needleOneDegree,
                 _needleTwoDegree = needleTwoDegree,
-                isCounterClockwise = true,
-                modifier = Modifier.size(600.dp)
+                modifier = Modifier.size(600.dp),
+                durationInMillis = 4000
             )
 
             Button(
                 onClick = {
-                    needleOneDegree = 360
+                    needleOneDegree += -90
                     needleTwoDegree += 180
                 }
             ) {
@@ -60,35 +60,24 @@ fun Clock(
     _needleTwoDegree: Int = 0,
     durationInMillis: Int = 500,
     easing: Easing = LinearEasing,
-    isCounterClockwise: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
 
-    val needleOneDegree = (_needleOneDegree * Math.PI / 180).toFloat().let {
-        if (isCounterClockwise) {
-            -it
-        } else {
-            it
-        }
-    }
-    val needleTwoDegree = (_needleTwoDegree * Math.PI / 180).toFloat().let {
-        if (isCounterClockwise) {
-            -it
-        } else {
-            it
-        }
-    }
-    val duration = tween<Float>(durationMillis = durationInMillis, easing = easing)
-
+    val needleOneDegree = (_needleOneDegree * Math.PI / 180).toFloat()
+    val needleTwoDegree = (_needleTwoDegree * Math.PI / 180).toFloat()
+    val animationSpec = tween<Float>(durationMillis = durationInMillis, easing = easing)
 
     val targetOne by animateFloatAsState(
         needleOneDegree,
-        animationSpec = duration,
+        animationSpec = animationSpec
     )
+
+    println("DUR: ${animationSpec.durationMillis}")
+
 
     val targetTwo by animateFloatAsState(
         needleTwoDegree,
-        animationSpec = duration,
+        animationSpec = animationSpec,
     )
 
     Canvas(
@@ -124,7 +113,7 @@ fun Clock(
 
 
         // Needle two
-        /*drawLine(
+        drawLine(
             color = NEEDLE_COLOR,
             start = center,
             end = Offset(
@@ -132,7 +121,7 @@ fun Clock(
                 y = center.y - radius * cos(targetTwo),
             ),
             strokeWidth = needleWidth
-        )*/
+        )
 
     }
 
