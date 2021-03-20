@@ -24,7 +24,7 @@ import kotlin.math.sin
 
 fun main(args: Array<String>) {
     Window {
-        var needleOneDegree by remember { mutableStateOf(90) }
+        var needleOneDegree by remember { mutableStateOf(45) }
         var needleTwoDegree by remember { mutableStateOf(180) }
 
         Box(
@@ -102,7 +102,7 @@ fun Clock(
             start = center,
             end = Offset(
                 x = center.x + radius * sin(targetOne),
-                y = center.y + radius * cos(targetOne),
+                y = center.y - radius * cos(targetOne),
             ),
             strokeWidth = needleWidth
         )
@@ -114,7 +114,7 @@ fun Clock(
             start = center,
             end = Offset(
                 x = center.x + radius * sin(targetTwo),
-                y = center.y + radius * cos(targetTwo),
+                y = center.y - radius * cos(targetTwo),
             ),
             strokeWidth = needleWidth
         )
