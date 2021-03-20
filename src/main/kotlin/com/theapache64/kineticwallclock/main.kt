@@ -65,21 +65,23 @@ fun main() {
 
             LaunchedEffect(Unit) {
                 println("Launching..")
-                val flower = Movement.Flower()
-                val waitTime = flower.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
+                val trance = Movement.Trance()
+                val waitTime = trance.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
 
                 while (true) {
-                    activeMovement = Movement.Flower(Movement.Flower.To.SQUARE)
+                    activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
 
                     delay(waitTime)
-                    activeMovement = Movement.Flower(to = Movement.Flower.To.FLOWER)
+                    activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
 
                     delay(waitTime - ENJOY_TIME_IN_MILLIS)
-                    activeMovement = Movement.Flower(to = Movement.Flower.To.STAR)
+                    activeMovement = Movement.Trance(to = Movement.Trance.To.STAR) // To start through circle (auto)
 
                     delay(waitTime)
-                    activeMovement = Movement.Flower(to = Movement.Flower.To.MID)
+                    activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
 
+
+                    // Wait for the next loop
                     delay(waitTime)
                 }
             }
@@ -97,7 +99,7 @@ fun verifyIntegrity(degreeMatrix: List<List<ClockData>>) {
 fun getDegreeMatrix(currentMagic: Movement): List<List<ClockData>> {
     return when (currentMagic) {
         is Movement.StandBy -> getStandByMatrix(currentMagic)
-        is Movement.Flower -> getFlowerMatrix(currentMagic)
+        is Movement.Trance -> getFlowerMatrix(currentMagic)
     }
 }
 

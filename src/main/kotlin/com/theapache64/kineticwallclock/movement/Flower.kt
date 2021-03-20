@@ -7,11 +7,11 @@ import com.theapache64.kineticwallclock.model.ClockData
 /**
  * Flower matrix is a 2x2 matrix pattern spanned to ROWSxCOLUMN
  */
-fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
+fun getFlowerMatrix(trance: Movement.Trance): List<List<ClockData>> {
 
     // 0,0
-    val evenDegreeOne = when (flower.to) {
-        Movement.Flower.To.SQUARE -> {
+    val evenDegreeOne = when (trance.to) {
+        Movement.Trance.To.SQUARE -> {
             ClockData(
                 degreeOne = 90,
                 degreeTwo = 180
@@ -19,19 +19,19 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
         }
 
 
-        Movement.Flower.To.FLOWER -> {
+        Movement.Trance.To.FLOWER -> {
             ClockData(
                 degreeOne = 135,
                 degreeTwo = 135
             )
         }
-        Movement.Flower.To.MID -> {
+        Movement.Trance.To.FLY -> {
             ClockData(
                 degreeOne = 45,
                 degreeTwo = 225
             )
         }
-        Movement.Flower.To.STAR -> {
+        Movement.Trance.To.STAR -> {
             ClockData(
                 degreeOne = -45,
                 degreeTwo = 315
@@ -40,27 +40,27 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
     }
 
     // 0,1
-    val evenDegreeTwo = when (flower.to) {
-        Movement.Flower.To.SQUARE -> {
+    val evenDegreeTwo = when (trance.to) {
+        Movement.Trance.To.SQUARE -> {
             // Square
             ClockData(
                 degreeOne = 180,
                 degreeTwo = 270
             )
         }
-        Movement.Flower.To.FLOWER -> {
+        Movement.Trance.To.FLOWER -> {
             ClockData(
                 degreeOne = 225,
                 degreeTwo = 225
             )
         }
-        Movement.Flower.To.MID -> {
+        Movement.Trance.To.FLY -> {
             ClockData(
                 degreeOne = 135,
                 degreeTwo = 315
             )
         }
-        Movement.Flower.To.STAR -> {
+        Movement.Trance.To.STAR -> {
             ClockData(
                 degreeOne = 45,
                 degreeTwo = 45 + 360
@@ -70,27 +70,27 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
 
 
     // 1,0
-    val oddDegreeOne = when (flower.to) {
-        Movement.Flower.To.SQUARE -> {
+    val oddDegreeOne = when (trance.to) {
+        Movement.Trance.To.SQUARE -> {
             // Square
             ClockData(
                 degreeOne = 0,
                 degreeTwo = 90
             )
         }
-        Movement.Flower.To.FLOWER -> {
+        Movement.Trance.To.FLOWER -> {
             ClockData(
                 degreeOne = 45,
                 degreeTwo = 45
             )
         }
-        Movement.Flower.To.MID -> {
+        Movement.Trance.To.FLY -> {
             ClockData(
                 degreeOne = 135,
                 degreeTwo = 315
             )
         }
-        Movement.Flower.To.STAR -> {
+        Movement.Trance.To.STAR -> {
             ClockData(
                 degreeOne = -135,
                 degreeTwo = 225
@@ -99,27 +99,27 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
     }
 
     // 1,1
-    val oddDegreeTwo = when (flower.to) {
-        Movement.Flower.To.SQUARE -> {
+    val oddDegreeTwo = when (trance.to) {
+        Movement.Trance.To.SQUARE -> {
             // Square
             ClockData(
                 degreeOne = 270,
                 degreeTwo = 360
             )
         }
-        Movement.Flower.To.FLOWER -> {
+        Movement.Trance.To.FLOWER -> {
             ClockData(
                 degreeOne = 315,
                 degreeTwo = 315
             )
         }
-        Movement.Flower.To.MID -> {
+        Movement.Trance.To.FLY -> {
             ClockData(
                 degreeOne = 45,
                 degreeTwo = 225
             )
         }
-        Movement.Flower.To.STAR -> {
+        Movement.Trance.To.STAR -> {
             ClockData(
                 degreeOne = 135,
                 degreeTwo = 135 + 360
