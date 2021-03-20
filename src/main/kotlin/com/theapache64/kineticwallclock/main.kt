@@ -22,11 +22,15 @@ private const val DIGIT_ROWS = 6
 sealed class Movement(
     val durationInMillis: Int = 2000,
 ) {
-    class StandBy(
+    data class StandBy(
         val degree: Int = 270,
     ) : Movement()
 
-    class Flower : Movement()
+    data class Flower(
+        val isOpen: Boolean = false,
+    ) : Movement(
+        durationInMillis = 4000
+    )
 }
 
 class ClockData(
@@ -40,7 +44,7 @@ fun main() {
     val clocksContainerWidth = clockSize * COLUMNS
     val clocksContainerHeight = clockSize * ROWS
 
-    var currentMagic by mutableStateOf<Movement>(Movement.StandBy(270))
+    var activeMovement by mutableStateOf<Movement>(Movement.StandBy(270))
     val padding = 100
 
     Window(
@@ -48,7 +52,7 @@ fun main() {
         size = IntSize(clocksContainerWidth + padding, clocksContainerHeight + padding)
     ) {
 
-        val degreeMatrix = getDegreeMatrix(currentMagic)
+        val degreeMatrix = getDegreeMatrix(activeMovement)
         verifyIntegrity(degreeMatrix)
         Column(
             modifier = Modifier.fillMaxSize().background(Color.Black),
@@ -64,6 +68,7 @@ fun main() {
                         Clock(
                             _needleOneDegree = clockData.degreeOne,
                             _needleTwoDegree = clockData.degreeTwo,
+                            durationInMillis = activeMovement.durationInMillis,
                             modifier = Modifier.requiredSize(clockSize.dp)
                         )
                     }
@@ -73,7 +78,14 @@ fun main() {
 
         Button(
             onClick = {
-                currentMagic = Movement.Flower()
+                activeMovement = if (activeMovement is Movement.Flower) {
+                    // close flower if open, and open if close
+                    val activeFlower = activeMovement as Movement.Flower
+                    activeFlower.copy(isOpen = !activeFlower.isOpen)
+                } else {
+                    // start new flower
+                    Movement.Flower()
+                }
             }
         ) {
             Text(text = "Animate")
@@ -90,31 +102,58 @@ fun verifyIntegrity(degreeMatrix: List<List<ClockData>>) {
 
 fun getDegreeMatrix(currentMagic: Movement): List<List<ClockData>> {
     return when (currentMagic) {
-        is Movement.StandBy -> getStandByMatrix(currentMagic.degree)
-        is Movement.Flower -> getFlowerMatrix()
+        is Movement.StandBy -> getStandByMatrix(currentMagic)
+        is Movement.Flower -> getFlowerMatrix(currentMagic)
     }
 }
 
-fun getFlowerMatrix(): List<List<ClockData>> {
-    val oddDegreeOne = ClockData(
-        degreeOne = 135,
-        degreeTwo = 135
-    )
+/**
+ * Flower matrix is a 2x2 matrix pattern spanned to ROWSxCOLUMN
+ */
+fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
+    val oddDegreeOne = if (flower.isOpen) {
+        // Open flower
+        ClockData(
+            degreeOne = 225,
+            degreeTwo = 45
+        )
+    } else {
+        // Closed flower
+        ClockData(
+            degreeOne = 135,
+            degreeTwo = 135
+        )
+    }
 
-    val oddDegreeTwo = ClockData(
-        degreeOne = 225,
-        degreeTwo = 225
-    )
+    val oddDegreeTwo = if (flower.isOpen) {
+        ClockData(
+            degreeOne = 315,
+            degreeTwo = 135
+        )
+    } else {
+        ClockData(
+            degreeOne = 225,
+            degreeTwo = 225
+        )
+    }
 
-    val evenDegreeOne = ClockData(
-        degreeOne = 45,
-        degreeTwo = 45
-    )
+    val evenDegreeOne = if (flower.isOpen) {
+        oddDegreeTwo
+    } else {
+        ClockData(
+            degreeOne = 45,
+            degreeTwo = 45
+        )
+    }
 
-    val evenDegreeTwo = ClockData(
-        degreeOne = 315,
-        degreeTwo = 315
-    )
+    val evenDegreeTwo = if (flower.isOpen) {
+        oddDegreeOne
+    } else {
+        ClockData(
+            degreeOne = 315,
+            degreeTwo = 315
+        )
+    }
 
     return mutableListOf<List<ClockData>>().apply {
         val columnRepeat = (COLUMNS / 2)
@@ -172,13 +211,13 @@ fun getFlowerMatrix(): List<List<ClockData>> {
  * Creating a ROWSxCOLUMN matrix with given degree as ClockData
  */
 fun getStandByMatrix(
-    standByDegree: Int,
+    standBy: Movement.StandBy,
 ): List<List<ClockData>> {
     return mutableListOf<List<ClockData>>().apply {
         repeat(ROWS) {
             val list = mutableListOf<ClockData>()
             repeat(COLUMNS) {
-                list.add(ClockData(standByDegree, standByDegree))
+                list.add(ClockData(standBy.degree, standBy.degree))
             }
             add(list)
         }

@@ -1,5 +1,6 @@
 package com.theapache64.kineticwallclock.composable
 
+import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -50,27 +51,29 @@ fun main(args: Array<String>) {
 
 
 private val NEEDLE_COLOR = Color.White
-private val NEEDLE_ANIMATION_SPEC = tween<Float>(500, easing = LinearEasing)
 
 
 @Composable
 fun Clock(
     _needleOneDegree: Int = 270,
     _needleTwoDegree: Int = 0,
+    durationInMillis: Int = 500,
+    easing: Easing = LinearEasing,
     modifier: Modifier = Modifier,
 ) {
 
     val needleOneDegree = (_needleOneDegree * Math.PI / 180).toFloat()
     val needleTwoDegree = (_needleTwoDegree * Math.PI / 180).toFloat()
+    val duration = tween<Float>(durationMillis = durationInMillis, easing = easing)
 
     val targetOne by animateFloatAsState(
         needleOneDegree,
-        animationSpec = NEEDLE_ANIMATION_SPEC,
+        animationSpec = duration,
     )
 
     val targetTwo by animateFloatAsState(
         needleTwoDegree,
-        animationSpec = NEEDLE_ANIMATION_SPEC,
+        animationSpec = duration,
     )
 
     Canvas(
