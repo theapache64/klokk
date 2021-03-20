@@ -6,8 +6,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.desktop.Window
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -56,7 +57,7 @@ private val NEEDLE_ANIMATION_SPEC = tween<Float>(500, easing = LinearEasing)
 fun Clock(
     _needleOneDegree: Int = 270,
     _needleTwoDegree: Int = 0,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     val needleOneDegree = (_needleOneDegree * Math.PI / 180).toFloat()
