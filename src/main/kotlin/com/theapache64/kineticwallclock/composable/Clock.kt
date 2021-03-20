@@ -34,12 +34,13 @@ fun main(args: Array<String>) {
             Clock(
                 _needleOneDegree = needleOneDegree,
                 _needleTwoDegree = needleTwoDegree,
+                isCounterClockwise = true,
                 modifier = Modifier.size(600.dp)
             )
 
             Button(
                 onClick = {
-                    needleOneDegree += 90
+                    needleOneDegree = 360
                     needleTwoDegree += 180
                 }
             ) {
@@ -59,11 +60,24 @@ fun Clock(
     _needleTwoDegree: Int = 0,
     durationInMillis: Int = 500,
     easing: Easing = LinearEasing,
+    isCounterClockwise: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
 
-    val needleOneDegree = (_needleOneDegree * Math.PI / 180).toFloat()
-    val needleTwoDegree = (_needleTwoDegree * Math.PI / 180).toFloat()
+    val needleOneDegree = (_needleOneDegree * Math.PI / 180).toFloat().let {
+        if (isCounterClockwise) {
+            -it
+        } else {
+            it
+        }
+    }
+    val needleTwoDegree = (_needleTwoDegree * Math.PI / 180).toFloat().let {
+        if (isCounterClockwise) {
+            -it
+        } else {
+            it
+        }
+    }
     val duration = tween<Float>(durationMillis = durationInMillis, easing = easing)
 
 
@@ -110,7 +124,7 @@ fun Clock(
 
 
         // Needle two
-        drawLine(
+        /*drawLine(
             color = NEEDLE_COLOR,
             start = center,
             end = Offset(
@@ -118,7 +132,7 @@ fun Clock(
                 y = center.y - radius * cos(targetTwo),
             ),
             strokeWidth = needleWidth
-        )
+        )*/
 
     }
 
