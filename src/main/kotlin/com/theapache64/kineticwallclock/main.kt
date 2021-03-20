@@ -36,7 +36,7 @@ fun main() {
 
     Window(
         title = "Kinetic Wall Clock",
-        size = IntSize(CLOCKS_CONTAINER_WIDTH + PADDING, CLOCKS_CONTAINER_HEIGHT + PADDING)
+        size = IntSize(CLOCKS_CONTAINER_WIDTH + PADDING, CLOCKS_CONTAINER_HEIGHT + PADDING),
     ) {
 
         val degreeMatrix = getDegreeMatrix(activeMovement)
@@ -68,7 +68,22 @@ fun main() {
                 activeMovement = if (activeMovement is Movement.Flower) {
                     // close flower if open, and open if close
                     val activeFlower = activeMovement as Movement.Flower
-                    activeFlower.copy(isOpen = !activeFlower.isOpen)
+                    when (activeFlower.state) {
+                        Movement.Flower.State.STAND_BY -> {
+                            activeFlower.copy(state = Movement.Flower.State.OPEN)
+                        }
+                        Movement.Flower.State.OPEN -> {
+                            activeFlower.copy(state = Movement.Flower.State.MID)
+                        }
+
+                        Movement.Flower.State.MID -> {
+                            activeFlower.copy(state = Movement.Flower.State.CLOSE)
+                        }
+
+                        Movement.Flower.State.CLOSE -> {
+                            activeFlower.copy(state = Movement.Flower.State.STAND_BY)
+                        }
+                    }
                 } else {
                     // start new flower
                     Movement.Flower()

@@ -24,8 +24,8 @@ import kotlin.math.sin
 
 fun main(args: Array<String>) {
     Window {
-        var needleOneDegree by remember { mutableStateOf(45) }
-        var needleTwoDegree by remember { mutableStateOf(180) }
+        var needleOneDegree by remember { mutableStateOf(0) }
+        var needleTwoDegree by remember { mutableStateOf(0) }
 
         Box(
             modifier = Modifier.fillMaxSize().background(CodGray)
@@ -65,6 +65,7 @@ fun Clock(
     val needleOneDegree = (_needleOneDegree * Math.PI / 180).toFloat()
     val needleTwoDegree = (_needleTwoDegree * Math.PI / 180).toFloat()
     val duration = tween<Float>(durationMillis = durationInMillis, easing = easing)
+
 
     val targetOne by animateFloatAsState(
         needleOneDegree,

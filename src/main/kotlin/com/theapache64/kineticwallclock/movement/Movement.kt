@@ -8,8 +8,12 @@ sealed class Movement(
     ) : Movement()
 
     data class Flower(
-        val isOpen: Boolean = true,
+        val state: State = State.STAND_BY,
     ) : Movement(
         durationInMillis = 4000
-    )
+    ) {
+        enum class State {
+            STAND_BY, OPEN, MID, CLOSE
+        }
+    }
 }
