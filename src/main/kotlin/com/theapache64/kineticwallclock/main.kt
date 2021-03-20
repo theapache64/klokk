@@ -24,7 +24,8 @@ const val PADDING = 100
 const val CLOCK_SIZE = 60
 const val CLOCKS_CONTAINER_WIDTH = CLOCK_SIZE * COLUMNS
 const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
-const val STAND_BY_DEGREE = 270
+const val STAND_BY_DEGREE = 315
+const val ENJOY_TIME_IN_MILLIS = 500
 
 private const val DIGIT_COLUMNS = 3
 private const val DIGIT_ROWS = 6
@@ -52,7 +53,6 @@ fun main() {
                 Row {
                     repeat(COLUMNS) { j ->
                         val clockData = degreeMatrix[i][j]
-                        println("Anim duration is ${activeMovement.durationInMillis}")
                         Clock(
                             _needleOneDegree = clockData.degreeOne,
                             _needleTwoDegree = clockData.degreeTwo,
@@ -66,24 +66,20 @@ fun main() {
             LaunchedEffect(Unit) {
                 println("Launching..")
                 val flower = Movement.Flower()
-                val delay = flower.durationInMillis.toLong() + 250
+                val delay = flower.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
 
                 while (true) {
-                    println("Delay is $delay")
-                    delay(delay)
+                    delay(2000)
                     activeMovement = Movement.Flower(Movement.Flower.To.SQUARE)
 
-                    delay(delay)
+                    /*delay(delay)
                     activeMovement = Movement.Flower(to = Movement.Flower.To.FLOWER)
 
-                    delay(delay)
-                    activeMovement = Movement.Flower(to = Movement.Flower.To.SQUARE)
-
-                    /*delay(delay)
-                    activeMovement = flower.copy(to = Movement.Flower.To.CIRCLE)*/
-
-                    delay(delay)
+                    delay(delay - ENJOY_TIME_IN_MILLIS)
                     activeMovement = Movement.Flower(to = Movement.Flower.To.STAR)
+
+                    delay(delay)
+                    activeMovement = Movement.Flower(to = Movement.Flower.To.MID)*/
                 }
             }
         }

@@ -24,8 +24,8 @@ import kotlin.math.sin
 
 fun main(args: Array<String>) {
     Window {
-        var needleOneDegree by remember { mutableStateOf(0) }
-        var needleTwoDegree by remember { mutableStateOf(0) }
+        var needleOneDegree by remember { mutableStateOf(315) }
+        var needleTwoDegree by remember { mutableStateOf(315) }
 
         Box(
             modifier = Modifier.fillMaxSize().background(CodGray)
@@ -35,13 +35,13 @@ fun main(args: Array<String>) {
                 _needleOneDegree = needleOneDegree,
                 _needleTwoDegree = needleTwoDegree,
                 modifier = Modifier.size(600.dp),
-                durationInMillis = 4000
+                durationInMillis = 2000
             )
 
             Button(
                 onClick = {
-                    needleOneDegree += -90
-                    needleTwoDegree += 180
+                    needleOneDegree = 270 + 360
+                    needleTwoDegree = 360
                 }
             ) {
                 Text(text = "Animate")
@@ -71,8 +71,6 @@ fun Clock(
         needleOneDegree,
         animationSpec = animationSpec
     )
-
-    println("DUR: ${animationSpec.durationMillis}")
 
 
     val targetTwo by animateFloatAsState(
