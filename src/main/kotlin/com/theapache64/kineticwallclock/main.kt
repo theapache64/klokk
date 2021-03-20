@@ -19,12 +19,14 @@ private const val ROWS = 8
 private const val DIGIT_COLUMNS = 3
 private const val DIGIT_ROWS = 6
 
-sealed class Magics(
+sealed class Movement(
     val durationInMillis: Int = 2000,
 ) {
-    class StandBy : Magics()
-    class StandByTwo : Magics()
-    class Flower : Magics()
+    class StandBy(
+        val degree: Int = 270,
+    ) : Movement()
+
+    class Flower : Movement()
 }
 
 class ClockData(
@@ -38,7 +40,7 @@ fun main() {
     val clocksContainerWidth = clockSize * COLUMNS
     val clocksContainerHeight = clockSize * ROWS
 
-    var currentMagic by mutableStateOf<Magics>(Magics.StandBy())
+    var currentMagic by mutableStateOf<Movement>(Movement.StandBy(270))
     val padding = 100
 
     Window(
@@ -53,6 +55,8 @@ fun main() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            println("Rendering new clock...")
+
             repeat(ROWS) { i ->
                 Row {
                     repeat(COLUMNS) { j ->
@@ -69,7 +73,7 @@ fun main() {
 
         Button(
             onClick = {
-                currentMagic = Magics.Flower()
+                currentMagic = Movement.Flower()
             }
         ) {
             Text(text = "Animate")
@@ -79,20 +83,96 @@ fun main() {
 
 fun verifyIntegrity(degreeMatrix: List<List<ClockData>>) {
     for (matrix in degreeMatrix) {
-        require(matrix.size == COLUMNS) { "" }
+        require(matrix.size == COLUMNS) { "Column size should be $COLUMNS but found ${matrix.size}" }
     }
+    require(degreeMatrix.size == ROWS) { "Row size should be $ROWS but found ${degreeMatrix.size}" }
 }
 
-fun getDegreeMatrix(currentMagic: Magics): List<List<ClockData>> {
+fun getDegreeMatrix(currentMagic: Movement): List<List<ClockData>> {
     return when (currentMagic) {
-        is Magics.StandBy -> getStandByMatrix(200)
-        is Magics.StandByTwo -> getStandByMatrix(120)
-        is Magics.Flower -> TODO()
+        is Movement.StandBy -> getStandByMatrix(currentMagic.degree)
+        is Movement.Flower -> getFlowerMatrix()
     }
 }
 
+fun getFlowerMatrix(): List<List<ClockData>> {
+    val oddDegreeOne = ClockData(
+        degreeOne = 135,
+        degreeTwo = 135
+    )
+
+    val oddDegreeTwo = ClockData(
+        degreeOne = 225,
+        degreeTwo = 225
+    )
+
+    val evenDegreeOne = ClockData(
+        degreeOne = 45,
+        degreeTwo = 45
+    )
+
+    val evenDegreeTwo = ClockData(
+        degreeOne = 315,
+        degreeTwo = 315
+    )
+
+    return mutableListOf<List<ClockData>>().apply {
+        val columnRepeat = (COLUMNS / 2)
+        repeat(ROWS) { rowIndex ->
+            val row = mutableListOf<ClockData>()
+            repeat(columnRepeat) {
+                if (rowIndex % 2 == 0) {
+                    // even row
+                    row.add(evenDegreeOne)
+                    row.add(evenDegreeTwo)
+                } else {
+                    // odd row
+                    row.add(oddDegreeOne)
+                    row.add(oddDegreeTwo)
+                }
+            }
+
+            // filling remaining columns
+            val remColumn = COLUMNS % 2
+            if (remColumn > 0) {
+                repeat(remColumn) { remColumnIndex ->
+                    val lastColumn = if (remColumnIndex % 2 == 0) {
+                        // even
+                        if (rowIndex % 2 == 0) {
+                            evenDegreeTwo
+                        } else {
+                            oddDegreeTwo
+                        }
+                    } else {
+                        // odd
+                        if (rowIndex % 2 == 0) {
+                            evenDegreeOne
+                        } else {
+                            oddDegreeOne
+                        }
+                    }
+                    row.add(lastColumn)
+                }
+            }
+
+            add(row)
+        }
+
+        // has rem row
+        val remRow = ROWS % 2
+
+        // Add remaining row
+        if (remRow == 1) {
+            add(get(0))
+        }
+    }
+}
+
+/**
+ * Creating a ROWSxCOLUMN matrix with given degree as ClockData
+ */
 fun getStandByMatrix(
-    standByDegree : Int
+    standByDegree: Int,
 ): List<List<ClockData>> {
     return mutableListOf<List<ClockData>>().apply {
         repeat(ROWS) {
