@@ -1,7 +1,7 @@
 package com.theapache64.kineticwallclock.movement
 
 import COLUMNS
-import ClockData
+import com.theapache64.kineticwallclock.model.ClockData
 import ROWS
 
 /**
@@ -26,7 +26,7 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
     val evenDegreeTwo = if (flower.isOpen) {
         ClockData(
             degreeOne = 270,
-            degreeTwo =180
+            degreeTwo = 180
         )
     } else {
         ClockData(
@@ -87,16 +87,16 @@ fun getFlowerMatrix(flower: Movement.Flower): List<List<ClockData>> {
                     val lastColumn = if (remColumnIndex % 2 == 0) {
                         // even
                         if (rowIndex % 2 == 0) {
-                            evenDegreeTwo
+                            evenDegreeOne
                         } else {
-                            oddDegreeTwo
+                            oddDegreeOne
                         }
                     } else {
                         // odd
                         if (rowIndex % 2 == 0) {
-                            evenDegreeOne
+                            evenDegreeTwo
                         } else {
-                            oddDegreeOne
+                            oddDegreeTwo
                         }
                     }
                     row.add(lastColumn)

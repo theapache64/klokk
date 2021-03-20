@@ -1,13 +1,12 @@
 package com.theapache64.kineticwallclock.movement
 
 import COLUMNS
-import ClockData
-import Movement
+import com.theapache64.kineticwallclock.model.ClockData
 import ROWS
 
 
 /**
- * Creating a ROWSxCOLUMN matrix with given degree as ClockData
+ * Creating a ROWSxCOLUMN matrix with given degree as com.theapache64.kineticwallclock.models.ClockData
  */
 fun getStandByMatrix(
     standBy: Movement.StandBy,

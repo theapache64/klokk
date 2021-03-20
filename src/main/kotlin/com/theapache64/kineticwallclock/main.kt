@@ -12,46 +12,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.theapache64.kineticwallclock.composable.Clock
+import com.theapache64.kineticwallclock.model.ClockData
+import com.theapache64.kineticwallclock.movement.Movement
 import com.theapache64.kineticwallclock.movement.getFlowerMatrix
 import com.theapache64.kineticwallclock.movement.getStandByMatrix
 
+
+// Configs
 const val COLUMNS = 15
 const val ROWS = 8
+const val PADDING = 100
+const val CLOCK_SIZE = 60
+const val CLOCKS_CONTAINER_WIDTH = CLOCK_SIZE * COLUMNS
+const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
+const val STAND_BY_DEGREE = 270
 
 private const val DIGIT_COLUMNS = 3
 private const val DIGIT_ROWS = 6
 
-sealed class Movement(
-    val durationInMillis: Int = 2000,
-) {
-    data class StandBy(
-        val degree: Int = 270,
-    ) : Movement()
-
-    data class Flower(
-        val isOpen: Boolean = true,
-    ) : Movement(
-        durationInMillis = 4000
-    )
-}
-
-class ClockData(
-    val degreeOne: Int,
-    val degreeTwo: Int,
-)
-
 fun main() {
-    val clockSize = 60
 
-    val clocksContainerWidth = clockSize * COLUMNS
-    val clocksContainerHeight = clockSize * ROWS
-
-    var activeMovement by mutableStateOf<Movement>(Movement.StandBy(270))
-    val padding = 100
+    var activeMovement by mutableStateOf<Movement>(Movement.StandBy(STAND_BY_DEGREE))
 
     Window(
         title = "Kinetic Wall Clock",
-        size = IntSize(clocksContainerWidth + padding, clocksContainerHeight + padding)
+        size = IntSize(CLOCKS_CONTAINER_WIDTH + PADDING, CLOCKS_CONTAINER_HEIGHT + PADDING)
     ) {
 
         val degreeMatrix = getDegreeMatrix(activeMovement)
@@ -71,7 +56,7 @@ fun main() {
                             _needleOneDegree = clockData.degreeOne,
                             _needleTwoDegree = clockData.degreeTwo,
                             durationInMillis = activeMovement.durationInMillis,
-                            modifier = Modifier.requiredSize(clockSize.dp)
+                            modifier = Modifier.requiredSize(CLOCK_SIZE.dp)
                         )
                     }
                 }
