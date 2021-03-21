@@ -1,6 +1,6 @@
-![](cover.jpeg)
+# 🕒 kinetic-wall-clock
 
-# kinetic-wall-clock
+![](screenshot.png)
 
 > 👷 This project is under heavy development 🏗️
 
@@ -10,12 +10,7 @@
 <img alt="Twitter: theapache64" src="https://img.shields.io/twitter/follow/theapache64.svg?style=social" />
 </a>
 
-> A kinetic wall clock, built using Compose Desktop
-
-### ✨ Demo
-
-![](demo.gif)
-
+> A kinetic wall clock, built using Compose Desktop. Inspired from 'A million times humans since 1982'
 
 ## ✍️ Author
 
@@ -55,7 +50,6 @@ Give a ⭐️ if this project helped you!
 <a href="https://www.paypal.me/theapache64" target="_blank">
     <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donation" width="160">
 </a>
-
 
 ## 📝 License
 

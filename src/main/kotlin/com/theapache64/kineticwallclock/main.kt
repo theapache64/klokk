@@ -24,7 +24,10 @@ const val CLOCKS_CONTAINER_WIDTH = CLOCK_SIZE * COLUMNS
 const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
 const val ENJOY_TIME_IN_MILLIS = 500L
 val BACKGROUND_COLOR = Color.Black
-val CLOCK_BACKGROUND = CodGray_2
+val CodGray = Color(0xff161616)
+val OuterSpace = Color(0xff1C1E1E)
+val CLOCK_BACKGROUND = CodGray
+
 
 const val DIGIT_COLUMNS = 3
 const val DIGIT_ROWS = 6
