@@ -1,6 +1,6 @@
 package com.theapache64.kineticwallclock.model
 
-class ClockData(
-    val degreeOne: Int,
-    val degreeTwo: Int,
+data class ClockData(
+    var degreeOne: Float,
+    var degreeTwo: Float,
 )

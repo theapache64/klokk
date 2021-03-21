@@ -27,10 +27,11 @@ private val NEEDLE_COLOR = Color.White
 
 @Composable
 fun Clock(
-    _needleOneDegree: Int = 270,
-    _needleTwoDegree: Int = 0,
+    _needleOneDegree: Float = 270f,
+    _needleTwoDegree: Float = 0f,
     durationInMillis: Int = 500,
     easing: Easing = LinearEasing,
+    debug: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
 
@@ -47,6 +48,7 @@ fun Clock(
         needleTwoDegree,
         animationSpec = animationSpec,
     )
+
 
     Canvas(
         modifier = modifier
@@ -82,16 +84,31 @@ fun Clock(
 
 
         // Needle two
+        val needleTwoEndX = center.x + radius * sin(needleTwoDegreeAnim)
+        val needleTwoEndY = center.y - radius * cos(needleTwoDegreeAnim)
         drawLine(
             color = NEEDLE_COLOR,
             start = center,
             end = Offset(
                 // Finding end coordinate for the given degree
-                x = center.x + radius * sin(needleTwoDegreeAnim),
-                y = center.y - radius * cos(needleTwoDegreeAnim),
+                x = needleTwoEndX,
+                y = needleTwoEndY,
             ),
             strokeWidth = needleWidth
         )
+
+        /*if(debug){
+            drawIntoCanvas {
+                it.nativeCanvas.drawString(
+                    "Hello World",
+                    needleTwoEndX,
+                    needleTwoEndY,
+                    org.jetbrains.skija.Font
+                    )
+            }
+        }*/
+
+
     }
 
 }
@@ -100,8 +117,11 @@ fun Clock(
 // Preview
 fun main(args: Array<String>) {
     Window {
-        var needleOneDegree by remember { mutableStateOf(315) }
-        var needleTwoDegree by remember { mutableStateOf(315) }
+        var needleOneDegree by remember { mutableStateOf(270f) }
+        var needleTwoDegree by remember { mutableStateOf(180f) }
+
+
+        val scope = rememberCoroutineScope()
 
         Box(
             modifier = Modifier.fillMaxSize().background(CodGray)
@@ -116,12 +136,26 @@ fun main(args: Array<String>) {
 
             Button(
                 onClick = {
-                    needleOneDegree = 270 + 360
-                    needleTwoDegree = 360
+                    needleOneDegree = getMirroredAngleFor(needleOneDegree)
+                    needleTwoDegree = getMirroredAngleFor(needleTwoDegree)
+
+                    /* scope.launch {
+                         delay(5000)
+                         needleOneDegree = (0..360).random().toFloat()
+                         needleTwoDegree = (0..360).random().toFloat()
+                     }*/
                 }
             ) {
                 Text(text = "Animate")
             }
         }
+    }
+}
+
+fun getMirroredAngleFor(current: Float): Float {
+    return if (current > 0 && current < 180) {
+        180 - current
+    } else {
+        (360 - (current % 180))
     }
 }

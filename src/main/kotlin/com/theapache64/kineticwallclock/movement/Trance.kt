@@ -5,36 +5,35 @@ import com.theapache64.kineticwallclock.ROWS
 import com.theapache64.kineticwallclock.model.ClockData
 
 /**
- * Flower matrix is a 2x2 matrix pattern spanned to ROWSxCOLUMN
+ * Trance matrix is a 2x2 matrix pattern spanned to ROWSxCOLUMN
  */
-fun getFlowerMatrix(trance: Movement.Trance): List<List<ClockData>> {
+fun getTranceMatrix(trance: Movement.Trance): List<List<ClockData>> {
 
     // 0,0
     val evenDegreeOne = when (trance.to) {
         Movement.Trance.To.SQUARE -> {
             ClockData(
-                degreeOne = 90,
-                degreeTwo = 180
+                degreeOne = 90f,
+                degreeTwo = 180f
             )
         }
 
-
         Movement.Trance.To.FLOWER -> {
             ClockData(
-                degreeOne = 135,
-                degreeTwo = 135
+                degreeOne = 135f,
+                degreeTwo = 135f
             )
         }
         Movement.Trance.To.FLY -> {
             ClockData(
-                degreeOne = 45,
-                degreeTwo = 225
+                degreeOne = 45f,
+                degreeTwo = 225f
             )
         }
         Movement.Trance.To.STAR -> {
             ClockData(
-                degreeOne = -45,
-                degreeTwo = 315
+                degreeOne = -45f,
+                degreeTwo = 315f
             )
         }
     }
@@ -44,26 +43,26 @@ fun getFlowerMatrix(trance: Movement.Trance): List<List<ClockData>> {
         Movement.Trance.To.SQUARE -> {
             // Square
             ClockData(
-                degreeOne = 180,
-                degreeTwo = 270
+                degreeOne = 180f,
+                degreeTwo = 270f
             )
         }
         Movement.Trance.To.FLOWER -> {
             ClockData(
-                degreeOne = 225,
-                degreeTwo = 225
+                degreeOne = 225f,
+                degreeTwo = 225f
             )
         }
         Movement.Trance.To.FLY -> {
             ClockData(
-                degreeOne = 135,
-                degreeTwo = 315
+                degreeOne = 135f,
+                degreeTwo = 315f
             )
         }
         Movement.Trance.To.STAR -> {
             ClockData(
-                degreeOne = 45,
-                degreeTwo = 45 + 360
+                degreeOne = 45f,
+                degreeTwo = 45f + 360
             )
         }
     }
@@ -74,26 +73,26 @@ fun getFlowerMatrix(trance: Movement.Trance): List<List<ClockData>> {
         Movement.Trance.To.SQUARE -> {
             // Square
             ClockData(
-                degreeOne = 0,
-                degreeTwo = 90
+                degreeOne = 0f,
+                degreeTwo = 90f
             )
         }
         Movement.Trance.To.FLOWER -> {
             ClockData(
-                degreeOne = 45,
-                degreeTwo = 45
+                degreeOne = 45f,
+                degreeTwo = 45f
             )
         }
         Movement.Trance.To.FLY -> {
             ClockData(
-                degreeOne = 135,
-                degreeTwo = 315
+                degreeOne = 135f,
+                degreeTwo = 315f
             )
         }
         Movement.Trance.To.STAR -> {
             ClockData(
-                degreeOne = -135,
-                degreeTwo = 225
+                degreeOne = -135f,
+                degreeTwo = 225f
             )
         }
     }
@@ -103,26 +102,26 @@ fun getFlowerMatrix(trance: Movement.Trance): List<List<ClockData>> {
         Movement.Trance.To.SQUARE -> {
             // Square
             ClockData(
-                degreeOne = 270,
-                degreeTwo = 360
+                degreeOne = 270f,
+                degreeTwo = 360f
             )
         }
         Movement.Trance.To.FLOWER -> {
             ClockData(
-                degreeOne = 315,
-                degreeTwo = 315
+                degreeOne = 315f,
+                degreeTwo = 315f
             )
         }
         Movement.Trance.To.FLY -> {
             ClockData(
-                degreeOne = 45,
-                degreeTwo = 225
+                degreeOne = 45f,
+                degreeTwo = 225f
             )
         }
         Movement.Trance.To.STAR -> {
             ClockData(
-                degreeOne = 135,
-                degreeTwo = 135 + 360
+                degreeOne = 135f,
+                degreeTwo = 135f + 360
             )
         }
     }
