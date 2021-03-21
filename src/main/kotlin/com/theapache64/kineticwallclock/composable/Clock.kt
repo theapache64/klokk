@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.theapache64.kineticwallclock.CLOCK_BACKGROUND
 import com.theapache64.kineticwallclock.theme.CodGray
-import com.theapache64.kineticwallclock.theme.CodGray_2
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -49,7 +49,6 @@ fun Clock(
         animationSpec = animationSpec,
     )
 
-
     Canvas(
         modifier = modifier
     ) {
@@ -60,7 +59,7 @@ fun Clock(
         val radius = size.minDimension / 2f
 
         drawCircle(
-            color = CodGray_2,
+            color = CLOCK_BACKGROUND,
             radius = radius
         )
 

@@ -2,7 +2,7 @@ package com.theapache64.kineticwallclock.movement.time
 
 import com.theapache64.kineticwallclock.model.ClockData
 
-object SevenMatrix : DigitMatrix() {
+object EightMatrix : DigitMatrix() {
     override fun getRow1(): List<ClockData?> {
         return listOf(
             clockDataRightAngledBottomRight(),
@@ -13,43 +13,42 @@ object SevenMatrix : DigitMatrix() {
 
     override fun getRow2(): List<ClockData?> {
         return listOf(
-            clockDataRightAngledTopRight(),
-            clockDataRightAngledBottomLeft(),
+            clockDataVertical(),
+            clockDataVerticalBottomHalf(),
             clockDataVertical()
         )
     }
 
     override fun getRow3(): List<ClockData?> {
         return listOf(
-            null,
-            clockDataLeftCurve(),
-            clockDataLeftCurve()
+            ClockData(degreeOne = 0f, degreeTwo = 135f),
+            clockDataVerticalTopHalf(),
+            ClockData(degreeOne = 0f, degreeTwo = 225f),
         )
     }
-
 
     override fun getRow4(): List<ClockData?> {
         return listOf(
             clockDataRightCurve(),
-            clockDataRightCurve(),
-            null
+            clockDataVerticalBottomHalf(),
+            ClockData(degreeOne = 180f, degreeTwo = 315f)
         )
     }
-
 
     override fun getRow5(): List<ClockData?> {
         return listOf(
             clockDataVertical(),
-            clockDataVertical(),
-            null,
+            clockDataVerticalTopHalf(),
+            clockDataVertical()
         )
     }
 
     override fun getRow6(): List<ClockData?> {
         return listOf(
             clockDataRightAngledTopRight(),
-            clockDataRightAngledTopLeft(),
-            null
+            clockDataHorizontal(),
+            clockDataRightAngledTopLeft()
         )
     }
+
 }

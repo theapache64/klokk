@@ -42,4 +42,13 @@ abstract class DigitMatrix {
     protected fun clockDataVerticalBottomHalf() = ClockData(degreeOne = 180f, degreeTwo = 180f)
     protected fun clockDataVerticalTopHalf() = ClockData(degreeOne = 0f, degreeTwo = 0f)
 
+    protected fun clockDataLeftCurve() = ClockData(
+        degreeOne = 0f,
+        degreeTwo = 225f
+    )
+
+    protected fun clockDataRightCurve() = ClockData(
+        degreeOne = 45f,
+        degreeTwo = 180f
+    )
 }
