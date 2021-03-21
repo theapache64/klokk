@@ -19,7 +19,7 @@ class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(
 
             // TODO : Calculate time dynamically
             val h1 = 4
-            val h2 = 1
+            val h2 = 5
             val m1 = 2
             val m2 = 3
 
@@ -74,6 +74,7 @@ class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(
                 2 -> TwoMatrix
                 3 -> ThreeMatrix
                 4 -> FourMatrix
+                5 -> FiveMatrix
                 else -> throw IllegalAccessException("Matrix not defined for $digit")
             }
 
