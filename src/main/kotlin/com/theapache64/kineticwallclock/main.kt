@@ -21,7 +21,7 @@ const val PADDING = 100
 const val CLOCK_SIZE = 60
 const val CLOCKS_CONTAINER_WIDTH = CLOCK_SIZE * COLUMNS
 const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
-const val ENJOY_TIME_IN_MILLIS = 500
+const val ENJOY_TIME_IN_MILLIS = 500L
 val BACKGROUND_COLOR = Color.Black
 
 private const val DIGIT_COLUMNS = 3
@@ -68,12 +68,11 @@ fun main() {
             // The animation loop
             LaunchedEffect(Unit) {
                 println("Animation loop created and started..")
-                val trance = Movement.Trance()
-                val waitTime = trance.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
+                /*val trance = Movement.Trance()
+                val waitTime = trance.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS*/
 
                 while (true) {
-
-                    activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
+                    /*activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
                     delay(waitTime)
 
                     activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
@@ -83,13 +82,13 @@ fun main() {
                     delay(waitTime)
 
                     activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
-                    delay(waitTime)
+                    delay(waitTime)*/
 
                     activeMovement = Movement.Ripple(to = Movement.Ripple.To.START)
-                    delay(waitTime)
+                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
 
                     activeMovement = Movement.Ripple(to = Movement.Ripple.To.END)
-                    delay(waitTime)
+                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
                 }
             }
         }

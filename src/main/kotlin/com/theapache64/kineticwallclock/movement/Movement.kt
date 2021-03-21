@@ -3,6 +3,7 @@ package com.theapache64.kineticwallclock.movement
 import com.theapache64.kineticwallclock.COLUMNS
 import com.theapache64.kineticwallclock.ROWS
 import com.theapache64.kineticwallclock.model.ClockData
+import java.util.*
 
 /**
  * Dynamic animation can't be supported until this fixed -> https://issuetracker.google.com/issues/183220315
@@ -62,6 +63,14 @@ sealed class Movement(
 
         enum class To {
             START, END
+        }
+    }
+
+    data class Time(
+        val date : Date
+    ) : Movement(durationInMillis = DEFAULT_ANIMATION_DURATION) {
+        override fun generateMatrix(): List<List<ClockData>> {
+            return verifyIntegrityAndReturn(getTimeMatrix(this))
         }
     }
 
