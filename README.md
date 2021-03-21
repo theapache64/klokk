@@ -12,11 +12,11 @@
 
 > A kinetic wall clock, built using Compose Desktop.
 
-## 😵 Inspiration
+## 💡 Inspiration
 
-- A big shut-out to Nezih Yılmaz for his #AndroidDevChallenge submission, [Chromie](https://github.com/nezih94/chromie). 
+- A big shout-out to Nezih Yılmaz for his #AndroidDevChallenge submission, [Chromie](https://github.com/nezih94/chromie)
 - A million times humans since 1982
-- @
+
 
 ## ✍️ Author
 
