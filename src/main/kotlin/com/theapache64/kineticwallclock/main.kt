@@ -74,7 +74,8 @@ fun main() {
                 val waitTime = trance.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
 
                 while (true) {
-                    /*activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
+                    delay(waitTime)
+                    activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
                     delay(waitTime)
 
                     activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
@@ -90,10 +91,10 @@ fun main() {
                     delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
 
                     activeMovement = Movement.Ripple(to = Movement.Ripple.To.END)
-                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)*/
+                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
 
                     activeMovement = Movement.Time()
-                    delay(activeMovement.durationInMillis + (ENJOY_TIME_IN_MILLIS * 10))
+                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
                 }
             }
         }

@@ -9,7 +9,7 @@ import java.util.*
 /**
  * Dynamic animation can't be supported until this fixed -> https://issuetracker.google.com/issues/183220315
  */
-const val DEFAULT_ANIMATION_DURATION = 2000
+const val DEFAULT_ANIMATION_DURATION = 4500
 
 
 sealed class Movement(
