@@ -3,8 +3,8 @@ package com.theapache64.kineticwallclock.movement.time
 import com.theapache64.kineticwallclock.DIGIT_COLUMNS
 import com.theapache64.kineticwallclock.DIGIT_ROWS
 import com.theapache64.kineticwallclock.model.ClockData
-import com.theapache64.kineticwallclock.movement.core.MatrixGenerator
 import com.theapache64.kineticwallclock.movement.StandByMatrixGenerator
+import com.theapache64.kineticwallclock.movement.core.MatrixGenerator
 import com.theapache64.kineticwallclock.movement.core.Movement
 
 class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(data) {
@@ -19,7 +19,7 @@ class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(
 
             // TODO : Calculate time dynamically
             val h1 = 0
-            val h2 = 0
+            val h2 = 1
             val m1 = 0
             val m2 = 0
 
@@ -52,23 +52,25 @@ class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(
 
         private fun replace(
             standByMatrix: MutableList<MutableList<ClockData>>,
-            replacementMatrix: List<List<ClockData>>,
+            replacementMatrix: List<List<ClockData?>>,
             replacementCoordinate: Pair<Int, Int>,
         ) {
             repeat(DIGIT_ROWS) { i ->
                 repeat(DIGIT_COLUMNS) { j ->
                     val element = replacementMatrix[i][j]
-                    val targetX = replacementCoordinate.first + i
-                    val targetY = replacementCoordinate.second + j
-                    standByMatrix[targetX][targetY] = element
+                    if (element != null) {
+                        val targetX = replacementCoordinate.first + i
+                        val targetY = replacementCoordinate.second + j
+                        standByMatrix[targetX][targetY] = element
+                    }
                 }
             }
         }
 
-        private fun getMatrixFor(digit: Int): List<List<ClockData>> {
+        private fun getMatrixFor(digit: Int): List<List<ClockData?>> {
             val digitMatrix: DigitMatrix = when (digit) {
-                0 -> ZeroMatrix()
-                1 -> OneMatrix()
+                0 -> ZeroMatrix
+                1 -> OneMatrix
                 else -> throw IllegalAccessException("Matrix not defined for $digit")
             }
 
@@ -76,7 +78,7 @@ class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(
         }
 
 
-        private fun verifyIntegrityAndReturn(matrix: List<List<ClockData>>): List<List<ClockData>> {
+        private fun verifyIntegrityAndReturn(matrix: List<List<ClockData?>>): List<List<ClockData?>> {
             require(matrix.size == DIGIT_ROWS) {
                 "No of digit rows should be $DIGIT_ROWS but found ${matrix.size}"
             }

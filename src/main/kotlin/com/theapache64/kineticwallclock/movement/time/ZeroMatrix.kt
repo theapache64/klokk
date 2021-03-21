@@ -2,7 +2,7 @@ package com.theapache64.kineticwallclock.movement.time
 
 import com.theapache64.kineticwallclock.model.ClockData
 
-class ZeroMatrix : DigitMatrix() {
+object ZeroMatrix : DigitMatrix() {
     override fun getRow1(): List<ClockData> {
         return listOf(
             ClockData(degreeOne = 90f, degreeTwo = 180f),
