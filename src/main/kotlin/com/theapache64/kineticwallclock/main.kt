@@ -73,7 +73,6 @@ fun main() {
 
                 while (true) {
 
-
                     activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
                     delay(waitTime)
 
@@ -87,6 +86,9 @@ fun main() {
                     delay(waitTime)
 
                     activeMovement = Movement.Ripple(to = Movement.Ripple.To.START)
+                    delay(waitTime)
+
+                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.END)
                     delay(waitTime)
                 }
             }

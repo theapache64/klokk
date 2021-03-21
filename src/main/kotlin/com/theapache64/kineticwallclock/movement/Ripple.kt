@@ -1,5 +1,6 @@
 package com.theapache64.kineticwallclock.movement
 
+import com.theapache64.kineticwallclock.COLUMNS
 import com.theapache64.kineticwallclock.model.ClockData
 
 fun main(args: Array<String>) {
@@ -71,6 +72,9 @@ private val grid11 = mutableListOf<List<ClockData>>().apply {
     }
 }
 
+/**
+ * Thanks to Zhuinden ;)
+ */
 fun getMirroredAngleFor(current: Float): Float {
     return if (current > 0 && current < 180) {
         180 - current
@@ -81,25 +85,13 @@ fun getMirroredAngleFor(current: Float): Float {
 
 private fun MutableList<ClockData>.mirrorVertically(): List<ClockData> {
     return this.map {
-        val degreeOne = getMirroredAngleFor(it.degreeOne)
-        val degreeTwo = getMirroredAngleFor(it.degreeTwo)
         it.copy(
-            degreeOne = degreeOne,
-            degreeTwo = degreeTwo
+            degreeOne = getMirroredAngleFor(it.degreeOne),
+            degreeTwo = getMirroredAngleFor(it.degreeTwo)
         )
     }
 }
 
-private fun MutableList<ClockData>.reverseAndMirrorVertically(): List<ClockData> {
-    return mirrorVertically().map {
-        val degreeOne = getMirroredAngleFor(it.degreeOne)
-        val degreeTwo = getMirroredAngleFor(it.degreeTwo)
-        it.copy(
-            degreeOne = degreeOne,
-            degreeTwo = degreeTwo
-        )
-    }
-}
 
 private fun MutableList<ClockData>.reverseAndMirrorHorizontally(): List<ClockData> {
     return reversed().map {
@@ -140,31 +132,63 @@ private fun MutableList<ClockData>.generateRow(
 
 fun getRippleMatrix(ripple: Movement.Ripple): List<List<ClockData>> {
     return mutableListOf<List<ClockData>>().apply {
-        repeat(4) { i ->
-            val list = getRightAligned(grid00, grid01, i)
-            add(list)
-        }
 
-        repeat(4) { i ->
-            val list = getRightAligned(grid10, grid11, i)
-            add(list)
+        when (ripple.to) {
+            Movement.Ripple.To.START -> {
+                repeat(4) { rowIndex ->
+                    val list = mergeHorizontally(grid00, grid01, rowIndex)
+                    add(list)
+                }
+
+                repeat(4) { i ->
+                    val list = mergeHorizontally(grid10, grid11, i)
+                    add(list)
+                }
+            }
+            Movement.Ripple.To.END -> {
+
+                repeat(4) { rowIndex ->
+                    val list = mergeHorizontallyAndFlip(grid00, grid01, rowIndex)
+                    add(list)
+                }
+
+                repeat(4) { i ->
+                    val list = mergeHorizontallyAndFlip(grid10, grid11, i)
+                    add(list)
+                }
+            }
         }
     }
 }
 
-fun getRightAligned(
+fun mergeHorizontally(
     grid1: MutableList<List<ClockData>>,
     grid2: MutableList<List<ClockData>>,
     rowIndex: Int,
 ): List<ClockData> {
     return mutableListOf<ClockData>().apply {
-        val x = grid1[rowIndex]
-        val y = grid2[rowIndex]/*.map {
-            val deg1 = it.degreeOne + 135f
-            val deg2 = it.degreeTwo + 135f
-            it.copy(degreeOne = deg1, degreeTwo = deg2)
-        }*/
-        addAll(x)
-        addAll(y.subList(0, y.size - 1))
+        val row1 = grid1[rowIndex]
+        val row2 = grid2[rowIndex]
+        addAll(row1)
+        addAll(row2)
+    }.subList(0, COLUMNS)
+}
+
+fun mergeHorizontallyAndFlip(
+    grid1: MutableList<List<ClockData>>,
+    grid2: MutableList<List<ClockData>>,
+    rowIndex: Int,
+): List<ClockData> {
+    return mutableListOf<ClockData>().apply {
+        val row1 = grid1[rowIndex]
+        val row2 = grid2[rowIndex]
+        addAll(row1)
+        addAll(row2)
+    }.subList(0, COLUMNS).map {
+
+        it.copy(
+            degreeOne = it.degreeOne + 360,
+            degreeTwo = it.degreeTwo - 360,
+        )
     }
 }
