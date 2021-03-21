@@ -13,8 +13,8 @@ private val row1 = mutableListOf<ClockData>().apply {
     generateRow(
         startNeedleOneDegree = 80f,
         startNeedleTwoDegree = 160f,
-        endNeedleOneDegree = 200f,
-        endNeedleTwoDegree = 175f
+        endNeedleOneDegree = 110f,
+        endNeedleTwoDegree = 170f
     )
 }
 
@@ -22,8 +22,8 @@ private val row2 = mutableListOf<ClockData>().apply {
     generateRow(
         startNeedleOneDegree = 85f,
         startNeedleTwoDegree = 150f,
-        endNeedleOneDegree = 210f,
-        endNeedleTwoDegree = 135f
+        endNeedleOneDegree = 120f,
+        endNeedleTwoDegree = 160f
     )
 }
 
@@ -31,8 +31,8 @@ private val row3 = mutableListOf<ClockData>().apply {
     generateRow(
         startNeedleOneDegree = 85f,
         startNeedleTwoDegree = 130f,
-        endNeedleOneDegree = 210f,
-        endNeedleTwoDegree = 225f
+        endNeedleOneDegree = 130f,
+        endNeedleTwoDegree = 150f
     )
 }
 
@@ -40,8 +40,8 @@ private val row4 = mutableListOf<ClockData>().apply {
     generateRow(
         startNeedleOneDegree = 80f,
         startNeedleTwoDegree = 120f,
-        endNeedleOneDegree = 225f,
-        endNeedleTwoDegree = 45f
+        endNeedleOneDegree = 135f,
+        endNeedleTwoDegree = 135f
     )
 }
 

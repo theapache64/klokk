@@ -117,8 +117,8 @@ fun Clock(
 // Preview
 fun main(args: Array<String>) {
     Window {
-        var needleOneDegree by remember { mutableStateOf(270f) }
-        var needleTwoDegree by remember { mutableStateOf(180f) }
+        var needleOneDegree by remember { mutableStateOf(300f) }
+        var needleTwoDegree by remember { mutableStateOf(330f) }
 
 
         val scope = rememberCoroutineScope()
@@ -136,8 +136,8 @@ fun main(args: Array<String>) {
 
             Button(
                 onClick = {
-                    needleOneDegree = getMirroredAngleFor(needleOneDegree)
-                    needleTwoDegree = getMirroredAngleFor(needleTwoDegree)
+                    needleOneDegree = 110f
+                    needleTwoDegree = 170f
 
                     /* scope.launch {
                          delay(5000)
@@ -152,10 +152,10 @@ fun main(args: Array<String>) {
     }
 }
 
-fun getMirroredAngleFor(current: Float): Float {
+/*fun getMirroredAngleFor(current: Float): Float {
     return if (current > 0 && current < 180) {
         180 - current
     } else {
         (360 - (current % 180))
     }
-}
+}*/
