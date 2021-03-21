@@ -31,7 +31,6 @@ fun Clock(
     _needleTwoDegree: Float = 0f,
     durationInMillis: Int = 500,
     easing: Easing = FastOutSlowInEasing,
-    debug: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
 
@@ -96,19 +95,6 @@ fun Clock(
             ),
             strokeWidth = needleWidth
         )
-
-        /*if(debug){
-            drawIntoCanvas {
-                it.nativeCanvas.drawString(
-                    "Hello World",
-                    needleTwoEndX,
-                    needleTwoEndY,
-                    org.jetbrains.skija.Font
-                    )
-            }
-        }*/
-
-
     }
 
 }
@@ -151,11 +137,3 @@ fun main(args: Array<String>) {
         }
     }
 }
-
-/*fun getMirroredAngleFor(current: Float): Float {
-    return if (current > 0 && current < 180) {
-        180 - current
-    } else {
-        (360 - (current % 180))
-    }
-}*/

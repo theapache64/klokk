@@ -10,7 +10,13 @@
 <img alt="Twitter: theapache64" src="https://img.shields.io/twitter/follow/theapache64.svg?style=social" />
 </a>
 
-> A kinetic wall clock, built using Compose Desktop. Inspired from 'A million times humans since 1982'
+> A kinetic wall clock, built using Compose Desktop.
+
+## 😵 Inspiration
+
+- A big shut-out to Nezih Yılmaz for his #AndroidDevChallenge submission, [Chromie](https://github.com/nezih94/chromie). 
+- A million times humans since 1982
+- @
 
 ## ✍️ Author
 
