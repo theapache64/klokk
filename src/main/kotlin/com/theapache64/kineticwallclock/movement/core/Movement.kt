@@ -25,7 +25,7 @@ sealed class Movement(
         val degree: Float = DEFAULT_STAND_BY_DEGREE,
     ) : Movement(durationInMillis = DEFAULT_ANIMATION_DURATION) {
         companion object {
-            const val DEFAULT_STAND_BY_DEGREE = 315f
+            const val DEFAULT_STAND_BY_DEGREE = 225f
         }
 
         override fun getMatrixGenerator(): MatrixGenerator<Movement> {

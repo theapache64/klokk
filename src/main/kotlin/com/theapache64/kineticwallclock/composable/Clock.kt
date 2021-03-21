@@ -1,6 +1,9 @@
 package com.theapache64.kineticwallclock.composable
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Easing
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.desktop.Window
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -51,7 +54,7 @@ fun Clock(
         modifier = modifier
     ) {
 
-        val needleWidth = size.minDimension * 0.05f
+        val needleWidth = size.minDimension * 0.07f
 
         // Background
         val radius = size.minDimension / 2f
@@ -66,6 +69,7 @@ fun Clock(
             radius = needleWidth * 0.487f
         )
 
+        val radius2 = radius - 4
 
         // Needle One
         drawLine(
@@ -73,16 +77,16 @@ fun Clock(
             start = center,
             end = Offset(
                 // Finding end coordinate for the given degree
-                x = center.x + radius * sin(needleOneDegreeAnim),
-                y = center.y - radius * cos(needleOneDegreeAnim),
+                x = center.x + radius2 * sin(needleOneDegreeAnim),
+                y = center.y - radius2 * cos(needleOneDegreeAnim),
             ),
             strokeWidth = needleWidth
         )
 
 
         // Needle two
-        val needleTwoEndX = center.x + radius * sin(needleTwoDegreeAnim)
-        val needleTwoEndY = center.y - radius * cos(needleTwoDegreeAnim)
+        val needleTwoEndX = center.x + radius2 * sin(needleTwoDegreeAnim)
+        val needleTwoEndY = center.y - radius2 * cos(needleTwoDegreeAnim)
         drawLine(
             color = NEEDLE_COLOR,
             start = center,
