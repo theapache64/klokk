@@ -6,9 +6,12 @@ import com.theapache64.kineticwallclock.model.ClockData
 import com.theapache64.kineticwallclock.movement.StandByMatrixGenerator
 import com.theapache64.kineticwallclock.movement.core.MatrixGenerator
 import com.theapache64.kineticwallclock.movement.core.Movement
+import java.text.SimpleDateFormat
 
 class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(data) {
     companion object {
+
+        private val timeFormat = SimpleDateFormat("HHmm")
 
         private val h1Position = Pair(1, 1)
         private val h2Position = Pair(1, 4)
@@ -17,11 +20,10 @@ class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(
 
         fun getTimeMatrix(time: Movement.Time): List<List<ClockData>> {
 
-            // TODO : Calculate time dynamically
-            val h1 = 8
-            val h2 = 9
-            val m1 = 4
-            val m2 = 7
+            val (h1, h2, m1, m2) = timeFormat.format(time.date)
+                .split("")
+                .filter { it.isNotEmpty() }
+                .map { it.toInt() }
 
             val h1Matrix = getMatrixFor(h1)
             val h2Matrix = getMatrixFor(h2)
