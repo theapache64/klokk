@@ -24,8 +24,8 @@ const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
 const val ENJOY_TIME_IN_MILLIS = 500L
 val BACKGROUND_COLOR = Color.Black
 
-private const val DIGIT_COLUMNS = 3
-private const val DIGIT_ROWS = 6
+const val DIGIT_COLUMNS = 3
+const val DIGIT_ROWS = 6
 
 fun main() {
 
@@ -40,7 +40,7 @@ fun main() {
         var activeMovement by remember { mutableStateOf<Movement>(Movement.StandBy()) }
 
         // Generating degree matrix using the active movement
-        val degreeMatrix = activeMovement.generateMatrix()
+        val degreeMatrix = activeMovement.getMatrixGenerator().getVerifiedMatrix()
 
         Column(
             modifier = Modifier
@@ -84,10 +84,13 @@ fun main() {
                     activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
                     delay(waitTime)*/
 
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.START)
+                    /*activeMovement = Movement.Ripple(to = Movement.Ripple.To.START)
                     delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
 
                     activeMovement = Movement.Ripple(to = Movement.Ripple.To.END)
+                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)*/
+
+                    activeMovement = Movement.Time()
                     delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
                 }
             }

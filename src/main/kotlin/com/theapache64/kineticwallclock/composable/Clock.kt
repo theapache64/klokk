@@ -1,9 +1,6 @@
 package com.theapache64.kineticwallclock.composable
 
-import androidx.compose.animation.core.Easing
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.*
 import androidx.compose.desktop.Window
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -30,7 +27,7 @@ fun Clock(
     _needleOneDegree: Float = 270f,
     _needleTwoDegree: Float = 0f,
     durationInMillis: Int = 500,
-    easing: Easing = LinearEasing,
+    easing: Easing = FastOutSlowInEasing,
     debug: Boolean = false,
     modifier: Modifier = Modifier,
 ) {

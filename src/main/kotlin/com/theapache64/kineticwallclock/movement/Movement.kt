@@ -1,22 +1,18 @@
 package com.theapache64.kineticwallclock.movement
 
-import com.theapache64.kineticwallclock.COLUMNS
-import com.theapache64.kineticwallclock.ROWS
-import com.theapache64.kineticwallclock.model.ClockData
 import java.util.*
 
 /**
  * Dynamic animation can't be supported until this fixed -> https://issuetracker.google.com/issues/183220315
  */
-const val DEFAULT_ANIMATION_DURATION = 4000
+const val DEFAULT_ANIMATION_DURATION = 2000
 
-/**
- * To hold all set of animations
- */
+
 sealed class Movement(
     val durationInMillis: Int,
 ) {
-    abstract fun generateMatrix(): List<List<ClockData>>
+
+    abstract fun getMatrixGenerator(): MatrixGenerator<Movement>
 
     /**
      * To move clocks to stand by position
@@ -28,8 +24,8 @@ sealed class Movement(
             const val DEFAULT_STAND_BY_DEGREE = 315f
         }
 
-        override fun generateMatrix(): List<List<ClockData>> {
-            return verifyIntegrityAndReturn(getStandByMatrix(this))
+        override fun getMatrixGenerator(): MatrixGenerator<Movement> {
+            return StandByMatrixGenerator(this)
         }
     }
 
@@ -45,8 +41,8 @@ sealed class Movement(
             SQUARE, FLOWER, FLY, STAR
         }
 
-        override fun generateMatrix(): List<List<ClockData>> {
-            return verifyIntegrityAndReturn(getTranceMatrix(this))
+        override fun getMatrixGenerator(): MatrixGenerator<Movement> {
+            return TranceMatrixGenerator(this)
         }
     }
 
@@ -57,8 +53,8 @@ sealed class Movement(
         val to: To = To.START,
     ) : Movement(durationInMillis = DEFAULT_ANIMATION_DURATION) {
 
-        override fun generateMatrix(): List<List<ClockData>> {
-            return verifyIntegrityAndReturn(getRippleMatrix(this))
+        override fun getMatrixGenerator(): MatrixGenerator<Movement> {
+            return RippleMatrixGenerator(this)
         }
 
         enum class To {
@@ -67,21 +63,12 @@ sealed class Movement(
     }
 
     data class Time(
-        val date : Date
+        val date: Date = Date(),
     ) : Movement(durationInMillis = DEFAULT_ANIMATION_DURATION) {
-        override fun generateMatrix(): List<List<ClockData>> {
-            return verifyIntegrityAndReturn(getTimeMatrix(this))
+        override fun getMatrixGenerator(): MatrixGenerator<Time> {
+            return TimeMatrixGenerator(this)
         }
     }
 
-    /**
-     * To check if the returned matrix match the clock matrix
-     */
-    protected fun verifyIntegrityAndReturn(degreeMatrix: List<List<ClockData>>): List<List<ClockData>> {
-        for (matrix in degreeMatrix) {
-            require(matrix.size == COLUMNS) { "Column size should be $COLUMNS but found ${matrix.size}" }
-        }
-        require(degreeMatrix.size == ROWS) { "Row size should be $ROWS but found ${degreeMatrix.size}" }
-        return degreeMatrix
-    }
+
 }
