@@ -18,7 +18,7 @@ class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(
         fun getTimeMatrix(time: Movement.Time): List<List<ClockData>> {
 
             // TODO : Calculate time dynamically
-            val h1 = 0
+            val h1 = 4
             val h2 = 1
             val m1 = 2
             val m2 = 3
@@ -73,6 +73,7 @@ class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(
                 1 -> OneMatrix
                 2 -> TwoMatrix
                 3 -> ThreeMatrix
+                4 -> FourMatrix
                 else -> throw IllegalAccessException("Matrix not defined for $digit")
             }
 
