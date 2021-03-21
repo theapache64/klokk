@@ -3,6 +3,8 @@ package com.theapache64.kineticwallclock.movement
 import com.theapache64.kineticwallclock.COLUMNS
 import com.theapache64.kineticwallclock.ROWS
 import com.theapache64.kineticwallclock.model.ClockData
+import com.theapache64.kineticwallclock.movement.core.MatrixGenerator
+import com.theapache64.kineticwallclock.movement.core.Movement
 
 class StandByMatrixGenerator(data: Movement.StandBy) : MatrixGenerator<Movement.StandBy>(data) {
     companion object {

@@ -1,5 +1,9 @@
-package com.theapache64.kineticwallclock.movement
+package com.theapache64.kineticwallclock.movement.core
 
+import com.theapache64.kineticwallclock.movement.RippleMatrixGenerator
+import com.theapache64.kineticwallclock.movement.StandByMatrixGenerator
+import com.theapache64.kineticwallclock.movement.TranceMatrixGenerator
+import com.theapache64.kineticwallclock.movement.time.TimeMatrixGenerator
 import java.util.*
 
 /**

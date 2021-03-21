@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.theapache64.kineticwallclock.composable.Clock
-import com.theapache64.kineticwallclock.movement.Movement
+import com.theapache64.kineticwallclock.movement.core.Movement
 import kotlinx.coroutines.delay
 
 

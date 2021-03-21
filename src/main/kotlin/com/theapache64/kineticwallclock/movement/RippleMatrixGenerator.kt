@@ -2,6 +2,8 @@ package com.theapache64.kineticwallclock.movement
 
 import com.theapache64.kineticwallclock.COLUMNS
 import com.theapache64.kineticwallclock.model.ClockData
+import com.theapache64.kineticwallclock.movement.core.MatrixGenerator
+import com.theapache64.kineticwallclock.movement.core.Movement
 
 class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ripple>(data) {
     companion object{

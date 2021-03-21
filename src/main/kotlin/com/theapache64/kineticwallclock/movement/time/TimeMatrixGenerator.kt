@@ -1,11 +1,11 @@
-package com.theapache64.kineticwallclock.movement
+package com.theapache64.kineticwallclock.movement.time
 
 import com.theapache64.kineticwallclock.DIGIT_COLUMNS
 import com.theapache64.kineticwallclock.DIGIT_ROWS
 import com.theapache64.kineticwallclock.model.ClockData
-import com.theapache64.kineticwallclock.movement.time.DigitMatrix
-import com.theapache64.kineticwallclock.movement.time.OneMatrix
-import com.theapache64.kineticwallclock.movement.time.ZeroMatrix
+import com.theapache64.kineticwallclock.movement.core.MatrixGenerator
+import com.theapache64.kineticwallclock.movement.StandByMatrixGenerator
+import com.theapache64.kineticwallclock.movement.core.Movement
 
 class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(data) {
     companion object {

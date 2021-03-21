@@ -1,4 +1,4 @@
-package com.theapache64.kineticwallclock.movement
+package com.theapache64.kineticwallclock.movement.core
 
 import com.theapache64.kineticwallclock.COLUMNS
 import com.theapache64.kineticwallclock.ROWS
