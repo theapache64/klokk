@@ -1,4 +1,4 @@
-package com.theapache64.kineticwallclock.composable
+package com.theapache64.klokk.composable
 
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.theapache64.kineticwallclock.CLOCK_BACKGROUND
-import com.theapache64.kineticwallclock.theme.CodGray
+import com.theapache64.klokk.CLOCK_BACKGROUND
+import com.theapache64.klokk.theme.CodGray
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -52,7 +52,7 @@ fun Clock(
         modifier = modifier
     ) {
 
-        val needleWidth = size.minDimension * 0.07f
+        val needleWidth = size.minDimension * 0.05f
 
         // Background
         val radius = size.minDimension / 2f

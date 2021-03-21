@@ -1,10 +1,13 @@
-package com.theapache64.kineticwallclock.movement
+package com.theapache64.klokk.movement
 
-import com.theapache64.kineticwallclock.COLUMNS
-import com.theapache64.kineticwallclock.model.ClockData
-import com.theapache64.kineticwallclock.movement.core.MatrixGenerator
-import com.theapache64.kineticwallclock.movement.core.Movement
+import com.theapache64.klokk.COLUMNS
+import com.theapache64.klokk.model.ClockData
+import com.theapache64.klokk.movement.core.MatrixGenerator
+import com.theapache64.klokk.movement.core.Movement
 
+/**
+ * A ripple matrix with 4x4 mirrored-flipped-matrix
+ */
 class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ripple>(data) {
     companion object{
         private const val ROW_CLOCK_COUNT = 8

@@ -36,7 +36,7 @@ compose.desktop {
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "kinetic-wall-clock"
+            packageName = "Klokk"
         }
     }
 }

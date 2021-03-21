@@ -6,5 +6,5 @@ pluginManagement {
     }
     
 }
-rootProject.name = "kinetic-wall-clock"
+rootProject.name = "klokk"
 

@@ -1,6 +1,6 @@
-package com.theapache64.kineticwallclock.movement.time
+package com.theapache64.klokk.movement.time
 
-import com.theapache64.kineticwallclock.model.ClockData
+import com.theapache64.klokk.model.ClockData
 
 object OneMatrix : DigitMatrix() {
 

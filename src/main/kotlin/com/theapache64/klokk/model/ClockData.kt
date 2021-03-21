@@ -1,4 +1,4 @@
-package com.theapache64.kineticwallclock.model
+package com.theapache64.klokk.model
 
 data class ClockData(
     var degreeOne: Float,

@@ -1,4 +1,4 @@
-# 🕒 kinetic-wall-clock
+# 🕒 klokk
 
 ![](screenshot.png)
 

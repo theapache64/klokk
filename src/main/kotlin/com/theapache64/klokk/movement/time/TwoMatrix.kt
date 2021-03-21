@@ -1,52 +1,53 @@
-package com.theapache64.kineticwallclock.movement.time
+package com.theapache64.klokk.movement.time
 
-import com.theapache64.kineticwallclock.model.ClockData
+import com.theapache64.klokk.model.ClockData
 
-object FourMatrix : DigitMatrix() {
+object TwoMatrix : DigitMatrix() {
+
     override fun getRow1(): List<ClockData?> {
         return listOf(
             clockDataRightAngledBottomRight(),
-            clockDataRightAngledBottomLeft(),
+            clockDataHorizontal(),
             clockDataRightAngledBottomLeft()
         )
     }
 
     override fun getRow2(): List<ClockData?> {
         return listOf(
-            clockDataVertical(),
-            clockDataVertical(),
-            clockDataVertical()
-        )
-    }
-
-    override fun getRow3(): List<ClockData?> {
-        return listOf(
-            clockDataVertical(),
-            clockDataRightAngledTopRight(),
-            clockDataVertical()
-        )
-    }
-
-    override fun getRow4(): List<ClockData?> {
-        return listOf(
             clockDataRightAngledTopRight(),
             clockDataRightAngledBottomLeft(),
             clockDataVertical()
         )
     }
 
+    override fun getRow3(): List<ClockData?> {
+        return listOf(
+            clockDataRightAngledBottomRight(),
+            clockDataRightAngledTopLeft(),
+            clockDataVertical()
+        )
+    }
+
+    override fun getRow4(): List<ClockData?> {
+        return listOf(
+            clockDataVertical(),
+            clockDataRightAngledBottomRight(),
+            clockDataRightAngledTopLeft()
+        )
+    }
+
     override fun getRow5(): List<ClockData?> {
         return listOf(
-            null,
             clockDataVertical(),
-            clockDataVertical()
+            clockDataRightAngledTopRight(),
+            clockDataRightAngledBottomLeft()
         )
     }
 
     override fun getRow6(): List<ClockData?> {
         return listOf(
-            null,
             clockDataRightAngledTopRight(),
+            clockDataHorizontal(),
             clockDataRightAngledTopLeft()
         )
     }

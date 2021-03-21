@@ -1,13 +1,16 @@
-package com.theapache64.kineticwallclock.movement.time
+package com.theapache64.klokk.movement.time
 
-import com.theapache64.kineticwallclock.DIGIT_COLUMNS
-import com.theapache64.kineticwallclock.DIGIT_ROWS
-import com.theapache64.kineticwallclock.model.ClockData
-import com.theapache64.kineticwallclock.movement.StandByMatrixGenerator
-import com.theapache64.kineticwallclock.movement.core.MatrixGenerator
-import com.theapache64.kineticwallclock.movement.core.Movement
+import com.theapache64.klokk.DIGIT_COLUMNS
+import com.theapache64.klokk.DIGIT_ROWS
+import com.theapache64.klokk.model.ClockData
+import com.theapache64.klokk.movement.StandByMatrixGenerator
+import com.theapache64.klokk.movement.core.MatrixGenerator
+import com.theapache64.klokk.movement.core.Movement
 import java.text.SimpleDateFormat
 
+/**
+ * Responsible to show time animation and digits.
+ */
 class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(data) {
     companion object {
 

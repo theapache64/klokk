@@ -1,9 +1,8 @@
-package com.theapache64.kineticwallclock.movement.time
+package com.theapache64.klokk.movement.time
 
-import com.theapache64.kineticwallclock.model.ClockData
+import com.theapache64.klokk.model.ClockData
 
-object TwoMatrix : DigitMatrix() {
-
+object EightMatrix : DigitMatrix() {
     override fun getRow1(): List<ClockData?> {
         return listOf(
             clockDataRightAngledBottomRight(),
@@ -14,33 +13,33 @@ object TwoMatrix : DigitMatrix() {
 
     override fun getRow2(): List<ClockData?> {
         return listOf(
-            clockDataRightAngledTopRight(),
-            clockDataRightAngledBottomLeft(),
+            clockDataVertical(),
+            clockDataVerticalBottomHalf(),
             clockDataVertical()
         )
     }
 
     override fun getRow3(): List<ClockData?> {
         return listOf(
-            clockDataRightAngledBottomRight(),
-            clockDataRightAngledTopLeft(),
-            clockDataVertical()
+            ClockData(degreeOne = 0f, degreeTwo = 135f),
+            clockDataVerticalTopHalf(),
+            ClockData(degreeOne = 0f, degreeTwo = 225f),
         )
     }
 
     override fun getRow4(): List<ClockData?> {
         return listOf(
-            clockDataVertical(),
-            clockDataRightAngledBottomRight(),
-            clockDataRightAngledTopLeft()
+            clockDataRightCurve(),
+            clockDataVerticalBottomHalf(),
+            ClockData(degreeOne = 180f, degreeTwo = 315f)
         )
     }
 
     override fun getRow5(): List<ClockData?> {
         return listOf(
             clockDataVertical(),
-            clockDataRightAngledTopRight(),
-            clockDataRightAngledBottomLeft()
+            clockDataVerticalTopHalf(),
+            clockDataVertical()
         )
     }
 
@@ -51,4 +50,5 @@ object TwoMatrix : DigitMatrix() {
             clockDataRightAngledTopLeft()
         )
     }
+
 }

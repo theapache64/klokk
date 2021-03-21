@@ -1,8 +1,8 @@
-package com.theapache64.kineticwallclock.movement.core
+package com.theapache64.klokk.movement.core
 
-import com.theapache64.kineticwallclock.COLUMNS
-import com.theapache64.kineticwallclock.ROWS
-import com.theapache64.kineticwallclock.model.ClockData
+import com.theapache64.klokk.COLUMNS
+import com.theapache64.klokk.ROWS
+import com.theapache64.klokk.model.ClockData
 
 /**
  * To hold all set of animations

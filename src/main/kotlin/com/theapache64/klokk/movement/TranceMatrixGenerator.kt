@@ -1,11 +1,14 @@
-package com.theapache64.kineticwallclock.movement
+package com.theapache64.klokk.movement
 
-import com.theapache64.kineticwallclock.COLUMNS
-import com.theapache64.kineticwallclock.ROWS
-import com.theapache64.kineticwallclock.model.ClockData
-import com.theapache64.kineticwallclock.movement.core.MatrixGenerator
-import com.theapache64.kineticwallclock.movement.core.Movement
+import com.theapache64.klokk.COLUMNS
+import com.theapache64.klokk.ROWS
+import com.theapache64.klokk.model.ClockData
+import com.theapache64.klokk.movement.core.MatrixGenerator
+import com.theapache64.klokk.movement.core.Movement
 
+/**
+ * Responsible to show Square, Flower, Wings and Star transition
+ */
 class TranceMatrixGenerator(data: Movement.Trance) : MatrixGenerator<Movement.Trance>(data) {
     companion object{
         /**

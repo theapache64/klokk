@@ -1,4 +1,4 @@
-package com.theapache64.kineticwallclock
+package com.theapache64.klokk
 
 import androidx.compose.desktop.Window
 import androidx.compose.foundation.background
@@ -9,9 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.theapache64.kineticwallclock.composable.Clock
-import com.theapache64.kineticwallclock.movement.core.Movement
-import com.theapache64.kineticwallclock.theme.CodGray_2
+import com.theapache64.klokk.composable.Clock
+import com.theapache64.klokk.movement.core.Movement
 import kotlinx.coroutines.delay
 
 
@@ -23,11 +22,11 @@ const val CLOCK_SIZE = 60
 const val CLOCKS_CONTAINER_WIDTH = CLOCK_SIZE * COLUMNS
 const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
 const val ENJOY_TIME_IN_MILLIS = 500L
-val BACKGROUND_COLOR = Color.Black
-val CodGray = Color(0xff161616)
-val OuterSpace = Color(0xff1C1E1E)
-val CLOCK_BACKGROUND = CodGray
+val CodGray = Color(0xff141414)
+val Black = Color(0xff020202)
 
+val BACKGROUND_COLOR = Black
+val CLOCK_BACKGROUND = CodGray
 
 const val DIGIT_COLUMNS = 3
 const val DIGIT_ROWS = 6
@@ -36,7 +35,7 @@ fun main() {
 
 
     Window(
-        title = "Kinetic Wall Clock",
+        title = "Klokk",
         // Clock container plus the padding we need
         size = IntSize(CLOCKS_CONTAINER_WIDTH + PADDING, CLOCKS_CONTAINER_HEIGHT + PADDING),
     ) {
