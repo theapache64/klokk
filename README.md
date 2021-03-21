@@ -10,6 +10,12 @@
 
 > A kinetic wall clock, built using Compose Desktop.
 
+# 🔮 Demo
+
+- [Watch](https://youtu.be/ECNfa3L4U6s) full demo
+- [Watch](https://www.youtube.com/watch?v=lTsZOs_PkbM) Development - Behind the Scenes - Part 1
+- [Watch](https://www.youtube.com/watch?v=ejp9850FWy8) Development - Behind the Scenes - Part 2
+
 ## 💡 Inspiration
 
 - A big shout-out to Nezih Yılmaz for his #AndroidDevChallenge submission, [Chromie](https://github.com/nezih94/chromie)

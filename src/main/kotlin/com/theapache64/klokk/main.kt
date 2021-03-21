@@ -75,6 +75,7 @@ fun main() {
                 val trance = Movement.Trance()
                 val waitTime = trance.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
 
+                delay(5000)
                 while (true) {
                     delay(waitTime)
                     activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
