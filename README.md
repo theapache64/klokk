@@ -1,8 +1,6 @@
 # 🕒 klokk
 
-![](screenshot.png)
-
-> 👷 This project is under heavy development 🏗️
+![](demo.gif)
 
 ![buildStatus](https://img.shields.io/github/workflow/status/theapache64/kinetic-wall-clock/Java%20CI%20with%20Gradle?style=plastic)
 ![latestVersion](https://img.shields.io/github/v/release/theapache64/kinetic-wall-clock)
@@ -16,7 +14,6 @@
 
 - A big shout-out to Nezih Yılmaz for his #AndroidDevChallenge submission, [Chromie](https://github.com/nezih94/chromie)
 - A million times humans since 1982
-
 
 ## ✍️ Author
 
