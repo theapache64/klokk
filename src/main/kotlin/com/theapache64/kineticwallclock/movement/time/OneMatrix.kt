@@ -6,25 +6,26 @@ object OneMatrix : DigitMatrix() {
 
     override fun getRow1(): List<ClockData> {
         return listOf(
-            ClockData(degreeOne = 90f, degreeTwo = 180f),
-            ClockData(degreeOne = 90f, degreeTwo = 270f),
-            ClockData(degreeOne = 180f, degreeTwo = 270f),
+            clockDataRightAngledBottomRight(),
+            clockDataHorizontal(),
+            clockDataRightAngledBottomLeft(),
         )
     }
 
     override fun getRow2(): List<ClockData> {
         return listOf(
-            ClockData(degreeOne = 0f, degreeTwo = 90f),
-            ClockData(degreeOne = 180f, degreeTwo = 270f),
-            ClockData(degreeOne = 0f, degreeTwo = 180f),
+            clockDataRightAngledTopRight(),
+            clockDataRightAngledBottomLeft(),
+            clockDataVertical(),
         )
     }
+
 
     override fun getRow3(): List<ClockData?> {
         return listOf(
             null,
-            ClockData(degreeOne = 0f, degreeTwo = 180f),
-            ClockData(degreeOne = 0f, degreeTwo = 180f),
+            clockDataVertical(),
+            clockDataVertical(),
         )
     }
 
@@ -39,10 +40,11 @@ object OneMatrix : DigitMatrix() {
     override fun getRow6(): List<ClockData?> {
         return listOf(
             null,
-            ClockData(degreeOne = 0f, degreeTwo = 90f),
-            ClockData(degreeOne = 0f, degreeTwo = 270f),
+            clockDataRightAngledTopRight(),
+            clockDataRightAngledTopLeft(),
         )
     }
+
 
 
 }

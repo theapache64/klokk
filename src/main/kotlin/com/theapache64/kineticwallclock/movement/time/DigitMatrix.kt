@@ -33,4 +33,13 @@ abstract class DigitMatrix {
         }
     }
 
+    protected fun clockDataRightAngledBottomRight() = ClockData(degreeOne = 90f, degreeTwo = 180f)
+    protected fun clockDataHorizontal() = ClockData(degreeOne = 90f, degreeTwo = 270f)
+    protected fun clockDataRightAngledBottomLeft() = ClockData(degreeOne = 180f, degreeTwo = 270f)
+    protected fun clockDataVertical() = ClockData(degreeOne = 0f, degreeTwo = 180f)
+    protected fun clockDataRightAngledTopLeft() = ClockData(degreeOne = 0f, degreeTwo = 270f)
+    protected fun clockDataRightAngledTopRight() = ClockData(degreeOne = 0f, degreeTwo = 90f)
+    protected fun clockDataVerticalHalfBottom() = ClockData(degreeOne = 180f, degreeTwo = 180f)
+    protected fun clockDataVerticalHalfTop() = ClockData(degreeOne = 0f, degreeTwo = 0f)
+
 }
