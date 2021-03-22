@@ -18,7 +18,7 @@
 
 ## 💡 Inspiration
 
-- A big shout-out to Nezih Yılmaz for his #AndroidDevChallenge submission, [Chromie](https://github.com/nezih94/chromie)
+- Nezih Yılmaz's kinetic countdown timer
 - A million times humans since 1982
 
 ## ✍️ Author
