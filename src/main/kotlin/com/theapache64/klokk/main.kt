@@ -11,28 +11,26 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.theapache64.klokk.composable.Clock
 import com.theapache64.klokk.movement.core.Movement
+import com.theapache64.klokk.theme.Black
+import com.theapache64.klokk.theme.CodGray
 import kotlinx.coroutines.delay
 
 
 // Configs
 const val COLUMNS = 15
 const val ROWS = 8
+const val DIGIT_COLUMNS = 3
+const val DIGIT_ROWS = 6
 const val PADDING = 100
 const val CLOCK_SIZE = 60
 const val CLOCKS_CONTAINER_WIDTH = CLOCK_SIZE * COLUMNS
 const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
 const val ENJOY_TIME_IN_MILLIS = 500L
-val CodGray = Color(0xff141414)
-val Black = Color(0xff020202)
-
 val BACKGROUND_COLOR = Black
 val CLOCK_BACKGROUND = CodGray
 
-const val DIGIT_COLUMNS = 3
-const val DIGIT_ROWS = 6
 
 fun main() {
-
 
     Window(
         title = "Klokk",
@@ -75,9 +73,8 @@ fun main() {
                 val trance = Movement.Trance()
                 val waitTime = trance.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
 
-                delay(5000)
                 while (true) {
-                    delay(waitTime)
+                    delay(ENJOY_TIME_IN_MILLIS * 3)
                     activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
                     delay(waitTime)
 
@@ -90,13 +87,13 @@ fun main() {
                     activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
                     delay(waitTime)
 
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.START)
+                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
                     delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
 
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.END)
+                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
                     delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
 
-                    activeMovement = Movement.Time()
+                    activeMovement = Movement.Time() // then show time
                     delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
                 }
             }

@@ -83,15 +83,13 @@ fun Clock(
 
 
         // Needle two
-        val needleTwoEndX = center.x + radius2 * sin(needleTwoDegreeAnim)
-        val needleTwoEndY = center.y - radius2 * cos(needleTwoDegreeAnim)
         drawLine(
             color = NEEDLE_COLOR,
             start = center,
             end = Offset(
                 // Finding end coordinate for the given degree
-                x = needleTwoEndX,
-                y = needleTwoEndY,
+                x = center.x + radius2 * sin(needleTwoDegreeAnim),
+                y = center.y - radius2 * cos(needleTwoDegreeAnim),
             ),
             strokeWidth = needleWidth
         )
