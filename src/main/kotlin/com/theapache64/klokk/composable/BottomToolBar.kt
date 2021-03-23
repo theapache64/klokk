@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.PlayArrow
@@ -26,10 +26,12 @@ import com.theapache64.klokk.movement.core.Movement
 @Composable
 fun BottomToolBar(
     activeMovement: Movement, // to show debug info
-    isAnimPlaying : Boolean,
+    isAnimPlaying: Boolean,
+    textInput: String,
     onTimeClicked: () -> Unit,
     onPlayClicked: () -> Unit,
     onStopClicked: () -> Unit,
+    onTextInputChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -44,60 +46,78 @@ fun BottomToolBar(
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         // Play Button
-        if(isAnimPlaying.not()){
-            ToolBarIcon(
+        if (isAnimPlaying.not()) {
+            IconTextButton(
+                text = "START AUTOPLAY",
                 imageVector = Icons.Outlined.PlayArrow,
                 onClicked = onPlayClicked
             )
         }
 
         // Stop Button
-        if(isAnimPlaying){
-            ToolBarIcon(
+        if (isAnimPlaying) {
+            IconTextButton(
+                text = "STOP AUTOPLAY",
                 imageVector = Icons.Outlined.Stop,
                 onClicked = onStopClicked
             )
         }
 
         // Time Button
-        ToolBarIcon(
+        IconTextButton(
+            text = "SHOW TIME",
             imageVector = Icons.Outlined.Update,
             onClicked = onTimeClicked
         )
 
+        Row(
+            modifier= Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
 
-        // TextField
-
-        // Align-Center
-
-        // Debug Info
-        if (IS_DEBUG) {
-            Text(
-                text = "DEBUG: $activeMovement",
-                color = Color.White,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.End
+            // TextField
+            OutlinedTextField(
+                value = textInput,
+                onValueChange = onTextInputChanged,
+                placeholder = {
+                    Text("Try some text here")
+                }
             )
+
+            // Align-Center
+
+            // Debug Info
+            if (IS_DEBUG) {
+                Text(
+                    text = "DEBUG: $activeMovement",
+                    color = Color.White,
+                    textAlign = TextAlign.End
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun ToolBarIcon(
+private fun IconTextButton(
+    text: String,
     imageVector: ImageVector,
     onClicked: () -> Unit,
 ) {
-    IconButton(
-        modifier = Modifier.background(
-            color = CLOCK_BACKGROUND,
-            shape = CircleShape
-        ),
+
+    OutlinedButton(
         onClick = onClicked
     ) {
+
         Icon(
             imageVector = imageVector,
             tint = Color.White,
-            contentDescription = "ToolBar Icon"
+            contentDescription = "ToolBar Icon",
+            modifier = Modifier.padding(end = 10.dp)
+        )
+
+        Text(
+            text = text
         )
     }
 }

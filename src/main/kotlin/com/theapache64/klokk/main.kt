@@ -13,6 +13,7 @@ import com.theapache64.klokk.composable.BottomToolBar
 import com.theapache64.klokk.composable.Clock
 import com.theapache64.klokk.movement.core.Movement
 import com.theapache64.klokk.theme.Black
+import com.theapache64.klokk.theme.KlokkTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -20,6 +21,8 @@ import kotlinx.coroutines.launch
 // Configs
 const val COLUMNS = 15
 const val ROWS = 8
+const val LETTER_WIDTH = 3
+const val MAX_CHARS = COLUMNS / LETTER_WIDTH
 const val DIGIT_COLUMNS = 3
 const val DIGIT_ROWS = 6
 const val PADDING = 100
@@ -49,88 +52,110 @@ fun main() {
         // To control the auto playing animation
         var shouldPlayAutoAnim by remember { mutableStateOf(true) }
 
+        var textInput by remember { mutableStateOf("") }
+
         // Generating degree matrix using the active movement
         val degreeMatrix = activeMovement.getMatrixGenerator().getVerifiedMatrix()
 
         val scope = rememberCoroutineScope()
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(BACKGROUND_COLOR),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
+        KlokkTheme {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(BACKGROUND_COLOR),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
 
-            // Building clock matrix
-            repeat(ROWS) { i ->
-                Row {
-                    repeat(COLUMNS) { j ->
-                        val clockData = degreeMatrix[i][j]
-                        Clock(
-                            _needleOneDegree = clockData.degreeOne,
-                            _needleTwoDegree = clockData.degreeTwo,
-                            durationInMillis = activeMovement.durationInMillis,
-                            modifier = Modifier.requiredSize(CLOCK_SIZE.dp)
-                        )
-                    }
-                }
-            }
-
-
-            // The animation loop
-            LaunchedEffect(shouldPlayAutoAnim) {
-                println("Animation loop created and started -> will run? $shouldPlayAutoAnim")
-                val waitTime = activeMovement.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
-
-                while (shouldPlayAutoAnim) {
-                    delay(ENJOY_TIME_IN_MILLIS)
-                    activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
-                    delay(waitTime)
-
-                    activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
-                    delay(waitTime - ENJOY_TIME_IN_MILLIS)
-
-                    activeMovement = Movement.Trance(to = Movement.Trance.To.STAR) // To star, through circle (auto)
-                    delay(waitTime)
-
-                    activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
-                    delay(waitTime)
-
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
-                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
-
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
-                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
-
-                    activeMovement = Movement.Time() // then show time
-                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
-                }
-            }
-
-            BottomToolBar(
-                activeMovement = activeMovement,
-                isAnimPlaying = shouldPlayAutoAnim,
-                onTimeClicked = {
-                    val wasAlreadyStopped = shouldPlayAutoAnim
-                    shouldPlayAutoAnim = false
-                    activeMovement = Movement.Time() // then show time
-                    if (wasAlreadyStopped) {
-                        // if its not already stopped start again...
-                        scope.launch {
-                            delay(activeMovement.durationInMillis.toLong()) // let the animation finish
-                            shouldPlayAutoAnim = true // now start the loop again...
+                // Building clock matrix
+                repeat(ROWS) { i ->
+                    Row {
+                        repeat(COLUMNS) { j ->
+                            val clockData = degreeMatrix[i][j]
+                            Clock(
+                                _needleOneDegree = clockData.degreeOne,
+                                _needleTwoDegree = clockData.degreeTwo,
+                                durationInMillis = activeMovement.durationInMillis,
+                                modifier = Modifier.requiredSize(CLOCK_SIZE.dp)
+                            )
                         }
                     }
-                },
-                onPlayClicked = {
-                    shouldPlayAutoAnim = true
-                },
-                onStopClicked = {
-                    shouldPlayAutoAnim = false
-                    activeMovement = standBy
                 }
-            )
+
+
+                // The animation loop
+                LaunchedEffect(shouldPlayAutoAnim) {
+                    println("Animation loop created and started -> will run? $shouldPlayAutoAnim")
+                    val waitTime = activeMovement.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
+
+                    while (shouldPlayAutoAnim) {
+                        delay(ENJOY_TIME_IN_MILLIS)
+                        activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
+                        delay(waitTime)
+
+                        activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
+                        delay(waitTime - ENJOY_TIME_IN_MILLIS)
+
+                        activeMovement = Movement.Trance(to = Movement.Trance.To.STAR) // To star, through circle (auto)
+                        delay(waitTime)
+
+                        activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
+                        delay(waitTime)
+
+                        activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
+                        delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
+
+                        activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
+                        delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
+
+                        activeMovement = Movement.Time() // then show time
+                        delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
+                    }
+                }
+
+                BottomToolBar(
+                    activeMovement = activeMovement,
+                    isAnimPlaying = shouldPlayAutoAnim,
+                    textInput = textInput,
+                    onTextInputChanged = { newInput ->
+                        if (newInput.length <= MAX_CHARS) {
+                            textInput = newInput.trim().toUpperCase()
+
+                            if (textInput.isEmpty()) {
+                                // no text
+                                shouldPlayAutoAnim = true
+                                // TODO :
+                                // activeMovement = Movement.Text(textInput)
+                            } else {
+                                // has some text
+                                shouldPlayAutoAnim = false
+                                activeMovement = standBy
+                            }
+                        }
+                    },
+
+                    onTimeClicked = {
+                        val wasAlreadyStopped = shouldPlayAutoAnim
+                        shouldPlayAutoAnim = false
+                        activeMovement = Movement.Time() // then show time
+                        if (wasAlreadyStopped) {
+                            // if its not already stopped start again...
+                            scope.launch {
+                                delay(activeMovement.durationInMillis.toLong()) // let the animation finish
+                                shouldPlayAutoAnim = true // now start the loop again...
+                            }
+                        }
+                    },
+                    onPlayClicked = {
+                        shouldPlayAutoAnim = true
+                    },
+                    onStopClicked = {
+                        shouldPlayAutoAnim = false
+                        activeMovement = standBy
+                    }
+                )
+            }
         }
     }
 }
