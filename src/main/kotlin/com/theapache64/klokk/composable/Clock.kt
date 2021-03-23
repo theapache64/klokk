@@ -18,7 +18,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.theapache64.klokk.CLOCK_BACKGROUND
-import com.theapache64.klokk.theme.CodGray
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -109,7 +108,7 @@ fun main(args: Array<String>) {
         val scope = rememberCoroutineScope()
 
         Box(
-            modifier = Modifier.fillMaxSize().background(CodGray)
+            modifier = Modifier.fillMaxSize().background(Color.Black)
         ) {
 
             Clock(
