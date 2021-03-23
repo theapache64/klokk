@@ -29,7 +29,7 @@ object EightMatrix : DigitMatrix() {
 
     override fun getRow4(): List<ClockData?> {
         return listOf(
-            clockDataRightCurve(),
+            clockDataTopRightCurve(),
             clockDataVerticalBottomHalf(),
             ClockData(degreeOne = 180f, degreeTwo = 315f)
         )

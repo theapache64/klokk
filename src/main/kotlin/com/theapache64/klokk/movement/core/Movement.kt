@@ -3,6 +3,7 @@ package com.theapache64.klokk.movement.core
 import com.theapache64.klokk.movement.RippleMatrixGenerator
 import com.theapache64.klokk.movement.StandByMatrixGenerator
 import com.theapache64.klokk.movement.TranceMatrixGenerator
+import com.theapache64.klokk.movement.alphabet.TextMatrixGenerator
 import com.theapache64.klokk.movement.time.TimeMatrixGenerator
 import java.util.*
 
@@ -66,6 +67,9 @@ sealed class Movement(
         }
     }
 
+    /**
+     * To show time
+     */
     data class Time(
         val date: Date = Date(),
     ) : Movement(durationInMillis = DEFAULT_ANIMATION_DURATION) {
@@ -74,5 +78,15 @@ sealed class Movement(
         }
     }
 
+    /**
+     *
+     */
+    data class Text(
+        val text: String,
+    ) : Movement(durationInMillis = DEFAULT_ANIMATION_DURATION) {
+        override fun getMatrixGenerator(): MatrixGenerator<Movement> {
+            return TextMatrixGenerator(this)
+        }
+    }
 
 }

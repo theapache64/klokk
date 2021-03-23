@@ -22,16 +22,16 @@ object SevenMatrix : DigitMatrix() {
     override fun getRow3(): List<ClockData?> {
         return listOf(
             null,
-            clockDataLeftCurve(),
-            clockDataLeftCurve()
+            clockDataBottomLeftCurve(),
+            clockDataBottomLeftCurve()
         )
     }
 
 
     override fun getRow4(): List<ClockData?> {
         return listOf(
-            clockDataRightCurve(),
-            clockDataRightCurve(),
+            clockDataTopRightCurve(),
+            clockDataTopRightCurve(),
             null
         )
     }
