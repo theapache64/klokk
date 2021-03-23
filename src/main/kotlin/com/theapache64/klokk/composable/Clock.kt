@@ -17,12 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.theapache64.klokk.CLOCK_BACKGROUND
+import com.theapache64.klokk.theme.CodGray
 import kotlin.math.cos
 import kotlin.math.sin
 
 
 private val NEEDLE_COLOR = Color.White
+private val CLOCK_BACKGROUND = CodGray
 
 @Composable
 fun Clock(
