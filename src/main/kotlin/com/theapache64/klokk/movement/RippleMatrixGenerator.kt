@@ -12,68 +12,31 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
     companion object {
         private const val ROW_CLOCK_COUNT = 8
 
-        private val row1 = mutableListOf<ClockData>().apply {
-            generateRow(
-                startNeedleOneDegree = 80f,
-                startNeedleTwoDegree = 160f,
-                endNeedleOneDegree = 110f,
-                endNeedleTwoDegree = 170f
-            )
-        }
+        private val rows = mutableListOf<List<ClockData>>().apply {
+            val startOne = 45f
+            val startTwo = 135f // the [0,0]
 
-        private val row2 = mutableListOf<ClockData>().apply {
-            generateRow(
-                startNeedleOneDegree = 85f,
-                startNeedleTwoDegree = 150f,
-                endNeedleOneDegree = 120f,
-                endNeedleTwoDegree = 160f
-            )
-        }
+            val endOne = 135f
+            val endTwo = 135f // [last,last]
 
-        private val row3 = mutableListOf<ClockData>().apply {
-            generateRow(
-                startNeedleOneDegree = 85f,
-                startNeedleTwoDegree = 130f,
-                endNeedleOneDegree = 130f,
-                endNeedleTwoDegree = 150f
-            )
-        }
+            repeat(4) {
+                val row = mutableListOf<ClockData>().apply {
+                    generateRow(
+                        startNeedleOneDegree = startOne,
+                        startNeedleTwoDegree = startTwo,
+                        endNeedleOneDegree = endOne,
+                        endNeedleTwoDegree = endTwo,
+                    )
+                }
 
-        private val row4 = mutableListOf<ClockData>().apply {
-            generateRow(
-                startNeedleOneDegree = 80f,
-                startNeedleTwoDegree = 120f,
-                endNeedleOneDegree = 135f,
-                endNeedleTwoDegree = 135f
-            )
-        }
-
-        private val grid00 = mutableListOf<List<ClockData>>().apply {
-            add(row1)
-            add(row2)
-            add(row3)
-            add(row4)
-        }
-
-        private val grid01 = mutableListOf<List<ClockData>>().apply {
-            add(row1.reverseAndMirrorHorizontally())
-            add(row2.reverseAndMirrorHorizontally())
-            add(row3.reverseAndMirrorHorizontally())
-            add(row4.reverseAndMirrorHorizontally())
-        }
-
-        private val grid10 = mutableListOf<List<ClockData>>().apply {
-            add(row4.mirrorVertically())
-            add(row3.mirrorVertically())
-            add(row2.mirrorVertically())
-            add(row1.mirrorVertically())
-        }
-
-        private val grid11 = mutableListOf<List<ClockData>>().apply {
-            grid10.forEach {
-                add(it.toMutableList().reverseAndMirrorHorizontally())
+                add(row)
             }
         }
+
+        private val grid00 = rows
+        private val grid01 = rows.map { it.reverseAndMirrorHorizontally() }.toMutableList()
+        private val grid10 = rows.reversed().map { it.mirrorVertically() }.toMutableList()
+        private val grid11 = grid10.map { it.reverseAndMirrorHorizontally() }.toMutableList()
 
         /**
          * Thanks to Zhuinden ;)
@@ -86,9 +49,9 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
             }
         }
 
-        private fun MutableList<ClockData>.mirrorVertically(): List<ClockData> {
+        private fun List<ClockData>.mirrorVertically(): List<ClockData> {
             return this.map {
-                it.copy(
+                ClockData(
                     degreeOne = getMirroredAngleFor(it.degreeOne),
                     degreeTwo = getMirroredAngleFor(it.degreeTwo)
                 )
@@ -96,11 +59,11 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
         }
 
 
-        private fun MutableList<ClockData>.reverseAndMirrorHorizontally(): List<ClockData> {
+        private fun List<ClockData>.reverseAndMirrorHorizontally(): List<ClockData> {
             return reversed().map {
                 val degreeOne = 360 - it.degreeOne
                 val degreeTwo = 360 - it.degreeTwo
-                it.copy(
+                ClockData(
                     degreeOne = degreeOne,
                     degreeTwo = degreeTwo
                 )
@@ -136,30 +99,21 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
         fun getRippleMatrix(ripple: Movement.Ripple): List<List<ClockData>> {
             return mutableListOf<List<ClockData>>().apply {
 
-                when (ripple.to) {
-                    Movement.Ripple.To.START -> {
-                        repeat(4) { rowIndex ->
-                            val list = mergeHorizontally(grid00, grid01, rowIndex)
-                            add(list)
-                        }
-
-                        repeat(4) { i ->
-                            val list = mergeHorizontally(grid10, grid11, i)
-                            add(list)
-                        }
+                repeat(4) { rowIndex ->
+                    val list = when (ripple.to) {
+                        Movement.Ripple.To.START -> mergeHorizontally(grid00, grid01, rowIndex)
+                        Movement.Ripple.To.END -> mergeHorizontallyAndFlip(grid00, grid01, rowIndex)
                     }
-                    Movement.Ripple.To.END -> {
 
-                        repeat(4) { rowIndex ->
-                            val list = mergeHorizontallyAndFlip(grid00, grid01, rowIndex)
-                            add(list)
-                        }
+                    add(list)
+                }
 
-                        repeat(4) { i ->
-                            val list = mergeHorizontallyAndFlip(grid10, grid11, i)
-                            add(list)
-                        }
+                repeat(4) { i ->
+                    val list = when (ripple.to) {
+                        Movement.Ripple.To.START -> mergeHorizontally(grid10, grid11, i)
+                        Movement.Ripple.To.END -> mergeHorizontallyAndFlip(grid10, grid11, i)
                     }
+                    add(list)
                 }
             }
         }
@@ -189,7 +143,7 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
                 addAll(row2)
             }.subList(0, COLUMNS).map {
 
-                it.copy(
+                ClockData(
                     degreeOne = it.degreeOne + 360,
                     degreeTwo = it.degreeTwo - 360,
                 )

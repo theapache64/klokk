@@ -3,9 +3,11 @@ package com.theapache64.klokk
 import androidx.compose.desktop.Window
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.theapache64.klokk.composable.Clock
@@ -27,7 +29,7 @@ const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
 const val ENJOY_TIME_IN_MILLIS = 500L
 val BACKGROUND_COLOR = Black
 val CLOCK_BACKGROUND = CodGray
-
+const val DEBUG = true
 
 fun main() {
 
@@ -51,6 +53,14 @@ fun main() {
             verticalArrangement = Arrangement.Center
         ) {
 
+            if (DEBUG) {
+                Text(
+                    text = "DEBUG: $activeMovement",
+                    color = Color.White,
+                    modifier = Modifier.padding(bottom = 10.dp)
+                )
+            }
+
             // Building clock matrix
             repeat(ROWS) { i ->
                 Row {
@@ -59,7 +69,6 @@ fun main() {
                         Clock(
                             _needleOneDegree = clockData.degreeOne,
                             _needleTwoDegree = clockData.degreeTwo,
-                            delay = clockData.delay,
                             durationInMillis = activeMovement.durationInMillis,
                             modifier = Modifier.requiredSize(CLOCK_SIZE.dp)
                         )
