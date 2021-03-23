@@ -23,7 +23,7 @@ import kotlin.math.sin
 
 
 private val NEEDLE_COLOR = Color.White
-private val CLOCK_BACKGROUND = CodGray
+val CLOCK_BACKGROUND = CodGray
 
 @Composable
 fun Clock(

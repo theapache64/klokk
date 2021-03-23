@@ -1,20 +1,20 @@
 package com.theapache64.klokk
 
 import androidx.compose.desktop.Window
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.theapache64.klokk.composable.BottomToolBar
 import com.theapache64.klokk.composable.Clock
 import com.theapache64.klokk.movement.core.Movement
 import com.theapache64.klokk.theme.Black
-import com.theapache64.klokk.theme.CodGray
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 // Configs
@@ -27,22 +27,32 @@ const val CLOCK_SIZE = 60
 const val CLOCKS_CONTAINER_WIDTH = CLOCK_SIZE * COLUMNS
 const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
 const val ENJOY_TIME_IN_MILLIS = 500L
-const val DEBUG = true
+const val IS_DEBUG = false
 private val BACKGROUND_COLOR = Black
 
+private val standBy by lazy {
+    Movement.StandBy()
+}
+
+@ExperimentalFoundationApi
 fun main() {
 
     Window(
         title = "Klokk",
         // Clock container plus the padding we need
-        size = IntSize(CLOCKS_CONTAINER_WIDTH + PADDING, CLOCKS_CONTAINER_HEIGHT + PADDING),
+        size = IntSize(CLOCKS_CONTAINER_WIDTH + PADDING, CLOCKS_CONTAINER_HEIGHT + PADDING + 40),
     ) {
 
         // To hold and control movement transition
-        var activeMovement by remember { mutableStateOf<Movement>(Movement.StandBy()) }
+        var activeMovement by remember { mutableStateOf<Movement>(standBy) }
+
+        // To control the auto playing animation
+        var shouldPlayAutoAnim by remember { mutableStateOf(true) }
 
         // Generating degree matrix using the active movement
         val degreeMatrix = activeMovement.getMatrixGenerator().getVerifiedMatrix()
+
+        val scope = rememberCoroutineScope()
 
         Column(
             modifier = Modifier
@@ -51,14 +61,6 @@ fun main() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
-            if (DEBUG) {
-                Text(
-                    text = "DEBUG: $activeMovement",
-                    color = Color.White,
-                    modifier = Modifier.padding(bottom = 10.dp)
-                )
-            }
 
             // Building clock matrix
             repeat(ROWS) { i ->
@@ -75,14 +77,14 @@ fun main() {
                 }
             }
 
-            // The animation loop
-            LaunchedEffect(Unit) {
-                println("Animation loop created and started..")
-                val trance = Movement.Trance()
-                val waitTime = trance.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
 
-                while (true) {
-                    delay(ENJOY_TIME_IN_MILLIS * 3)
+            // The animation loop
+            LaunchedEffect(shouldPlayAutoAnim) {
+                println("Animation loop created and started -> will run? $shouldPlayAutoAnim")
+                val waitTime = activeMovement.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
+
+                while (shouldPlayAutoAnim) {
+                    delay(ENJOY_TIME_IN_MILLIS)
                     activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
                     delay(waitTime)
 
@@ -105,6 +107,30 @@ fun main() {
                     delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
                 }
             }
+
+            BottomToolBar(
+                activeMovement = activeMovement,
+                isAnimPlaying = shouldPlayAutoAnim,
+                onTimeClicked = {
+                    val wasAlreadyStopped = shouldPlayAutoAnim
+                    shouldPlayAutoAnim = false
+                    activeMovement = Movement.Time() // then show time
+                    if (wasAlreadyStopped) {
+                        // if its not already stopped start again...
+                        scope.launch {
+                            delay(activeMovement.durationInMillis.toLong()) // let the animation finish
+                            shouldPlayAutoAnim = true // now start the loop again...
+                        }
+                    }
+                },
+                onPlayClicked = {
+                    shouldPlayAutoAnim = true
+                },
+                onStopClicked = {
+                    shouldPlayAutoAnim = false
+                    activeMovement = standBy
+                }
+            )
         }
     }
 }
