@@ -30,13 +30,16 @@ fun Clock(
     _needleOneDegree: Float = 270f,
     _needleTwoDegree: Float = 0f,
     durationInMillis: Int = 500,
+    delay: Int = 0,
     easing: Easing = FastOutSlowInEasing,
     modifier: Modifier = Modifier,
 ) {
 
+    println("Delay is $delay")
+
     val needleOneDegree = (_needleOneDegree * Math.PI / 180).toFloat()
     val needleTwoDegree = (_needleTwoDegree * Math.PI / 180).toFloat()
-    val animationSpec = tween<Float>(durationMillis = durationInMillis, easing = easing)
+    val animationSpec = tween<Float>(durationMillis = durationInMillis, easing = easing, delayMillis = delay)
 
     val needleOneDegreeAnim by animateFloatAsState(
         needleOneDegree,

@@ -9,7 +9,7 @@ import com.theapache64.klokk.movement.core.Movement
  * A ripple matrix with 4x4 mirrored-flipped-matrix
  */
 class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ripple>(data) {
-    companion object{
+    companion object {
         private const val ROW_CLOCK_COUNT = 8
 
         private val row1 = mutableListOf<ClockData>().apply {
@@ -123,7 +123,7 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
                 add(
                     ClockData(
                         degreeOne = needleOne,
-                        degreeTwo = needleTwo
+                        degreeTwo = needleTwo,
                     )
                 )
 

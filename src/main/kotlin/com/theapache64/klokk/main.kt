@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.theapache64.klokk.composable.Clock
@@ -60,6 +59,7 @@ fun main() {
                         Clock(
                             _needleOneDegree = clockData.degreeOne,
                             _needleTwoDegree = clockData.degreeTwo,
+                            delay = clockData.delay,
                             durationInMillis = activeMovement.durationInMillis,
                             modifier = Modifier.requiredSize(CLOCK_SIZE.dp)
                         )
@@ -74,7 +74,7 @@ fun main() {
                 val waitTime = trance.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
 
                 while (true) {
-                    delay(ENJOY_TIME_IN_MILLIS * 3)
+                    /*delay(ENJOY_TIME_IN_MILLIS * 3)
                     activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
                     delay(waitTime)
 
@@ -85,7 +85,7 @@ fun main() {
                     delay(waitTime)
 
                     activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
-                    delay(waitTime)
+                    delay(waitTime)*/
 
                     activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
                     delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
@@ -93,8 +93,8 @@ fun main() {
                     activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
                     delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
 
-                    activeMovement = Movement.Time() // then show time
-                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
+                    /*activeMovement = Movement.Time() // then show time
+                    delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)*/
                 }
             }
         }
