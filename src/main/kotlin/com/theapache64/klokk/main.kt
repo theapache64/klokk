@@ -124,12 +124,11 @@ fun main() {
                             if (textInput.isEmpty()) {
                                 // no text
                                 shouldPlayAutoAnim = true
-                                // TODO :
-                                // activeMovement = Movement.Text(textInput)
+                                activeMovement = standBy
                             } else {
                                 // has some text
                                 shouldPlayAutoAnim = false
-                                activeMovement = standBy
+                                activeMovement = Movement.Text(textInput)
                             }
                         }
                     },

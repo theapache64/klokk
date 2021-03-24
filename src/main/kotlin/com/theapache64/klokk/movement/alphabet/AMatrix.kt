@@ -2,7 +2,7 @@ package com.theapache64.klokk.movement.alphabet
 
 import com.theapache64.klokk.model.ClockData
 
-class AMatrix : AlphabetMatrix() {
+object AMatrix : AlphabetMatrix() {
     override fun getRow1(): List<ClockData?> {
         return listOf(
             null,
