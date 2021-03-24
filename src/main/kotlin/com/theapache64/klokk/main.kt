@@ -14,7 +14,9 @@ import com.theapache64.klokk.composable.Clock
 import com.theapache64.klokk.movement.core.Movement
 import com.theapache64.klokk.theme.Black
 import com.theapache64.klokk.theme.KlokkTheme
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 // Configs
@@ -32,9 +34,6 @@ const val ENJOY_TIME_IN_MILLIS = 500L
 const val IS_DEBUG = false
 private val BACKGROUND_COLOR = Black
 
-private val standBy by lazy {
-    Movement.StandBy()
-}
 
 @ExperimentalFoundationApi
 fun main() {
@@ -45,8 +44,10 @@ fun main() {
         size = IntSize(CLOCKS_CONTAINER_WIDTH + PADDING, CLOCKS_CONTAINER_HEIGHT + PADDING + 40),
     ) {
 
+        val infiniteTimeLoop = rememberCoroutineScope()
+
         // To hold and control movement transition
-        var activeMovement by remember { mutableStateOf<Movement>(standBy) }
+        var activeMovement by remember { mutableStateOf<Movement>(Movement.StandBy) }
 
         // To control the auto playing animation
         var shouldPlayAutoAnim by remember { mutableStateOf(true) }
@@ -90,7 +91,7 @@ fun main() {
 
                     while (shouldPlayAutoAnim) {
                         delay(ENJOY_TIME_IN_MILLIS)
-                        activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
+                        /*activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
                         delay(waitTime)
 
                         activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
@@ -103,13 +104,16 @@ fun main() {
                         delay(waitTime)
 
                         activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
-                        delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
+                        delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)*/
+
 
                         activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
                         delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
 
-                        activeMovement = Movement.Time() // then show time
-                        delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
+                        for (i in 0 until 30) {
+                            activeMovement = Movement.Time() // then show time
+                            delay(1000)
+                        }
                     }
                 }
 
@@ -124,7 +128,7 @@ fun main() {
                             if (textInput.isEmpty()) {
                                 // no text
                                 shouldPlayAutoAnim = true
-                                activeMovement = standBy
+                                activeMovement = Movement.StandBy
                             } else {
                                 // has some text
                                 shouldPlayAutoAnim = false
@@ -135,14 +139,20 @@ fun main() {
 
                     onShowTimeClicked = {
                         shouldPlayAutoAnim = false // stop auto play
-                        activeMovement = Movement.Time() // then show time
+                        infiniteTimeLoop.launch {
+                            while (true) {
+                                activeMovement = Movement.Time() // then show time
+                                delay(activeMovement.durationInMillis.toLong())
+                            }
+                        }
                     },
                     onPlayClicked = {
                         shouldPlayAutoAnim = true
+                        infiniteTimeLoop.cancel()
                     },
                     onStopClicked = {
                         shouldPlayAutoAnim = false
-                        activeMovement = standBy
+                        activeMovement = Movement.StandBy
                     }
                 )
             }

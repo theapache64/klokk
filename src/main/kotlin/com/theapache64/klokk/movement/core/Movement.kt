@@ -22,13 +22,7 @@ sealed class Movement(
     /**
      * To move clocks to stand by position
      */
-    data class StandBy(
-        val degree: Float = DEFAULT_STAND_BY_DEGREE,
-    ) : Movement(durationInMillis = DEFAULT_ANIMATION_DURATION) {
-        companion object {
-            const val DEFAULT_STAND_BY_DEGREE = 225f
-        }
-
+    object StandBy : Movement(durationInMillis = DEFAULT_ANIMATION_DURATION) {
         override fun getMatrixGenerator(): MatrixGenerator<Movement> {
             return StandByMatrixGenerator(this)
         }

@@ -16,7 +16,7 @@ class TextMatrixGenerator(data: Movement.Text) : MatrixGenerator<Movement.Text>(
     }
 
     override fun generateMatrix(): List<List<ClockData>> {
-        val fullMatrix = StandByMatrixGenerator(Movement.StandBy())
+        val fullMatrix = StandByMatrixGenerator(Movement.StandBy)
             .getVerifiedMatrix()
             .map { it.toMutableList() }
             .toMutableList()
