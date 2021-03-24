@@ -93,20 +93,23 @@ fun main() {
                     while (shouldPlayAutoAnim) {
                         delay(ENJOY_TIME_IN_MILLIS)
 
-                        activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
-                        delay(mediumDelay)
+                        /* activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
+                         delay(mediumDelay)
 
-                        activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
-                        delay(mediumDelay) // flower doesn't have enjoy time
+                         activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
+                         delay(mediumDelay) // flower doesn't have enjoy time
 
-                        activeMovement = Movement.Trance(to = Movement.Trance.To.STAR) // To star, through circle (auto)
-                        delay(mediumDelay)
+                         activeMovement = Movement.Trance(to = Movement.Trance.To.STAR) // To star, through circle (auto)
+                         delay(mediumDelay)
 
-                        activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
-                        delay(defaultWaitTime)
+                         activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
+                         delay(defaultWaitTime)*/
 
                         activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
                         delay(mediumDelay)
+
+                        activeMovement = Movement.Ripple(to = Movement.Ripple.To.TIME_TABLE) // then ripple start
+                        delay(defaultWaitTime)
 
                         activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
                         delay(mediumDelay)

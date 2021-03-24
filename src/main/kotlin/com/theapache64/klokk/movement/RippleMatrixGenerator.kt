@@ -10,7 +10,8 @@ import com.theapache64.klokk.movement.core.Movement
  */
 class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ripple>(data) {
     companion object {
-        private const val ROW_CLOCK_COUNT = 8
+        private const val ROW_CLOCK_COUNT = 4
+        private const val COLUMN_CLOCK_COUNT = 8
 
         private val rows = mutableListOf<List<ClockData>>().apply {
             val startOne = 45f
@@ -33,10 +34,36 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
             }
         }
 
+        private val timeTableRows = mutableListOf<List<ClockData>>().apply {
+            val startOne = 0f
+            val startTwo = 0f // the [0,0]
+
+            val endOne = 360f
+            val endTwo = 360f // [last,last]
+
+            repeat(4) {
+                val row = mutableListOf<ClockData>().apply {
+                    generateRow(
+                        startNeedleOneDegree = startOne,
+                        startNeedleTwoDegree = startTwo,
+                        endNeedleOneDegree = endOne,
+                        endNeedleTwoDegree = endTwo,
+                    )
+                }
+
+                add(row)
+            }
+        }
+
         private val grid00 = rows
         private val grid01 = rows.map { it.reverseAndMirrorHorizontally() }.toMutableList()
         private val grid10 = rows.reversed().map { it.mirrorVertically() }.toMutableList()
         private val grid11 = grid10.map { it.reverseAndMirrorHorizontally() }.toMutableList()
+
+        private val timeTableGrid00 = timeTableRows
+        private val timeTableGrid01 = timeTableRows.map { it.reverseAndMirrorHorizontally() }.toMutableList()
+        private val timeTableGrid10 = timeTableRows.reversed().map { it.mirrorVertically() }.toMutableList()
+        private val timeTableGrid11 = timeTableGrid10.map { it.reverseAndMirrorHorizontally() }.toMutableList()
 
         /**
          * Thanks to Zhuinden ;)
@@ -77,12 +104,12 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
             endNeedleOneDegree: Float,
             endNeedleTwoDegree: Float,
         ) {
-            val intervalOne = (endNeedleOneDegree - startNeedleOneDegree) / ROW_CLOCK_COUNT
-            val intervalTwo = (endNeedleTwoDegree - startNeedleTwoDegree) / ROW_CLOCK_COUNT
+            val intervalOne = (endNeedleOneDegree - startNeedleOneDegree) / COLUMN_CLOCK_COUNT
+            val intervalTwo = (endNeedleTwoDegree - startNeedleTwoDegree) / COLUMN_CLOCK_COUNT
             var needleOne = startNeedleOneDegree
             var needleTwo = startNeedleTwoDegree
 
-            repeat(ROW_CLOCK_COUNT) {
+            repeat(COLUMN_CLOCK_COUNT) {
                 add(
                     ClockData(
                         degreeOne = needleOne,
@@ -103,6 +130,7 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
                     val list = when (ripple.to) {
                         Movement.Ripple.To.START -> mergeHorizontally(grid00, grid01, rowIndex)
                         Movement.Ripple.To.END -> mergeHorizontallyAndFlip(grid00, grid01, rowIndex)
+                        Movement.Ripple.To.TIME_TABLE -> mergeHorizontally(timeTableGrid00, timeTableGrid01, rowIndex)
                     }
 
                     add(list)
@@ -112,6 +140,7 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
                     val list = when (ripple.to) {
                         Movement.Ripple.To.START -> mergeHorizontally(grid10, grid11, i)
                         Movement.Ripple.To.END -> mergeHorizontallyAndFlip(grid10, grid11, i)
+                        Movement.Ripple.To.TIME_TABLE -> mergeHorizontally(timeTableGrid10, timeTableGrid11, i)
                     }
                     add(list)
                 }

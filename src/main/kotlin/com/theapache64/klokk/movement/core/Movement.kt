@@ -57,7 +57,7 @@ sealed class Movement(
         }
 
         enum class To {
-            START, END
+            START, END, TIME_TABLE
         }
     }
 
