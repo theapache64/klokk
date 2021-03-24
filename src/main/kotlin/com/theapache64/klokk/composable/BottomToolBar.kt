@@ -1,14 +1,10 @@
 package com.theapache64.klokk.composable
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.Stop
@@ -28,7 +24,7 @@ fun BottomToolBar(
     activeMovement: Movement, // to show debug info
     isAnimPlaying: Boolean,
     textInput: String,
-    onTimeClicked: () -> Unit,
+    onShowTimeClicked: () -> Unit,
     onPlayClicked: () -> Unit,
     onStopClicked: () -> Unit,
     onTextInputChanged: (String) -> Unit,
@@ -67,11 +63,11 @@ fun BottomToolBar(
         IconTextButton(
             text = "SHOW TIME",
             imageVector = Icons.Outlined.Update,
-            onClicked = onTimeClicked
+            onClicked = onShowTimeClicked
         )
 
         Row(
-            modifier= Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
 
@@ -83,8 +79,6 @@ fun BottomToolBar(
                     Text("Try some text here")
                 }
             )
-
-            // Align-Center
 
             // Debug Info
             if (IS_DEBUG) {

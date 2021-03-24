@@ -87,6 +87,10 @@ sealed class Movement(
         override fun getMatrixGenerator(): MatrixGenerator<Movement> {
             return TextMatrixGenerator(this)
         }
+
+        enum class Alignment {
+            CENTER, LEFT
+        }
     }
 
 }

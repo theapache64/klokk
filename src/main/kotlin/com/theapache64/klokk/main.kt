@@ -15,7 +15,6 @@ import com.theapache64.klokk.movement.core.Movement
 import com.theapache64.klokk.theme.Black
 import com.theapache64.klokk.theme.KlokkTheme
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 // Configs
@@ -54,10 +53,10 @@ fun main() {
 
         var textInput by remember { mutableStateOf("") }
 
+        val isCenterAligned by remember { mutableStateOf(false) }
+
         // Generating degree matrix using the active movement
         val degreeMatrix = activeMovement.getMatrixGenerator().getVerifiedMatrix()
-
-        val scope = rememberCoroutineScope()
 
         KlokkTheme {
             Column(
@@ -135,17 +134,9 @@ fun main() {
                         }
                     },
 
-                    onTimeClicked = {
-                        val wasAlreadyStopped = shouldPlayAutoAnim
-                        shouldPlayAutoAnim = false
+                    onShowTimeClicked = {
+                        shouldPlayAutoAnim = false // stop auto play
                         activeMovement = Movement.Time() // then show time
-                        if (wasAlreadyStopped) {
-                            // if its not already stopped start again...
-                            scope.launch {
-                                delay(activeMovement.durationInMillis.toLong()) // let the animation finish
-                                shouldPlayAutoAnim = true // now start the loop again...
-                            }
-                        }
                     },
                     onPlayClicked = {
                         shouldPlayAutoAnim = true
