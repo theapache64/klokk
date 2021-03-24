@@ -66,7 +66,7 @@ Give a ⭐️ if this project helped you!
 - [ ] Wave Movement
 - [ ] Tornado Movement
 - [ ] Background Music
-- [ ] Add second movement to border clocks
+- [x] Add second movement to border clocks
 - [ ] Add alphabets
 
 ## 📝 License

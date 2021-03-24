@@ -87,33 +87,32 @@ fun main() {
                 // The animation loop
                 LaunchedEffect(shouldPlayAutoAnim) {
                     println("Animation loop created and started -> will run? $shouldPlayAutoAnim")
-                    val waitTime = activeMovement.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
+                    val defaultWaitTime = activeMovement.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
+                    val mediumDelay = activeMovement.durationInMillis.toLong() - ENJOY_TIME_IN_MILLIS
 
                     while (shouldPlayAutoAnim) {
                         delay(ENJOY_TIME_IN_MILLIS)
-                        /*activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
-                        delay(waitTime)
+
+                        activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
+                        delay(mediumDelay)
 
                         activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
-                        delay(waitTime - ENJOY_TIME_IN_MILLIS)
+                        delay(mediumDelay) // flower doesn't have enjoy time
 
                         activeMovement = Movement.Trance(to = Movement.Trance.To.STAR) // To star, through circle (auto)
-                        delay(waitTime)
+                        delay(mediumDelay)
 
                         activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
-                        delay(waitTime)
+                        delay(defaultWaitTime)
 
                         activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
-                        delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)*/
-
+                        delay(mediumDelay)
 
                         activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
-                        delay(activeMovement.durationInMillis + ENJOY_TIME_IN_MILLIS)
+                        delay(mediumDelay)
 
-                        for (i in 0 until 30) {
-                            activeMovement = Movement.Time() // then show time
-                            delay(1000)
-                        }
+                        activeMovement = Movement.Time() // then show time
+                        delay(defaultWaitTime)
                     }
                 }
 
