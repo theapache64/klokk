@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.theapache64.klokk.composable.BottomToolBar
 import com.theapache64.klokk.composable.Clock
+import com.theapache64.klokk.movement.alphabet.TextMatrixGenerator
 import com.theapache64.klokk.movement.core.Movement
 import com.theapache64.klokk.theme.Black
 import com.theapache64.klokk.theme.KlokkTheme
@@ -22,10 +23,6 @@ import kotlinx.coroutines.launch
 // Configs
 const val COLUMNS = 15
 const val ROWS = 8
-const val LETTER_WIDTH = 3
-const val MAX_CHARS = COLUMNS / LETTER_WIDTH
-const val DIGIT_COLUMNS = 3
-const val DIGIT_ROWS = 6
 const val PADDING = 100
 const val CLOCK_SIZE = 60
 const val CLOCKS_CONTAINER_WIDTH = CLOCK_SIZE * COLUMNS
@@ -33,7 +30,6 @@ const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
 const val ENJOY_TIME_IN_MILLIS = 1000L
 const val IS_DEBUG = false
 private val BACKGROUND_COLOR = Black
-
 
 @ExperimentalFoundationApi
 fun main() {
@@ -44,7 +40,11 @@ fun main() {
         size = IntSize(CLOCKS_CONTAINER_WIDTH + PADDING, CLOCKS_CONTAINER_HEIGHT + PADDING + 40),
     ) {
 
-        val infiniteTimeLoop = rememberCoroutineScope()
+
+        /**
+         * To control the infinite animation loop
+         */
+        val infiniteLoopScope = rememberCoroutineScope()
 
         // To hold and control movement transition
         var activeMovement by remember { mutableStateOf<Movement>(Movement.StandBy) }
@@ -119,9 +119,11 @@ fun main() {
                 BottomToolBar(
                     activeMovement = activeMovement,
                     isAnimPlaying = shouldPlayAutoAnim,
+
+                    // TODO :WIP
                     textInput = textInput,
                     onTextInputChanged = { newInput ->
-                        if (newInput.length <= MAX_CHARS) {
+                        if (newInput.length <= TextMatrixGenerator.MAX_CHARS) {
                             textInput = newInput.trim().toUpperCase()
 
                             if (textInput.isEmpty()) {
@@ -138,7 +140,7 @@ fun main() {
 
                     onShowTimeClicked = {
                         shouldPlayAutoAnim = false // stop auto play
-                        infiniteTimeLoop.launch {
+                        infiniteLoopScope.launch {
                             while (true) {
                                 activeMovement = Movement.Time() // then show time
                                 delay(activeMovement.durationInMillis.toLong())
@@ -147,7 +149,7 @@ fun main() {
                     },
                     onPlayClicked = {
                         shouldPlayAutoAnim = true
-                        infiniteTimeLoop.cancel()
+                        infiniteLoopScope.cancel()
                     },
                     onStopClicked = {
                         shouldPlayAutoAnim = false

@@ -1,5 +1,6 @@
 package com.theapache64.klokk.movement.alphabet
 
+import com.theapache64.klokk.COLUMNS
 import com.theapache64.klokk.model.ClockData
 import com.theapache64.klokk.movement.StandByMatrixGenerator
 import com.theapache64.klokk.movement.core.MatrixGenerator
@@ -11,6 +12,10 @@ import com.theapache64.klokk.movement.core.Movement
 class TextMatrixGenerator(data: Movement.Text) : MatrixGenerator<Movement.Text>(data) {
 
     companion object {
+
+        private const val LETTER_WIDTH = 3
+        const val MAX_CHARS = COLUMNS / LETTER_WIDTH
+
         private val keyMap by lazy {
             mapOf(
                 'A' to AMatrix

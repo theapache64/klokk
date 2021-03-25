@@ -1,7 +1,5 @@
 package com.theapache64.klokk.movement.time
 
-import com.theapache64.klokk.DIGIT_COLUMNS
-import com.theapache64.klokk.DIGIT_ROWS
 import com.theapache64.klokk.model.ClockData
 import com.theapache64.klokk.movement.StandByMatrixGenerator
 import com.theapache64.klokk.movement.core.MatrixGenerator
@@ -14,6 +12,9 @@ import java.text.SimpleDateFormat
  */
 class TimeMatrixGenerator(data: Movement.Time) : MatrixGenerator<Movement.Time>(data) {
     companion object {
+
+        private const val DIGIT_COLUMNS = 3
+        private const val DIGIT_ROWS = 6
 
         private val timeFormat = SimpleDateFormat("HHmmss")
 
