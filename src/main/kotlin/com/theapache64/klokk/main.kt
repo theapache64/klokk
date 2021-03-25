@@ -54,8 +54,6 @@ fun main() {
 
         var textInput by remember { mutableStateOf("") }
 
-        val isCenterAligned by remember { mutableStateOf(false) }
-
         // Generating degree matrix using the active movement
         val degreeMatrix = activeMovement.getMatrixGenerator().getVerifiedMatrix()
 

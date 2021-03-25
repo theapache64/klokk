@@ -54,5 +54,4 @@ abstract class MatrixGenerator<out T : Movement>(
     }
 
 
-
 }

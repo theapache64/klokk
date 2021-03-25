@@ -10,7 +10,7 @@ import com.theapache64.klokk.movement.core.Movement
  * Responsible to show Square, Flower, Wings and Star transition
  */
 class TranceMatrixGenerator(data: Movement.Trance) : MatrixGenerator<Movement.Trance>(data) {
-    companion object{
+    companion object {
         /**
          * Trance matrix is a 2x2 matrix pattern spanned to ROWSxCOLUMN
          */

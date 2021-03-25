@@ -62,7 +62,7 @@ fun BottomToolBar(
         }
 
         // Time Button
-        if(isAnimPlaying){
+        if (isAnimPlaying) {
             IconTextButton(
                 text = "SHOW TIME",
                 imageVector = Icons.Outlined.Update,

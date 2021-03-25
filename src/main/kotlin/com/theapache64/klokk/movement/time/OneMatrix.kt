@@ -46,5 +46,4 @@ object OneMatrix : DigitMatrix() {
     }
 
 
-
 }

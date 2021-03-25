@@ -3,7 +3,7 @@ package com.theapache64.klokk.movement.time
 import com.theapache64.klokk.model.ClockData
 
 object FiveMatrix : DigitMatrix() {
-    
+
     override fun getRow1(): List<ClockData?> {
         return listOf(
             clockDataRightAngledBottomRight(),
