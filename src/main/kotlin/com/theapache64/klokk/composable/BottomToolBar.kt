@@ -62,11 +62,13 @@ fun BottomToolBar(
         }
 
         // Time Button
-        IconTextButton(
-            text = "SHOW TIME",
-            imageVector = Icons.Outlined.Update,
-            onClicked = onShowTimeClicked
-        )
+        if(isAnimPlaying){
+            IconTextButton(
+                text = "SHOW TIME",
+                imageVector = Icons.Outlined.Update,
+                onClicked = onShowTimeClicked
+            )
+        }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
