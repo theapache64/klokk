@@ -16,6 +16,10 @@
 - [Watch](https://www.youtube.com/watch?v=lTsZOs_PkbM) Development - Behind the Scenes - Part 1
 - [Watch](https://www.youtube.com/watch?v=ejp9850FWy8) Development - Behind the Scenes - Part 2
 
+## 🏃 Run
+
+- Clone the repo and run `./gradlew run`
+
 ## 💡 Inspiration
 
 - Nezih Yılmaz's kinetic countdown timer
