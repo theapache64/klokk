@@ -5,6 +5,9 @@ import com.theapache64.klokk.movement.StandByMatrixGenerator
 import com.theapache64.klokk.movement.core.MatrixGenerator
 import com.theapache64.klokk.movement.core.Movement
 
+/**
+ * TODO : WIP (TBH, too lazy to create matrix map for all alphabets :/)
+ */
 class TextMatrixGenerator(data: Movement.Text) : MatrixGenerator<Movement.Text>(data) {
 
     companion object {
