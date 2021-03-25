@@ -30,7 +30,7 @@ const val PADDING = 100
 const val CLOCK_SIZE = 60
 const val CLOCKS_CONTAINER_WIDTH = CLOCK_SIZE * COLUMNS
 const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
-const val ENJOY_TIME_IN_MILLIS = 500L
+const val ENJOY_TIME_IN_MILLIS = 1000L
 const val IS_DEBUG = false
 private val BACKGROUND_COLOR = Black
 
@@ -87,7 +87,7 @@ fun main() {
                 LaunchedEffect(shouldPlayAutoAnim) {
                     println("Animation loop created and started -> will run? $shouldPlayAutoAnim")
                     val defaultWaitTime = activeMovement.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
-                    val mediumDelay = defaultWaitTime - (ENJOY_TIME_IN_MILLIS * 0.5f).toLong()
+                    val mediumDelay = defaultWaitTime - ENJOY_TIME_IN_MILLIS
 
                     while (shouldPlayAutoAnim) {
                         delay(ENJOY_TIME_IN_MILLIS)
@@ -102,7 +102,7 @@ fun main() {
                         delay(mediumDelay)
 
                         activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
-                        delay(defaultWaitTime)
+                        delay(mediumDelay)
 
                         activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
                         delay(mediumDelay)
