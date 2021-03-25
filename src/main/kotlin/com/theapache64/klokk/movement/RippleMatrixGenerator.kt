@@ -1,17 +1,19 @@
 package com.theapache64.klokk.movement
 
 import com.theapache64.klokk.COLUMNS
+import com.theapache64.klokk.ROWS
 import com.theapache64.klokk.model.ClockData
 import com.theapache64.klokk.movement.core.MatrixGenerator
 import com.theapache64.klokk.movement.core.Movement
+import kotlin.math.ceil
 
 /**
  * A ripple matrix with 4x4 mirrored-flipped-matrix
  */
 class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ripple>(data) {
     companion object {
-        private const val ROW_CLOCK_COUNT = 4
-        private const val COLUMN_CLOCK_COUNT = 8
+        private const val ROW_CLOCK_COUNT = ROWS / 2
+        private val COLUMN_CLOCK_COUNT = ceil(COLUMNS / 2.toDouble()).toInt()
 
         private val rows = mutableListOf<List<ClockData>>().apply {
             val startOne = 45f
@@ -20,7 +22,7 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
             val endOne = 135f
             val endTwo = 135f // [last,last]
 
-            repeat(4) {
+            repeat(ROW_CLOCK_COUNT) {
                 val row = mutableListOf<ClockData>().apply {
                     generateRow(
                         startNeedleOneDegree = startOne,
@@ -41,7 +43,7 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
             val endOne = 360f
             val endTwo = 360f // [last,last]
 
-            repeat(4) {
+            repeat(ROW_CLOCK_COUNT) {
                 val row = mutableListOf<ClockData>().apply {
                     generateRow(
                         startNeedleOneDegree = startOne,
@@ -126,7 +128,7 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
         fun getRippleMatrix(ripple: Movement.Ripple): List<List<ClockData>> {
             return mutableListOf<List<ClockData>>().apply {
 
-                repeat(4) { rowIndex ->
+                repeat(ROW_CLOCK_COUNT) { rowIndex ->
                     val list = when (ripple.to) {
                         Movement.Ripple.To.START -> mergeHorizontally(grid00, grid01, rowIndex)
                         Movement.Ripple.To.END -> mergeHorizontallyAndFlip(grid00, grid01, rowIndex)
@@ -136,7 +138,7 @@ class RippleMatrixGenerator(data: Movement.Ripple) : MatrixGenerator<Movement.Ri
                     add(list)
                 }
 
-                repeat(4) { i ->
+                repeat(ROW_CLOCK_COUNT) { i ->
                     val list = when (ripple.to) {
                         Movement.Ripple.To.START -> mergeHorizontally(grid10, grid11, i)
                         Movement.Ripple.To.END -> mergeHorizontallyAndFlip(grid10, grid11, i)
