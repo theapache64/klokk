@@ -1,7 +1,7 @@
 package com.theapache64.klokk.composable
 
 import androidx.compose.animation.core.Easing
-import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.desktop.Window
@@ -31,7 +31,7 @@ fun Clock(
     _needleTwoDegree: Float = 0f,
     durationInMillis: Int = 500,
     delay: Int = 0,
-    easing: Easing = FastOutSlowInEasing,
+    easing: Easing = LinearEasing,
     modifier: Modifier = Modifier,
 ) {
 

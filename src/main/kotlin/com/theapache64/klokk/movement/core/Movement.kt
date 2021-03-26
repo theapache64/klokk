@@ -1,9 +1,10 @@
 package com.theapache64.klokk.movement.core
 
-import com.theapache64.klokk.movement.ripple.RippleMatrixGenerator
 import com.theapache64.klokk.movement.StandByMatrixGenerator
 import com.theapache64.klokk.movement.TranceMatrixGenerator
 import com.theapache64.klokk.movement.alphabet.TextMatrixGenerator
+import com.theapache64.klokk.movement.ripple.RippleMatrixGenerator
+import com.theapache64.klokk.movement.snake.WaveMatrixGenerator
 import com.theapache64.klokk.movement.time.TimeMatrixGenerator
 import java.util.*
 
@@ -87,4 +88,15 @@ sealed class Movement(
         }
     }
 
+    data class Wave(
+        val state: State,
+    ) : Movement(durationInMillis = DEFAULT_ANIMATION_DURATION) {
+        override fun getMatrixGenerator(): MatrixGenerator<Movement> {
+            return WaveMatrixGenerator(this)
+        }
+
+        enum class State {
+            START, END
+        }
+    }
 }

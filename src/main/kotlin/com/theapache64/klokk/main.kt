@@ -27,8 +27,8 @@ const val PADDING = 100
 const val CLOCK_SIZE = 60
 const val CLOCKS_CONTAINER_WIDTH = CLOCK_SIZE * COLUMNS
 const val CLOCKS_CONTAINER_HEIGHT = CLOCK_SIZE * ROWS
-const val ENJOY_TIME_IN_MILLIS = 1000L
-const val IS_DEBUG = false
+const val ENJOY_TIME_IN_MILLIS = 1500L
+const val IS_DEBUG = true
 private val BACKGROUND_COLOR = Black
 
 @ExperimentalFoundationApi
@@ -87,11 +87,11 @@ fun main() {
                     val defaultWaitTime = activeMovement.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
                     val mediumDelay = defaultWaitTime - ENJOY_TIME_IN_MILLIS
 
-                    /*while (shouldPlayAutoAnim) {
+                    while (shouldPlayAutoAnim) {
                         delay(ENJOY_TIME_IN_MILLIS)
 
                         activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
-                        delay(mediumDelay)
+                        delay(defaultWaitTime)
 
                         activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
                         delay(mediumDelay) // flower doesn't have enjoy time
@@ -100,7 +100,16 @@ fun main() {
                         delay(mediumDelay)
 
                         activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
-                        delay(mediumDelay)
+                        delay(defaultWaitTime)
+
+                        // Show wave two times
+                        repeat(2){
+                            activeMovement = Movement.Wave(Movement.Wave.State.START)
+                            delay(mediumDelay)
+
+                            activeMovement = Movement.Wave(Movement.Wave.State.END)
+                            delay(mediumDelay)
+                        }
 
                         activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
                         delay(mediumDelay)
@@ -113,9 +122,8 @@ fun main() {
 
                         activeMovement = Movement.Time() // then show time
                         delay(defaultWaitTime)
-                    }*/
+                    }
 
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.TIME_TABLE)
                 }
 
                 BottomToolBar(
