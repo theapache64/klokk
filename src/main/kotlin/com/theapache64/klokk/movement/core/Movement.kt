@@ -27,6 +27,10 @@ sealed class Movement(
         override fun getMatrixGenerator(): MatrixGenerator<Movement> {
             return StandByMatrixGenerator(this)
         }
+
+        override fun toString(): String {
+            return "StandBy"
+        }
     }
 
     /**

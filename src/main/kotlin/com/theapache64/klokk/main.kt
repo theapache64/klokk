@@ -102,23 +102,29 @@ fun main() {
                         activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
                         delay(defaultWaitTime)
 
-                        // Show wave two times
-                        repeat(2){
-                            activeMovement = Movement.Wave(Movement.Wave.State.START)
-                            delay(mediumDelay)
+                        activeMovement = Movement.Wave(Movement.Wave.State.START)
+                        delay(mediumDelay)
 
-                            activeMovement = Movement.Wave(Movement.Wave.State.END)
-                            delay(mediumDelay)
-                        }
+                        activeMovement = Movement.Wave(Movement.Wave.State.END)
+                        delay(mediumDelay)
 
+                        // Ripple
                         activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
-                        delay(mediumDelay)
-
-                        activeMovement = Movement.Ripple(to = Movement.Ripple.To.TIME_TABLE) // then ripple start
-                        delay(mediumDelay)
+                        delay(defaultWaitTime)
 
                         activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
-                        delay(mediumDelay)
+                        delay(defaultWaitTime)
+
+                        // Time table
+                        activeMovement = Movement.Ripple(to = Movement.Ripple.To.TIME_TABLE) // then ripple start
+                        delay(defaultWaitTime)
+
+                        // Ripple again
+                        activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
+                        delay(defaultWaitTime)
+
+                        activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
+                        delay(defaultWaitTime)
 
                         activeMovement = Movement.Time() // then show time
                         delay(defaultWaitTime)
