@@ -87,7 +87,7 @@ fun main() {
                     val defaultWaitTime = activeMovement.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
                     val mediumDelay = defaultWaitTime - ENJOY_TIME_IN_MILLIS
 
-                    while (shouldPlayAutoAnim) {
+                    /*while (shouldPlayAutoAnim) {
                         delay(ENJOY_TIME_IN_MILLIS)
 
                         activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
@@ -113,7 +113,9 @@ fun main() {
 
                         activeMovement = Movement.Time() // then show time
                         delay(defaultWaitTime)
-                    }
+                    }*/
+
+                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.TIME_TABLE)
                 }
 
                 BottomToolBar(

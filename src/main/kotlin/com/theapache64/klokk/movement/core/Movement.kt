@@ -1,6 +1,6 @@
 package com.theapache64.klokk.movement.core
 
-import com.theapache64.klokk.movement.RippleMatrixGenerator
+import com.theapache64.klokk.movement.ripple.RippleMatrixGenerator
 import com.theapache64.klokk.movement.StandByMatrixGenerator
 import com.theapache64.klokk.movement.TranceMatrixGenerator
 import com.theapache64.klokk.movement.alphabet.TextMatrixGenerator
@@ -10,7 +10,7 @@ import java.util.*
 /**
  * Dynamic animation can't be supported until this fixed -> https://issuetracker.google.com/issues/183220315
  */
-const val DEFAULT_ANIMATION_DURATION = 1000
+const val DEFAULT_ANIMATION_DURATION = 4000
 
 
 sealed class Movement(
