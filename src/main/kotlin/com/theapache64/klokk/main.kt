@@ -72,8 +72,8 @@ fun main() {
                         repeat(COLUMNS) { j ->
                             val clockData = degreeMatrix[i][j]
                             Clock(
-                                _needleOneDegree = clockData.degreeOne,
-                                _needleTwoDegree = clockData.degreeTwo,
+                                needleOneDegree = clockData.degreeOne,
+                                needleTwoDegree = clockData.degreeTwo,
                                 durationInMillis = activeMovement.durationInMillis,
                                 modifier = Modifier.requiredSize(CLOCK_SIZE.dp)
                             )

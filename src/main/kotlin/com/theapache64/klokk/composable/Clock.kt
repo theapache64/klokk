@@ -27,25 +27,25 @@ val CLOCK_BACKGROUND = CodGray
 
 @Composable
 fun Clock(
-    _needleOneDegree: Float = 270f,
-    _needleTwoDegree: Float = 0f,
+    needleOneDegree: Float = 270f,
+    needleTwoDegree: Float = 0f,
     durationInMillis: Int = 500,
     delay: Int = 0,
     easing: Easing = LinearEasing,
     modifier: Modifier = Modifier,
 ) {
 
-    val needleOneDegree = (_needleOneDegree * Math.PI / 180).toFloat()
-    val needleTwoDegree = (_needleTwoDegree * Math.PI / 180).toFloat()
+    val needleOneRadian = (needleOneDegree * Math.PI / 180).toFloat()
+    val needleTwoRadian = (needleTwoDegree * Math.PI / 180).toFloat()
     val animationSpec = tween<Float>(durationMillis = durationInMillis, easing = easing, delayMillis = delay)
 
     val needleOneDegreeAnim by animateFloatAsState(
-        needleOneDegree,
+        needleOneRadian,
         animationSpec = animationSpec
     )
 
     val needleTwoDegreeAnim by animateFloatAsState(
-        needleTwoDegree,
+        needleTwoRadian,
         animationSpec = animationSpec,
     )
 
@@ -63,6 +63,7 @@ fun Clock(
             radius = radius
         )
 
+        // To make the needle origin rounded.
         drawCircle(
             color = NEEDLE_COLOR,
             radius = needleWidth * 0.487f
@@ -75,7 +76,7 @@ fun Clock(
             color = NEEDLE_COLOR,
             start = center,
             end = Offset(
-                // Finding end coordinate for the given degree
+                // Finding end coordinate for the given radian
                 x = center.x + radius2 * sin(needleOneDegreeAnim),
                 y = center.y - radius2 * cos(needleOneDegreeAnim),
             ),
@@ -113,8 +114,8 @@ fun main(args: Array<String>) {
         ) {
 
             Clock(
-                _needleOneDegree = needleOneDegree,
-                _needleTwoDegree = needleTwoDegree,
+                needleOneDegree = needleOneDegree,
+                needleTwoDegree = needleTwoDegree,
                 modifier = Modifier.size(600.dp),
                 durationInMillis = 2000
             )
