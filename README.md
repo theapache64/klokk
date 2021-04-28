@@ -1,20 +1,20 @@
 # 🕒 klokk
 
-![](screenshot.png)
-
-
-## 🙌 Demo 
-![](demo.gif)
-
 ![buildStatus](https://img.shields.io/github/workflow/status/theapache64/kinetic-wall-clock/Java%20CI%20with%20Gradle?style=plastic)
 ![latestVersion](https://img.shields.io/github/v/release/theapache64/kinetic-wall-clock)
 <a href="https://twitter.com/theapache64" target="_blank">
 <img alt="Twitter: theapache64" src="https://img.shields.io/twitter/follow/theapache64.svg?style=social" />
 </a>
 
+
+![](screenshot.png)
+
+
 > A kinetic wall clock, built using Compose Desktop.
 
 ## 🔮 Demo
+
+![](demo.gif)
 
 - [Watch](https://youtu.be/ECNfa3L4U6s) full demo
 - [Watch](https://www.youtube.com/watch?v=lTsZOs_PkbM) Development - Behind the Scenes - Part 1
