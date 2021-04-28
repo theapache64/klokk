@@ -1,7 +1,9 @@
-![](screenshot.png)
-
 # 🕒 klokk
 
+![](screenshot.png)
+
+
+## 🙌 Demo 
 ![](demo.gif)
 
 ![buildStatus](https://img.shields.io/github/workflow/status/theapache64/kinetic-wall-clock/Java%20CI%20with%20Gradle?style=plastic)
