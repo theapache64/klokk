@@ -14,7 +14,7 @@
 
 > A kinetic wall clock, built using Compose Desktop.
 
-# 🔮 Demo
+## 🔮 Demo
 
 - [Watch](https://youtu.be/ECNfa3L4U6s) full demo
 - [Watch](https://www.youtube.com/watch?v=lTsZOs_PkbM) Development - Behind the Scenes - Part 1
