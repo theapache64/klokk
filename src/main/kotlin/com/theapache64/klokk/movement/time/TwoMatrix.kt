@@ -6,49 +6,49 @@ object TwoMatrix : DigitMatrix() {
 
     override fun getRow1(): List<ClockData?> {
         return listOf(
-            clockDataRightAngledBottomRight(),
-            clockDataHorizontal(),
-            clockDataRightAngledBottomLeft()
+            time_3_30(),
+            time_3_45(),
+            time_6_45()
         )
     }
 
     override fun getRow2(): List<ClockData?> {
         return listOf(
-            clockDataRightAngledTopRight(),
-            clockDataRightAngledBottomLeft(),
-            clockDataVertical()
+            time_3(),
+            time_6_45(),
+            time_6()
         )
     }
 
     override fun getRow3(): List<ClockData?> {
         return listOf(
-            clockDataRightAngledBottomRight(),
-            clockDataRightAngledTopLeft(),
-            clockDataVertical()
+            time_3_30(),
+            time_9(),
+            time_6()
         )
     }
 
     override fun getRow4(): List<ClockData?> {
         return listOf(
-            clockDataVertical(),
-            clockDataRightAngledBottomRight(),
-            clockDataRightAngledTopLeft()
+            time_6(),
+            time_3_30(),
+            time_9()
         )
     }
 
     override fun getRow5(): List<ClockData?> {
         return listOf(
-            clockDataVertical(),
-            clockDataRightAngledTopRight(),
-            clockDataRightAngledBottomLeft()
+            time_6(),
+            time_3(),
+            time_6_45()
         )
     }
 
     override fun getRow6(): List<ClockData?> {
         return listOf(
-            clockDataRightAngledTopRight(),
-            clockDataHorizontal(),
-            clockDataRightAngledTopLeft()
+            time_3(),
+            time_3_45(),
+            time_9()
         )
     }
 }

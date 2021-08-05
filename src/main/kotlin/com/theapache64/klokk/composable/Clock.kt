@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.theapache64.klokk.model.ClockData
 import com.theapache64.klokk.theme.CodGray
 import kotlin.math.cos
 import kotlin.math.sin
@@ -103,8 +104,8 @@ fun Clock(
 // Preview
 fun main(args: Array<String>) {
     Window {
-        var needleOneDegree by remember { mutableStateOf(300f) }
-        var needleTwoDegree by remember { mutableStateOf(330f) }
+        var needleOneDegree by remember { mutableStateOf(135f) }
+        var needleTwoDegree by remember { mutableStateOf(225f) }
 
 
         val scope = rememberCoroutineScope()

@@ -1,14 +1,17 @@
 package com.theapache64.klokk
 
-import androidx.compose.desktop.Window
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import com.theapache64.klokk.composable.BottomToolBar
 import com.theapache64.klokk.composable.Clock
 import com.theapache64.klokk.movement.alphabet.TextMatrixGenerator
@@ -31,13 +34,14 @@ const val ENJOY_TIME_IN_MILLIS = 1500L
 const val IS_DEBUG = true
 private val BACKGROUND_COLOR = Black
 
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalFoundationApi
-fun main() {
+fun main() = application {
 
     Window(
+        onCloseRequest = ::exitApplication,
         title = "Klokk",
-        // Clock container plus the padding we need
-        size = IntSize(CLOCKS_CONTAINER_WIDTH + PADDING, CLOCKS_CONTAINER_HEIGHT + PADDING + 40),
+        state = rememberWindowState(width = (CLOCKS_CONTAINER_WIDTH + PADDING).dp, height = (CLOCKS_CONTAINER_HEIGHT + PADDING + 40).dp),
     ) {
 
 

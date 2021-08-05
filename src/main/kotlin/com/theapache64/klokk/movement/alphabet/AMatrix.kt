@@ -6,24 +6,24 @@ object AMatrix : AlphabetMatrix() {
     override fun getRow1(): List<ClockData?> {
         return listOf(
             null,
-            clockDataBottomBoomerang(),
+            time_4_40(),
             null,
         )
     }
 
     override fun getRow2(): List<ClockData?> {
         return listOf(
-            clockDataTopRightCurve(),
-            clockDataHorizontal(),
-            clockDataTopLeftCurve()
+            time_1_30(),
+            time_3_45(),
+            time_6_50()
         )
     }
 
     override fun getRow3(): List<ClockData?> {
         return listOf(
-            clockDataVertical(),
+            time_6(),
             null,
-            clockDataVertical()
+            time_6()
         )
     }
 }
