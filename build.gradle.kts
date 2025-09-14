@@ -1,35 +1,52 @@
-import org.jetbrains.compose.compose
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
-    kotlin("jvm") version "1.5.21"
-    id("org.jetbrains.compose") version "0.5.0-build270"
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
 }
 
 group = "com.theapache64"
 version = "1.0.1"
 
-repositories {
-    jcenter()
-    mavenCentral()
-    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
-}
+kotlin {
+    val xcf = XCFramework()
+    val targets = listOf(macosX64(), macosArm64())
+    targets.forEach { target ->
+        target.binaries.framework {
+            isStatic = true
+            xcf.add(this)
+        }
+        target.binaries.executable {
+            entryPoint = "com.theapache64.klokk.main"
+        }
+    }
 
-dependencies {
-    testImplementation(kotlin("test-junit5"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
-    implementation(compose.desktop.currentOs)
-    implementation(compose.materialIconsExtended)
-}
+    listOf(js(), wasmJs()).forEach {
+        it.browser()
+        it.binaries.executable()
+    }
 
-tasks.test {
-    useJUnitPlatform()
-}
+    jvm()
 
-tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "11"
+    sourceSets {
+        commonMain.dependencies {
+            implementation(compose.ui)
+            implementation(compose.runtime)
+            implementation(compose.material)
+            implementation(compose.materialIconsExtended)
+            implementation(libs.kotlinx.datetime)
+        }
+
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(libs.kotlin.coroutines.swing)
+        }
+    }
 }
 
 compose.desktop {
