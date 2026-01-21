@@ -9,7 +9,7 @@ plugins {
 
 group = "com.theapache64"
 // [latest version - i promise!]
-version = "1.1.1"
+version = "1.1.3"
 
 allprojects {
     repositories {
