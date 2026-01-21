@@ -36,7 +36,10 @@ const val TOOLBAR_HEIGHT = 60
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    onControlsVisibilityChanged: (Boolean) -> Unit = {},
+    onShowControlsHandler: ((showControls: () -> Unit) -> Unit) = {}
+) {
 
     /**
      * To control the infinite animation loop
@@ -50,6 +53,21 @@ fun MainScreen() {
     var shouldPlayAutoAnim by remember { mutableStateOf(true) }
 
     var textInput by remember { mutableStateOf("") }
+
+    // To control toolbar visibility (immersive mode)
+    var areControlsVisible by remember { mutableStateOf(true) }
+
+    // Register handler to show controls (called from MainActivity on back press)
+    LaunchedEffect(Unit) {
+        onShowControlsHandler {
+            areControlsVisible = true
+        }
+    }
+
+    // Notify platform layer when controls visibility changes
+    LaunchedEffect(areControlsVisible) {
+        onControlsVisibilityChanged(areControlsVisible)
+    }
 
     // Generating degree matrix using the active movement
     val degreeMatrix = activeMovement.getMatrixGenerator().getVerifiedMatrix()
@@ -152,46 +170,52 @@ fun MainScreen() {
 
             }
 
-                BottomToolBar(
-                    activeMovement = activeMovement,
-                    isAnimPlaying = shouldPlayAutoAnim,
+                // Show toolbar only when controls are visible
+                if (areControlsVisible) {
+                    BottomToolBar(
+                        activeMovement = activeMovement,
+                        isAnimPlaying = shouldPlayAutoAnim,
 
-                    // TODO :WIP
-                    textInput = textInput,
-                    onTextInputChanged = { newInput ->
-                        if (newInput.length <= TextMatrixGenerator.MAX_CHARS) {
-                            textInput = newInput.trim().uppercase()
+                        // TODO :WIP
+                        textInput = textInput,
+                        onTextInputChanged = { newInput ->
+                            if (newInput.length <= TextMatrixGenerator.MAX_CHARS) {
+                                textInput = newInput.trim().uppercase()
 
-                            if (textInput.isEmpty()) {
-                                // no text
-                                shouldPlayAutoAnim = true
-                                activeMovement = Movement.StandBy
-                            } else {
-                                // has some text
-                                shouldPlayAutoAnim = false
-                                activeMovement = Movement.Text(textInput)
+                                if (textInput.isEmpty()) {
+                                    // no text
+                                    shouldPlayAutoAnim = true
+                                    activeMovement = Movement.StandBy
+                                } else {
+                                    // has some text
+                                    shouldPlayAutoAnim = false
+                                    activeMovement = Movement.Text(textInput)
+                                }
                             }
-                        }
-                    },
+                        },
 
-                    onShowTimeClicked = {
-                        shouldPlayAutoAnim = false // stop auto play
-                        infiniteLoopScope.launch {
-                            while (true) {
-                                activeMovement = Movement.Time() // then show time
-                                delay(activeMovement.durationInMillis.toLong())
+                        onShowTimeClicked = {
+                            shouldPlayAutoAnim = false // stop auto play
+                            infiniteLoopScope.launch {
+                                while (true) {
+                                    activeMovement = Movement.Time() // then show time
+                                    delay(activeMovement.durationInMillis.toLong())
+                                }
                             }
+                        },
+                        onPlayClicked = {
+                            shouldPlayAutoAnim = true
+                            infiniteLoopScope.cancel()
+                        },
+                        onStopClicked = {
+                            shouldPlayAutoAnim = false
+                            activeMovement = Movement.StandBy
+                        },
+                        onHideControlsClicked = {
+                            areControlsVisible = false
                         }
-                    },
-                    onPlayClicked = {
-                        shouldPlayAutoAnim = true
-                        infiniteLoopScope.cancel()
-                    },
-                    onStopClicked = {
-                        shouldPlayAutoAnim = false
-                        activeMovement = Movement.StandBy
-                    }
-                )
+                    )
+                }
             }
         }
     }

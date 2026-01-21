@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.Stop
 import androidx.compose.material.icons.outlined.Update
+import androidx.compose.material.icons.outlined.Fullscreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +31,7 @@ fun BottomToolBar(
     onPlayClicked: () -> Unit,
     onStopClicked: () -> Unit,
     onTextInputChanged: (String) -> Unit,
+    onHideControlsClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -69,6 +71,13 @@ fun BottomToolBar(
                 onClicked = onShowTimeClicked
             )
         }
+
+        // Immersive Mode Button
+        IconTextButton(
+            text = "HIDE CONTROLS",
+            imageVector = Icons.Outlined.Fullscreen,
+            onClicked = onHideControlsClicked
+        )
 
         Row(
             modifier = Modifier.fillMaxWidth(),
