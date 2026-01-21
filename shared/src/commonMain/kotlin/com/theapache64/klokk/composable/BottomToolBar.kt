@@ -1,11 +1,14 @@
 package com.theapache64.klokk.composable
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedButton
@@ -27,6 +30,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import com.theapache64.klokk.IS_DEBUG
 import com.theapache64.klokk.movement.core.Movement
 
@@ -42,6 +48,22 @@ fun BottomToolBar(
     onHideControlsClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val showTimeFocusRequester = remember { FocusRequester() }
+
+    // Request focus on SHOW TIME button when toolbar appears
+    LaunchedEffect(isAnimPlaying) {
+        println("BottomToolBar: isAnimPlaying = $isAnimPlaying")
+        if (isAnimPlaying) {
+            kotlinx.coroutines.delay(100) // Small delay to ensure button is composed
+            try {
+                showTimeFocusRequester.requestFocus()
+                println("BottomToolBar: Focus requested on SHOW TIME button")
+            } catch (e: Exception) {
+                println("BottomToolBar: Failed to request focus: ${e.message}")
+            }
+        }
+    }
+
     Row(
         modifier = modifier
             .padding(
@@ -71,12 +93,13 @@ fun BottomToolBar(
             )
         }
 
-        // Time Button
+        // Time Button (default focus)
         if (isAnimPlaying) {
             IconTextButton(
                 text = "SHOW TIME",
                 imageVector = Icons.Outlined.Update,
-                onClicked = onShowTimeClicked
+                onClicked = onShowTimeClicked,
+                focusRequester = showTimeFocusRequester
             )
         }
 
@@ -120,36 +143,53 @@ private fun IconTextButton(
     text: String,
     imageVector: ImageVector,
     onClicked: () -> Unit,
+    focusRequester: FocusRequester? = null,
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
-    OutlinedButton(
-        onClick = onClicked,
+    Box(
         modifier = Modifier
-            .focusable()
+            .then(
+                if (focusRequester != null) {
+                    Modifier.focusRequester(focusRequester)
+                } else {
+                    Modifier
+                }
+            )
             .onFocusChanged { focusState ->
                 isFocused = focusState.isFocused
-            },
-        border = BorderStroke(
-            width = if (isFocused) 3.dp else 1.dp,
-            color = if (isFocused) Color.White else Color.Gray
-        ),
-        colors = ButtonDefaults.outlinedButtonColors(
-            backgroundColor = if (isFocused) Color.White.copy(alpha = 0.2f) else Color.Transparent,
-            contentColor = Color.White
-        )
+                println("IconTextButton '$text': isFocused = ${focusState.isFocused}")
+            }
+            .border(
+                width = if (isFocused) 5.dp else 0.dp,
+                color = if (isFocused) Color(0xFFFFD700) else Color.Transparent,
+                shape = RoundedCornerShape(4.dp)
+            )
+            .padding(if (isFocused) 4.dp else 0.dp)
     ) {
+        OutlinedButton(
+            onClick = onClicked,
+            modifier = Modifier.focusable(),
+            border = BorderStroke(
+                width = 1.dp,
+                color = if (isFocused) Color(0xFFFFD700) else Color.Gray
+            ),
+            colors = ButtonDefaults.outlinedButtonColors(
+                backgroundColor = if (isFocused) Color(0xFFFFD700).copy(alpha = 0.4f) else Color.Transparent
+            )
+        ) {
 
-        Icon(
-            imageVector = imageVector,
-            tint = Color.White,
-            contentDescription = "ToolBar Icon",
-            modifier = Modifier.padding(end = 10.dp)
-        )
+            Icon(
+                imageVector = imageVector,
+                tint = if (isFocused) Color(0xFFFFD700) else Color.White,
+                contentDescription = "ToolBar Icon",
+                modifier = Modifier.padding(end = 10.dp)
+            )
 
-        Text(
-            text = text,
-            color = Color.White
-        )
+            Text(
+                text = text,
+                color = if (isFocused) Color(0xFFFFD700) else Color.White
+            )
+        }
     }
 }

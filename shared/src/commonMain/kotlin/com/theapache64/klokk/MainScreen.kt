@@ -79,15 +79,19 @@ fun MainScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(BACKGROUND_COLOR)
-                .clickable(
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
-                ) {
-                    // Tap to show controls when in immersive mode
+                .then(
+                    // Only add clickable when controls are hidden (immersive mode)
                     if (!areControlsVisible) {
-                        areControlsVisible = true
+                        Modifier.clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) {
+                            areControlsVisible = true
+                        }
+                    } else {
+                        Modifier
                     }
-                }
+                )
         ) {
             // Calculate responsive dimensions
             val density = LocalDensity.current
