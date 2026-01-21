@@ -135,55 +135,76 @@ fun MainScreen(
                     }
                 }
 
-            // The animation loop
+            // The animation loop with random order and time shown every minute
             LaunchedEffect(shouldPlayAutoAnim) {
                 println("Animation loop created and started -> will run? $shouldPlayAutoAnim")
                 val defaultWaitTime = activeMovement.durationInMillis.toLong() + ENJOY_TIME_IN_MILLIS
-                val mediumDelay = defaultWaitTime - ENJOY_TIME_IN_MILLIS
+
+                // Patterns as list of sequences (some are paired START/END)
+                val patternSequences: List<List<Movement>> = listOf(
+                    // Trance patterns (single)
+                    listOf(Movement.Trance(Movement.Trance.To.SQUARE)),
+                    listOf(Movement.Trance(Movement.Trance.To.FLOWER)),
+                    listOf(Movement.Trance(Movement.Trance.To.STAR)),
+                    listOf(Movement.Trance(Movement.Trance.To.FLY)),
+                    // Wave patterns (paired - START then END)
+                    listOf(Movement.Wave(Movement.Wave.State.START), Movement.Wave(Movement.Wave.State.END)),
+                    // Ripple patterns (paired - START then END)
+                    listOf(Movement.Ripple(Movement.Ripple.To.START), Movement.Ripple(Movement.Ripple.To.END)),
+                    listOf(Movement.Ripple(Movement.Ripple.To.TIME_TABLE)),
+                    // Mosaic patterns - original
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.MONA_LISA)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.MANDALA)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.GALAXY)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.HYPNOTIC_RINGS)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.WAVE_INTERFERENCE)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.INFINITY)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.PEACOCK)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.VORTEX)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.FIBONACCI)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.OPTICAL_DEPTH)),
+                    // Mosaic patterns - new hypnotic
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.KALEIDOSCOPE)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.AURORA)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.TORNADO)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.HEARTBEAT)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.BLACK_HOLE)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.ELECTRIC)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.OCEAN_WAVES)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.BLOOM)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.TESSERACT)),
+                    listOf(Movement.Mosaic(Movement.Mosaic.To.STARBURST)),
+                )
+
+                // Track time for showing clock every minute
+                var lastTimeShownAt = System.currentTimeMillis()
+                val oneMinuteInMillis = 60_000L
 
                 while (shouldPlayAutoAnim) {
-                    delay(ENJOY_TIME_IN_MILLIS)
+                    // Shuffle pattern sequences for random order each cycle
+                    val shuffledSequences = patternSequences.shuffled()
 
-                    activeMovement = Movement.Trance(Movement.Trance.To.SQUARE) // Show square
-                    delay(defaultWaitTime)
+                    for (sequence in shuffledSequences) {
+                        // Play all patterns in the sequence (keeps START/END together)
+                        for (pattern in sequence) {
+                            if (!shouldPlayAutoAnim) break
 
-                    activeMovement = Movement.Trance(to = Movement.Trance.To.FLOWER) // Then flower
-                    delay(mediumDelay) // flower doesn't have enjoy time
+                            // Check if a minute has passed - show time
+                            val now = System.currentTimeMillis()
+                            if (now - lastTimeShownAt >= oneMinuteInMillis) {
+                                activeMovement = Movement.Time()
+                                delay(defaultWaitTime)
+                                lastTimeShownAt = System.currentTimeMillis()
+                                if (!shouldPlayAutoAnim) break
+                            }
 
-                    activeMovement = Movement.Trance(to = Movement.Trance.To.STAR) // To star, through circle (auto)
-                    delay(mediumDelay)
-
-                    activeMovement = Movement.Trance(to = Movement.Trance.To.FLY) // then fly
-                    delay(defaultWaitTime)
-
-                    activeMovement = Movement.Wave(Movement.Wave.State.START)
-                    delay(mediumDelay)
-
-                    activeMovement = Movement.Wave(Movement.Wave.State.END)
-                    delay(mediumDelay)
-
-                    // Ripple
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
-                    delay(defaultWaitTime)
-
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
-                    delay(defaultWaitTime)
-
-                    // Time table
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.TIME_TABLE) // then ripple start
-                    delay(defaultWaitTime)
-
-                    // Ripple again
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.START) // then ripple start
-                    delay(defaultWaitTime)
-
-                    activeMovement = Movement.Ripple(to = Movement.Ripple.To.END) // then ripple end
-                    delay(defaultWaitTime)
-
-                    activeMovement = Movement.Time() // then show time
-                    delay(defaultWaitTime)
+                            // Play the pattern
+                            activeMovement = pattern
+                            delay(defaultWaitTime)
+                        }
+                        if (!shouldPlayAutoAnim) break
+                    }
                 }
-
             }
 
                 // Show toolbar only when controls are visible
