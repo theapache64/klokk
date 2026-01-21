@@ -19,7 +19,7 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "Klokk"
             // [latest version - i promise!]
-            packageVersion = "1.1.3"
+            packageVersion = "1.1.4"
         }
     }
 }
