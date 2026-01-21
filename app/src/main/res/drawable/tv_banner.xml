@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#000000" />
+        </shape>
+    </item>
+
+    <!-- Clock circle icon -->
+    <item
+        android:width="80dp"
+        android:height="80dp"
+        android:gravity="center_vertical|left"
+        android:left="40dp">
+        <shape android:shape="oval">
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+
+    <!-- Inner circle for clock face -->
+    <item
+        android:width="74dp"
+        android:height="74dp"
+        android:gravity="center_vertical|left"
+        android:left="43dp">
+        <shape android:shape="oval">
+            <solid android:color="#000000" />
+        </shape>
+    </item>
+
+    <!-- Clock needle effect -->
+    <item
+        android:width="3dp"
+        android:height="30dp"
+        android:gravity="center_vertical|left"
+        android:left="78dp"
+        android:top="60dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+
+    <item
+        android:width="20dp"
+        android:height="3dp"
+        android:gravity="center_vertical|left"
+        android:left="80dp"
+        android:top="88dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

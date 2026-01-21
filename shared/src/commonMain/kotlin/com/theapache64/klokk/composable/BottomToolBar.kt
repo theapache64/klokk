@@ -1,9 +1,12 @@
 package com.theapache64.klokk.composable
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
@@ -15,10 +18,15 @@ import androidx.compose.material.icons.outlined.Fullscreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import com.theapache64.klokk.IS_DEBUG
 import com.theapache64.klokk.movement.core.Movement
 
@@ -113,9 +121,23 @@ private fun IconTextButton(
     imageVector: ImageVector,
     onClicked: () -> Unit,
 ) {
+    var isFocused by remember { mutableStateOf(false) }
 
     OutlinedButton(
-        onClick = onClicked
+        onClick = onClicked,
+        modifier = Modifier
+            .focusable()
+            .onFocusChanged { focusState ->
+                isFocused = focusState.isFocused
+            },
+        border = BorderStroke(
+            width = if (isFocused) 3.dp else 1.dp,
+            color = if (isFocused) Color.White else Color.Gray
+        ),
+        colors = ButtonDefaults.outlinedButtonColors(
+            backgroundColor = if (isFocused) Color.White.copy(alpha = 0.2f) else Color.Transparent,
+            contentColor = Color.White
+        )
     ) {
 
         Icon(
@@ -126,7 +148,8 @@ private fun IconTextButton(
         )
 
         Text(
-            text = text
+            text = text,
+            color = Color.White
         )
     }
 }

@@ -10,7 +10,17 @@
 ![](screenshot.png)
 
 
-> A kinetic wall clock, built using Compose Desktop.
+> A kinetic wall clock, built using Compose Multiplatform. Available on Android, Android TV, and Desktop (Windows, macOS, Linux).
+
+## 📦 Download
+
+Download the latest release for your platform from the [**Releases**](../../releases) page:
+
+- **Android Mobile** - APK file
+- **Android TV** - Same APK, optimized for TV experience
+- **Windows** - MSI installer
+- **macOS** - DMG package
+- **Linux** - DEB package
 
 ## 🔮 Demo
 
@@ -20,9 +30,39 @@
 - [Watch](https://www.youtube.com/watch?v=lTsZOs_PkbM) Development - Behind the Scenes - Part 1
 - [Watch](https://www.youtube.com/watch?v=ejp9850FWy8) Development - Behind the Scenes - Part 2
 
-## 🏃 Run
+## 🏃‍♂️ Build & Run
 
-- Clone the repo and run `./gradlew run`
+### Android
+```bash
+# Install on connected device
+./gradlew :app:installDebug
+
+# Or build APK
+./gradlew :app:assembleDebug
+# APK location: app/build/outputs/apk/debug/app-debug.apk
+```
+
+### Desktop
+```bash
+# Run directly
+./gradlew :desktopApp:run
+
+# Create installer packages
+./gradlew :desktopApp:packageDmg      # macOS
+./gradlew :desktopApp:packageMsi      # Windows
+./gradlew :desktopApp:packageDeb      # Linux
+```
+
+## ✨ Platform Features
+
+| Feature | Android Mobile | Android TV | Desktop |
+|---------|---------------|------------|---------|
+| Immersive Mode | ✅ | ✅ | ➖ |
+| D-pad Navigation | ➖ | ✅ | ➖ |
+| Touch Controls | ✅ | ➖ | ➖ |
+| Mouse/Keyboard | ➖ | ➖ | ✅ |
+| Landscape Lock | ✅ | ✅ (default) | ➖ |
+| Screen Always On | ✅ | ✅ | ✅ |
 
 ## 💡 Inspiration
 
@@ -37,6 +77,19 @@
 * Email: theapache64@gmail.com
 
 Feel free to ping me 😉
+
+## 🚀 Creating Releases
+
+This project uses GitHub Actions to automatically build and release packages for all platforms.
+
+### How to Create a Release:
+
+1. Update version in `app/build.gradle.kts`
+2. Commit your changes: `git commit -m "Release v1.0.2"`
+3. Create and push a tag: `git tag v1.0.2 && git push origin v1.0.2`
+4. GitHub Actions will automatically build and create a release
+
+See [`.github/RELEASE_SETUP.md`](.github/RELEASE_SETUP.md) for detailed setup instructions.
 
 ## 🤝 Contributing
 
