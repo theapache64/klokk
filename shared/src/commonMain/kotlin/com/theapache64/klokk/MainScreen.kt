@@ -39,6 +39,7 @@ const val TOOLBAR_HEIGHT = 60
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen(
+    isTvMode: Boolean = false,
     onControlsVisibilityChanged: (Boolean) -> Unit = {},
     onShowControlsHandler: ((showControls: () -> Unit) -> Unit) = {}
 ) {
@@ -188,6 +189,7 @@ fun MainScreen(
                 // Show toolbar only when controls are visible
                 if (areControlsVisible) {
                     BottomToolBar(
+                        isTvMode = isTvMode,
                         activeMovement = activeMovement,
                         isAnimPlaying = shouldPlayAutoAnim,
 

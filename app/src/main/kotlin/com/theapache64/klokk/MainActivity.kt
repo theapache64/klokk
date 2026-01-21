@@ -1,5 +1,7 @@
 package com.theapache64.klokk
 
+import android.app.UiModeManager
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -20,6 +22,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Detect if running on Android TV
+        val uiModeManager = getSystemService(UI_MODE_SERVICE) as UiModeManager
+        val isTvMode = uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
+
         // Enable edge-to-edge display
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -31,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MainScreen(
+                isTvMode = isTvMode,
                 onControlsVisibilityChanged = { visible ->
                     areControlsVisible = visible
                     updateSystemUiVisibility(visible)

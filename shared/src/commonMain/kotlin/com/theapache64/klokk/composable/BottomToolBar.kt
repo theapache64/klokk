@@ -38,6 +38,7 @@ import com.theapache64.klokk.movement.core.Movement
 
 @Composable
 fun BottomToolBar(
+    isTvMode: Boolean = false,
     activeMovement: Movement, // to show debug info
     isAnimPlaying: Boolean,
     textInput: String,
@@ -74,7 +75,8 @@ fun BottomToolBar(
             IconTextButton(
                 text = "START AUTOPLAY",
                 imageVector = Icons.Outlined.PlayArrow,
-                onClicked = onPlayClicked
+                onClicked = onPlayClicked,
+                isTvMode = isTvMode
             )
         }
 
@@ -83,7 +85,8 @@ fun BottomToolBar(
             IconTextButton(
                 text = "STOP AUTOPLAY",
                 imageVector = Icons.Outlined.Stop,
-                onClicked = onStopClicked
+                onClicked = onStopClicked,
+                isTvMode = isTvMode
             )
         }
 
@@ -93,7 +96,8 @@ fun BottomToolBar(
                 text = "SHOW TIME",
                 imageVector = Icons.Outlined.Update,
                 onClicked = onShowTimeClicked,
-                focusRequester = showTimeFocusRequester
+                focusRequester = showTimeFocusRequester,
+                isTvMode = isTvMode
             )
         }
 
@@ -101,7 +105,8 @@ fun BottomToolBar(
         IconTextButton(
             text = "HIDE CONTROLS",
             imageVector = Icons.Outlined.Fullscreen,
-            onClicked = onHideControlsClicked
+            onClicked = onHideControlsClicked,
+            isTvMode = isTvMode
         )
 
         Row(
@@ -137,9 +142,13 @@ private fun IconTextButton(
     text: String,
     imageVector: ImageVector,
     onClicked: () -> Unit,
+    isTvMode: Boolean = false,
     focusRequester: FocusRequester? = null,
 ) {
     var isFocused by remember { mutableStateOf(false) }
+
+    // Show focus highlighting only on TV
+    val showFocusHighlight = isTvMode && isFocused
 
     Box(
         modifier = Modifier
@@ -154,34 +163,34 @@ private fun IconTextButton(
                 isFocused = focusState.isFocused
             }
             .border(
-                width = if (isFocused) 2.dp else 0.dp,
-                color = if (isFocused) Color(0xFFFFD700) else Color.Transparent,
+                width = if (showFocusHighlight) 2.dp else 0.dp,
+                color = if (showFocusHighlight) Color(0xFFFFD700) else Color.Transparent,
                 shape = RoundedCornerShape(4.dp)
             )
-            .padding(if (isFocused) 2.dp else 0.dp)
+            .padding(if (showFocusHighlight) 2.dp else 0.dp)
     ) {
         OutlinedButton(
             onClick = onClicked,
             modifier = Modifier.focusable(),
             border = BorderStroke(
                 width = 1.dp,
-                color = if (isFocused) Color(0xFFFFD700) else Color.Gray
+                color = if (showFocusHighlight) Color(0xFFFFD700) else Color.Gray
             ),
             colors = ButtonDefaults.outlinedButtonColors(
-                backgroundColor = if (isFocused) Color(0xFFFFD700).copy(alpha = 0.2f) else Color.Transparent
+                backgroundColor = if (showFocusHighlight) Color(0xFFFFD700).copy(alpha = 0.2f) else Color.Transparent
             )
         ) {
 
             Icon(
                 imageVector = imageVector,
-                tint = if (isFocused) Color(0xFFFFD700) else Color.White,
+                tint = if (showFocusHighlight) Color(0xFFFFD700) else Color.White,
                 contentDescription = "ToolBar Icon",
                 modifier = Modifier.padding(end = 10.dp)
             )
 
             Text(
                 text = text,
-                color = if (isFocused) Color(0xFFFFD700) else Color.White
+                color = if (showFocusHighlight) Color(0xFFFFD700) else Color.White
             )
         }
     }

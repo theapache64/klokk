@@ -27,7 +27,7 @@ jobs:
         run: ./gradlew :app:assembleRelease
 
       - name: Sign APK (if secrets are configured)
-        if: ${{ secrets.SIGNING_KEY != '' }}
+        continue-on-error: true
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
@@ -40,12 +40,12 @@ jobs:
           BUILD_TOOLS_VERSION: "34.0.0"
 
       - name: Rename signed APK
-        if: ${{ secrets.SIGNING_KEY != '' }}
+        if: steps.sign_app.outcome == 'success'
         run: |
           mv ${{steps.sign_app.outputs.signedReleaseFile}} klokk-android.apk
 
       - name: Rename unsigned APK
-        if: ${{ secrets.SIGNING_KEY == '' }}
+        if: steps.sign_app.outcome != 'success'
         run: |
           mv app/build/outputs/apk/release/app-release-unsigned.apk klokk-android.apk
 
