@@ -18,7 +18,8 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "Klokk"
-            packageVersion = "1.0.1"
+            // [latest version - i promise!]
+            packageVersion = "1.1.1"
         }
     }
 }

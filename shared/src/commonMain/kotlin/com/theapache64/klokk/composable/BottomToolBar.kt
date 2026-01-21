@@ -52,15 +52,9 @@ fun BottomToolBar(
 
     // Request focus on SHOW TIME button when toolbar appears
     LaunchedEffect(isAnimPlaying) {
-        println("BottomToolBar: isAnimPlaying = $isAnimPlaying")
         if (isAnimPlaying) {
             kotlinx.coroutines.delay(100) // Small delay to ensure button is composed
-            try {
-                showTimeFocusRequester.requestFocus()
-                println("BottomToolBar: Focus requested on SHOW TIME button")
-            } catch (e: Exception) {
-                println("BottomToolBar: Failed to request focus: ${e.message}")
-            }
+            showTimeFocusRequester.requestFocus()
         }
     }
 
@@ -158,14 +152,13 @@ private fun IconTextButton(
             )
             .onFocusChanged { focusState ->
                 isFocused = focusState.isFocused
-                println("IconTextButton '$text': isFocused = ${focusState.isFocused}")
             }
             .border(
-                width = if (isFocused) 5.dp else 0.dp,
+                width = if (isFocused) 2.dp else 0.dp,
                 color = if (isFocused) Color(0xFFFFD700) else Color.Transparent,
                 shape = RoundedCornerShape(4.dp)
             )
-            .padding(if (isFocused) 4.dp else 0.dp)
+            .padding(if (isFocused) 2.dp else 0.dp)
     ) {
         OutlinedButton(
             onClick = onClicked,
@@ -175,7 +168,7 @@ private fun IconTextButton(
                 color = if (isFocused) Color(0xFFFFD700) else Color.Gray
             ),
             colors = ButtonDefaults.outlinedButtonColors(
-                backgroundColor = if (isFocused) Color(0xFFFFD700).copy(alpha = 0.4f) else Color.Transparent
+                backgroundColor = if (isFocused) Color(0xFFFFD700).copy(alpha = 0.2f) else Color.Transparent
             )
         ) {
 

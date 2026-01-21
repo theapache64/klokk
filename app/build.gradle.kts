@@ -13,8 +13,10 @@ android {
         applicationId = "com.theapache64.klokk"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.1"
+        // [latest version - i promise!]
+        versionCode = 11
+        // [latest version - i promise!]
+        versionName = "v1.1.1"
     }
 
     buildTypes {
