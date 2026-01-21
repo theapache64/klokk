@@ -2,6 +2,8 @@ package com.theapache64.klokk
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -77,6 +79,15 @@ fun MainScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(BACKGROUND_COLOR)
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) {
+                    // Tap to show controls when in immersive mode
+                    if (!areControlsVisible) {
+                        areControlsVisible = true
+                    }
+                }
         ) {
             // Calculate responsive dimensions
             val density = LocalDensity.current
